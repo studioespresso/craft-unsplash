@@ -55,7 +55,7 @@ class SplashingImagesAsset extends AssetBundle
         $this->js = [
             'js/masonry.pkgd.min.js',
             'js/imagesloaded.pkgd.min.js',
-            'js/splashingImages.js',
+            'js/splashingimages.js',
         ];
 
         $this->css = [

@@ -10,6 +10,8 @@
 
 namespace studioespresso\splashingimages\controllers;
 
+use craft\elements\Asset;
+use craft\services\Path;
 use studioespresso\splashingimages\SplashingImages;
 
 use Craft;
@@ -49,9 +51,44 @@ class DownloadController extends Controller
      */
     public function actionIndex()
     {
-        $result = 'Welcome to the DefaultController actionIndex() method';
+        if(!Craft::$app->request->isAjax) {
+            return false;
+        }
 
-        return $result;
+        $path = new Path();
+        $dir = $path->getTempAssetUploadsPath() . '/unsplash/';
+        if(!is_dir($dir)){ mkdir($dir); }
+
+        $payload = trim(stripslashes(Craft::$app->request->post('source')));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $payload);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $picture = curl_exec($ch);
+        curl_close($ch);
+
+        $tmpImage = 'photo-' . rand() . '.jpg';
+        $tempPath = $dir . $tmpImage;
+        $saved = file_put_contents($tempPath, $picture);
+
+        $assets = Craft::$app->getAssets();
+        $folder = $assets->findFolder(['id' => 3]);
+
+        $asset = new Asset();
+        $asset->tempFilePath = $tempPath;
+        $asset->filename = $tmpImage;
+        $asset->newFolderId = $folder->id;
+        $asset->volumeId = $folder->volumeId;
+        $asset->avoidFilenameConflicts = true;
+        $asset->setScenario(Asset::SCENARIO_CREATE);
+
+        $result = Craft::$app->getElements()->saveElement($asset);
+        echo $result;
+        exit;
+        
     }
 
 }
