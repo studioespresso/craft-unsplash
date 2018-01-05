@@ -36,7 +36,9 @@
 
 {# The content of the CP Section#}
 {% set content %}
-    {% for image in images %}
-        <img src="{{ image.thumb }}">
-    {% endfor %}
+    <div id="splashing-container">
+        {% for image in images %}
+            <img src="{{ image.thumb }}" class="item">
+        {% endfor %}
+    </div>
 {% endset %}

@@ -9,3 +9,13 @@
  * @package   SplashingImages
  * @since     1.0.0
  */
+
+$( document ).ready(function() {
+    var $grid = jQuery('#splashing-container').masonry({
+        itemSelector: 'img.item',
+        gutter: 10,
+    });
+    $grid.imagesLoaded().progress( function() {
+        $grid.masonry('');
+    });
+});

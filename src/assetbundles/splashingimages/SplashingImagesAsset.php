@@ -53,7 +53,9 @@ class SplashingImagesAsset extends AssetBundle
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            'js/SplashingImages.js',
+            'js/masonry.pkgd.min.js',
+            'js/imagesloaded.pkgd.min.js',
+            'js/splashingImages.js',
         ];
 
         $this->css = [

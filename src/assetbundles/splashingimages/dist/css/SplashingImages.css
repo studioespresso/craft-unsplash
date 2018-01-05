@@ -9,3 +9,6 @@
  * @package   SplashingImages
  * @since     1.0.0
  */
+#splashing-container img.item {
+    margin-bottom: 10px;
+}
