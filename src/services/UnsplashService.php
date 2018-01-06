@@ -80,6 +80,8 @@ class UnsplashService extends Component
             $data[$image['id']]['thumb'] = $image['urls']['thumb'];
             $data[$image['id']]['small'] = $image['urls']['small'];
             $data[$image['id']]['full'] = $image['urls']['full'];
+            $data[$image['id']]['attr']['name'] = $image['user']['name'];
+            $data[$image['id']]['attr']['link'] = $image['user']['links']['html'];
         }
         Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
         return $data;
@@ -93,6 +95,8 @@ class UnsplashService extends Component
             $data[$image->id]['thumb'] = $image->urls['thumb'];
             $data[$image->id]['small'] = $image->urls['small'];
             $data[$image->id]['full'] = $image->urls['full'];
+            $data[$image->id]['attr']['name'] = $image->user['name'];
+            $data[$image->id]['attr']['link'] = $image->user['links']['html'];
         }
         return $data;
     }
