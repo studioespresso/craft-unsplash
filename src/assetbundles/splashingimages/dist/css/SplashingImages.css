@@ -12,3 +12,7 @@
 #splashing-container img.item {
     margin-bottom: 10px;
 }
+
+img.item {
+    cursor: cell;
+}
