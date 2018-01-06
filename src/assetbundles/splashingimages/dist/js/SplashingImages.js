@@ -22,28 +22,34 @@ $(document).ready(function () {
 
 $(document).ready(function ($) {
     var container = $('#splashing-container');
+
     $('img.item').click(function (e) {
+
         var element = $(this);
-        // If not saving, then proceed
+
         payload = {
             id: element.data('id')
         }
         payload[window.csrfTokenName] = window.csrfTokenValue;
-        $.ajax({
-            type: 'POST',
-            url: Craft.getActionUrl('splashing-images/download'),
-            dataType: 'JSON',
-            data: payload,
-            beforeSend: function () {
-                console.log('posting..');
-            },
-            success: function (response) {
 
-            },
-            error: function (xhr, status, error) {
-
-            }
-        });
-
+        if (!element.hasClass('saving')) {
+            element.addClass('saving');
+            $.ajax({
+                type: 'POST',
+                url: Craft.getActionUrl('splashing-images/download'),
+                dataType: 'JSON',
+                data: payload,
+                beforeSend: function () {
+                    console.log('posting..');
+                },
+                success: function (response) {
+                    console.log(response);
+                    Craft.cp.displayNotice(Craft.t('Image saved!'));
+                },
+                error: function (xhr, status, error) {
+                    Craft.cp.displayError(Craft.t('Oops, something went wrong...'));
+                }
+            });
+        }
     });
 });

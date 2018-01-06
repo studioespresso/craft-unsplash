@@ -93,6 +93,11 @@ class DownloadController extends Controller
         if($result and file_exists($tempPath)) {
             unlink($tempPath);
         }
+        if($result) {
+            return true;
+        } else {
+            return false;
+        }
         exit;
 
     }
