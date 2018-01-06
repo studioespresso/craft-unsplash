@@ -12,6 +12,7 @@ namespace studioespresso\splashingimages\services;
 
 use Crew\Unsplash\HttpClient;
 use Crew\Unsplash\Photo;
+use Crew\Unsplash\Search;
 use studioespresso\splashingimages\SplashingImages;
 
 use Craft;
@@ -67,6 +68,16 @@ class UnsplashService extends Component
         $images = $this->parseResults($images);
         Craft::$app->cache->add('splashing_latest', $images, 60*60*12);
         return $images;
+    }
+
+    public function search($query) {
+        $images = Search::photos($query, 1, 20);
+        foreach($images->getResults() as $image) {
+            $data[$image['id']]['id'] = $image['id'];
+            $data[$image['id']]['thumb'] = $image['urls']['thumb'];
+            $data[$image['id']]['full'] = $image['urls']['full'];
+        }
+        return $data;
     }
 
     private function parseResults($images)

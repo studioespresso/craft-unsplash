@@ -30,7 +30,7 @@
 
 {# Content that should appear in the page header#}
 {% set extraPageHeaderHtml %}
-    <div class="buttons right">
+    <div class="buttons">
         <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('splashing-images') }}</a>
     </div>
 {% endset %}
@@ -38,8 +38,9 @@
 {% set tabs = {
     curated: { url: url('splashing-images'), label: 'Curated'},
     latest: { url: url('splashing-images/latest'), label: 'Latest'},
+    search: { url: url('splashing-images/search'), label: 'Search'},
 } %}
-{% set selectedTab = 'curated' %}
+{% set selectedTab = 'search' %}
 
 {% block contextMenu %}
     {% include "splashing-images/_includes/_search" %}
@@ -47,7 +48,6 @@
 
 {# The content of the CP Section#}
 {% block content %}
-
     <div id="splashing-container">
         {% for image in images %}
             <img src="{{ image.thumb }}" data-id="{{ image.id }}" class="item">

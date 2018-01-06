@@ -94,6 +94,7 @@ class SplashingImages extends Plugin
                 $event->rules['splashing-images'] = ['template' => 'splashing-images/_index', 'variables' => ['images' => $curated]];
                 $latest = $unsplashService->getLatest();
                 $event->rules['splashing-images/latest'] = ['template' => 'splashing-images/_latest', 'variables' => ['images' => $latest]];
+                $event->rules['splashing-images/search'] = 'splashing-images/images/search';
             }
         );
 
