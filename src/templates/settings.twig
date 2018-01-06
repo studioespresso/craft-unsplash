@@ -15,12 +15,11 @@
 
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
-
-{{ forms.textField({
+{{ forms.selectField({
     label: 'Some Field',
     instructions: 'Enter some setting here.',
-    id: 'someAttribute',
-    name: 'someAttribute',
-    value: settings['someAttribute']})
+    options: volumes,
+    id: 'destination',
+    name: 'destination',
+    value: settings['destination']})
 }}

@@ -79,8 +79,9 @@ class DownloadController extends Controller
         $saved = file_put_contents($tempPath, $picture);
 
         $assets = Craft::$app->getAssets();
-        $folder = $assets->findFolder(['id' => 3]);
-
+        $settings = SplashingImages::$plugin->getSettings();
+        $folder  = $assets->getRootFolderByVolumeId($settings->destination);
+        
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
         $asset->filename = $tmpImage;
