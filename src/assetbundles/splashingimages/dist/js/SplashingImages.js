@@ -23,6 +23,14 @@ $(document).ready(function () {
 $(document).ready(function ($) {
     var container = $('#splashing-container');
 
+    $.LoadingOverlaySetup({
+        color           : "rgba(241,241,241,0.5)",
+        maxSize         : "80px",
+        minSize         : "20px",
+        resizeInterval  : 0,
+        size            : "30%"
+    });
+
     $('img.item').click(function (e) {
 
         var element = $(this);
@@ -40,14 +48,17 @@ $(document).ready(function ($) {
                 dataType: 'JSON',
                 data: payload,
                 beforeSend: function () {
+                    element.LoadingOverlay("show");
                     console.log('posting..');
                 },
                 success: function (response) {
                     console.log(response);
-                    Craft.cp.displayNotice(Craft.t('Image saved!'));
+                    element.LoadingOverlay("hide");
+                    Craft.cp.displayNotice(Craft.t('splashing-images','Image saved!'));
                 },
                 error: function (xhr, status, error) {
-                    Craft.cp.displayError(Craft.t('Oops, something went wrong...'));
+                    element.LoadingOverlay("hide");
+                    Craft.cp.displayError(Craft.t('splashing-images', 'Oops, something went wrong...'));
                 }
             });
         }
