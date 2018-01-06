@@ -14,5 +14,9 @@
 }
 
 img.item {
-    cursor: cell;
+    cursor: pointer;
+}
+
+input.search-splashing {
+    content: 'search';
 }
