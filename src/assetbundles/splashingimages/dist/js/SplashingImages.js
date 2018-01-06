@@ -12,7 +12,7 @@
 
 $(document).ready(function () {
     var grid = jQuery('#splashing-container').masonry({
-        itemSelector: 'img.item',
+        itemSelector: 'div.splashing',
         gutter: 10,
     });
     grid.imagesLoaded().progress(function () {
@@ -31,8 +31,7 @@ $(document).ready(function ($) {
         size            : "30%"
     });
 
-    $('img.item').click(function (e) {
-
+    $('div.splashing').click(function (e) {
         var element = $(this);
 
         payload = {
