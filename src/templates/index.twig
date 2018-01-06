@@ -38,7 +38,7 @@
 {% set content %}
     <div id="splashing-container">
         {% for image in images %}
-            <img src="{{ image.thumb }}" data-full="{{ image.full }}" class="item">
+            <img src="{{ image.thumb }}" data-id="{{ image.id }}" class="item">
         {% endfor %}
     </div>
     <script type="text/javascript">

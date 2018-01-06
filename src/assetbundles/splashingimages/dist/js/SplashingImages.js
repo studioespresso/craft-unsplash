@@ -26,7 +26,7 @@ $(document).ready(function ($) {
         var element = $(this);
         // If not saving, then proceed
         payload = {
-            source: element.data('full')
+            id: element.data('id')
         }
         payload[window.csrfTokenName] = window.csrfTokenValue;
         $.ajax({

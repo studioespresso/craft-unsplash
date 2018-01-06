@@ -12,6 +12,7 @@ namespace studioespresso\splashingimages\controllers;
 
 use craft\elements\Asset;
 use craft\services\Path;
+use studioespresso\splashingimages\services\UnsplashService;
 use studioespresso\splashingimages\SplashingImages;
 
 use Craft;
@@ -59,7 +60,9 @@ class DownloadController extends Controller
         $dir = $path->getTempAssetUploadsPath() . '/unsplash/';
         if(!is_dir($dir)){ mkdir($dir); }
 
-        $payload = trim(stripslashes(Craft::$app->request->post('source')));
+        $id = Craft::$app->request->post('id');
+        $unplash = new UnsplashService();
+        $payload = $unplash->registerDownload($id);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $payload);
@@ -69,6 +72,7 @@ class DownloadController extends Controller
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $picture = curl_exec($ch);
         curl_close($ch);
+
 
         $tmpImage = 'photo-' . rand() . '.jpg';
         $tempPath = $dir . $tmpImage;
@@ -86,7 +90,7 @@ class DownloadController extends Controller
         $asset->setScenario(Asset::SCENARIO_CREATE);
 
         $result = Craft::$app->getElements()->saveElement($asset);
-        if($result) {
+        if($result and file_exists($tempPath)) {
             unlink($tempPath);
         }
         exit;

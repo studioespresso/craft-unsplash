@@ -41,6 +41,12 @@ class UnsplashService extends Component
         ]);
     }
 
+    public function registerDownload($id) {
+        $photo = Photo::find($id);
+        return $photo->download();
+
+    }
+
     public function getCurated($count = 20)
     {
         if(Craft::$app->cache->get('splashing_curated')) {
@@ -56,6 +62,7 @@ class UnsplashService extends Component
     {
         $data = [];
         foreach($images as $image) {
+            $data[$image->id]['id'] = $image->id;
             $data[$image->id]['thumb'] = $image->urls['thumb'];
             $data[$image->id]['full'] = $image->urls['full'];
         }
