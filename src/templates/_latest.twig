@@ -15,6 +15,7 @@
 
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
+{% import "_includes/tabs" as tabs %}
 
 {% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
 
@@ -34,8 +35,16 @@
     </div>
 {% endset %}
 
+{% set tabs = {
+    curated: { url: url('splashing-images'), label: 'Curated'},
+    latest: { url: url('splashing-images/latest'), label: 'Latest'},
+    random: { url: url('splashing-images/random'), label: 'Random'},
+} %}
+{% set selectedTab = 'latest' %}
+
 {# The content of the CP Section#}
-{% set content %}
+{% block content %}
+
     <div id="splashing-container">
         {% for image in images %}
             <img src="{{ image.thumb }}" data-id="{{ image.id }}" class="item">
@@ -45,4 +54,4 @@
         window.csrfTokenName = "{{ craft.app.config.general.csrfTokenName }}";
         window.csrfTokenValue = "{{ craft.app.request.csrfToken }}";
     </script>
-{% endset %}
+{% endblock %}

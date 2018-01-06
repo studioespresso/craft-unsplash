@@ -91,7 +91,9 @@ class SplashingImages extends Plugin
             function (RegisterUrlRulesEvent $event) {
                 $unsplashService = new UnsplashService();
                 $images = $unsplashService->getCurated();
-                $event->rules['splashing-images'] = ['template' => 'splashing-images/index', 'variables' => ['images' => $images]];
+                $event->rules['splashing-images'] = ['template' => 'splashing-images/_index', 'variables' => ['images' => $images]];
+                $event->rules['splashing-images/latest'] = ['template' => 'splashing-images/_latest', 'variables' => ['images' => $images]];
+                $event->rules['splashing-images/random'] = ['template' => 'splashing-images/_random', 'variables' => ['images' => $images]];
 
             }
         );
