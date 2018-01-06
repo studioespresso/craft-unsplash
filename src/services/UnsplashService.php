@@ -78,6 +78,7 @@ class UnsplashService extends Component
         foreach($images->getResults() as $image) {
             $data[$image['id']]['id'] = $image['id'];
             $data[$image['id']]['thumb'] = $image['urls']['thumb'];
+            $data[$image['id']]['small'] = $image['urls']['small'];
             $data[$image['id']]['full'] = $image['urls']['full'];
         }
         Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
@@ -90,6 +91,7 @@ class UnsplashService extends Component
         foreach($images as $image) {
             $data[$image->id]['id'] = $image->id;
             $data[$image->id]['thumb'] = $image->urls['thumb'];
+            $data[$image->id]['small'] = $image->urls['small'];
             $data[$image->id]['full'] = $image->urls['full'];
         }
         return $data;

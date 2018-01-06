@@ -15,6 +15,7 @@
 
 img.item {
     cursor: pointer;
+    width: 32%;
 }
 
 input.search-splashing {
