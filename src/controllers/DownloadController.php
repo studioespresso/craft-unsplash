@@ -11,6 +11,7 @@
 namespace studioespresso\splashingimages\controllers;
 
 use craft\elements\Asset;
+use craft\errors\InvalidSubpathException;
 use craft\services\Path;
 use studioespresso\splashingimages\services\UnsplashService;
 use studioespresso\splashingimages\SplashingImages;
@@ -80,13 +81,27 @@ class DownloadController extends Controller
 
         $assets = Craft::$app->getAssets();
         $settings = SplashingImages::$plugin->getSettings();
-        $folder  = $assets->getRootFolderByVolumeId($settings->destination);
-        
+
+        $volume = Craft::$app->volumes->getVolumeById($settings->destination);
+
+        $subpath = (string)SplashingImages::$plugin->getSettings()->folder;
+
+        if ($subpath) {
+            try {
+                $subpath = Craft::$app->getView()->renderObjectTemplate($subpath, $settings);
+            } catch (\Throwable $e) {
+                throw new InvalidSubpathException($subpath);
+            }
+        }
+        $assetsService = Craft::$app->getAssets();
+
+        $folderId = $assetsService->ensureFolderByFullPathAndVolume($subpath, $volume);
+
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
         $asset->filename = $tmpImage;
-        $asset->newFolderId = $folder->id;
-        $asset->volumeId = $folder->volumeId;
+        $asset->newFolderId = $folderId;
+        $asset->volumeId = $volume->id;
         $asset->avoidFilenameConflicts = true;
         $asset->setScenario(Asset::SCENARIO_CREATE);
 
