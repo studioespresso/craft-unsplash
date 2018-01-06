@@ -86,9 +86,11 @@ class DownloadController extends Controller
         $asset->setScenario(Asset::SCENARIO_CREATE);
 
         $result = Craft::$app->getElements()->saveElement($asset);
-        echo $result;
+        if($result) {
+            unlink($tempPath);
+        }
         exit;
-        
+
     }
 
 }
