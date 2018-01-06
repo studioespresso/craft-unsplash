@@ -15,11 +15,29 @@
 
 {% import "_includes/forms" as forms %}
 
-{{ forms.selectField({
-    label: 'Some Field',
-    instructions: 'Enter some setting here.',
-    options: volumes,
-    id: 'destination',
-    name: 'destination',
-    value: settings['destination']})
-}}
+
+<div class="field first">
+    <div class="heading">
+        <label>{{ 'Volume'|t }}</label>
+        <div class="instructions"><p>{{ 'Select the volume where your images should be save'|t }}</p>
+        </div>
+    </div>
+    <div class="input ltr">
+        <div class="flex">
+            <div>
+                <div class="select">
+                    <select id="destination" name="destination">
+                        {% for volume in volumes %}
+                        <option value="{{ volume.value }}" {% if settings['destination'] == volume.value     %}selected{% endif %}>{{ volume.label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+            <div class="flex-grow">
+                <input class="text ltr fullwidth" type="text" id="folder" name="folder" value="{{ settings['folder'] }}" autocomplete="off" placeholder="path/to/subfolder">
+            </div>
+        </div>
+
+    </div>
+</div>

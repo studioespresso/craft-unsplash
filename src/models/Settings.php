@@ -39,7 +39,11 @@ class Settings extends Model
      *
      * @var string
      */
-    public $destination = 'Some Default';
+    public $destination;
+
+    public $folder;
+
+
 
     // Public Methods
     // =========================================================================
