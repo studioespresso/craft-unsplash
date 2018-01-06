@@ -70,13 +70,17 @@ class UnsplashService extends Component
         return $images;
     }
 
-    public function search($query) {
+    public function search($query, $page = 1, $count = 20) {
+        if(Craft::$app->cache->get('splashing_'.$query. '_'.$page)) {
+            return Craft::$app->cache->get('splashing_'.$query. '_'.$page);
+        }
         $images = Search::photos($query, 1, 20);
         foreach($images->getResults() as $image) {
             $data[$image['id']]['id'] = $image['id'];
             $data[$image['id']]['thumb'] = $image['urls']['thumb'];
             $data[$image['id']]['full'] = $image['urls']['full'];
         }
+        Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
         return $data;
     }
 
