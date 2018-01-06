@@ -58,6 +58,17 @@ class UnsplashService extends Component
         return $images;
     }
 
+    public function getLatest($count = 20)
+    {
+        if(Craft::$app->cache->get('splashing_latest')) {
+            return Craft::$app->cache->get('splashing_latest');
+        }
+        $images = Photo::all(1, $count);
+        $images = $this->parseResults($images);
+        Craft::$app->cache->add('splashing_latest', $images, 60*60*12);
+        return $images;
+    }
+
     private function parseResults($images)
     {
         $data = [];

@@ -38,9 +38,15 @@
 {% set tabs = {
     curated: { url: url('splashing-images'), label: 'Curated'},
     latest: { url: url('splashing-images/latest'), label: 'Latest'},
-    random: { url: url('splashing-images/random'), label: 'Random'},
 } %}
 {% set selectedTab = 'curated' %}
+
+{% block contextMenu %}
+    search
+{% endblock %}
+
+{% block details %}
+{% endblock %}
 
 {# The content of the CP Section#}
 {% block content %}

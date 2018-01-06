@@ -90,11 +90,10 @@ class SplashingImages extends Plugin
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
                 $unsplashService = new UnsplashService();
-                $images = $unsplashService->getCurated();
-                $event->rules['splashing-images'] = ['template' => 'splashing-images/_index', 'variables' => ['images' => $images]];
-                $event->rules['splashing-images/latest'] = ['template' => 'splashing-images/_latest', 'variables' => ['images' => $images]];
-                $event->rules['splashing-images/random'] = ['template' => 'splashing-images/_random', 'variables' => ['images' => $images]];
-
+                $curated = $unsplashService->getCurated();
+                $event->rules['splashing-images'] = ['template' => 'splashing-images/_index', 'variables' => ['images' => $curated]];
+                $latest = $unsplashService->getLatest();
+                $event->rules['splashing-images/latest'] = ['template' => 'splashing-images/_latest', 'variables' => ['images' => $latest]];
             }
         );
 
