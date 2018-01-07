@@ -75,16 +75,9 @@ class UnsplashService extends Component
             return Craft::$app->cache->get('splashing_'.$query. '_'.$page);
         }
         $images = Search::photos($query, 1, 20);
-        foreach($images->getResults() as $image) {
-            $data[$image['id']]['id'] = $image['id'];
-            $data[$image['id']]['thumb'] = $image['urls']['thumb'];
-            $data[$image['id']]['small'] = $image['urls']['small'];
-            $data[$image['id']]['full'] = $image['urls']['full'];
-            $data[$image['id']]['attr']['name'] = $image['user']['name'];
-            $data[$image['id']]['attr']['link'] = $image['user']['links']['html'];
-        }
-        Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
-        return $data;
+        $images = $this->parseResults($images->getArrayObject());
+        Craft::$app->cache->add('splashing_'.$query. '_'.$page, $images, 60*60*24);
+        return $images;
     }
 
     private function parseResults($images)
