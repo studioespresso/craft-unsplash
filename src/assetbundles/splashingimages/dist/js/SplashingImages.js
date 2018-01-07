@@ -31,11 +31,11 @@ $(document).ready(function ($) {
         size            : "30%"
     });
 
-    $('div.splashing').click(function (e) {
+    $('div.splashing img').click(function (e) {
         var element = $(this);
 
         payload = {
-            id: element.data('id')
+            id: element.parent().data('id')
         }
         payload[window.csrfTokenName] = window.csrfTokenValue;
 
@@ -48,7 +48,6 @@ $(document).ready(function ($) {
                 data: payload,
                 beforeSend: function () {
                     element.LoadingOverlay("show");
-                    console.log('posting..');
                 },
                 success: function (response) {
                     console.log(response);
