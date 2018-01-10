@@ -63,7 +63,8 @@ class DownloadController extends Controller
 
         $id = Craft::$app->request->post('id');
         $unplash = new UnsplashService();
-        $payload = $unplash->registerDownload($id);
+        $photo = $unplash->getPhoto($id);
+        $payload = $photo->download();
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $payload);
@@ -102,13 +103,15 @@ class DownloadController extends Controller
         $asset->filename = $tmpImage;
         $asset->newFolderId = $folderId;
         $asset->volumeId = $volume->id;
+        $asset->title = 'Photo by ' .  $photo->photographer()->name;
         $asset->avoidFilenameConflicts = true;
         $asset->setScenario(Asset::SCENARIO_CREATE);
 
-        $result = Craft::$app->getElements()->saveElement($asset);
+        $result = Craft::$app->elements->saveElement($asset);
         if($result and file_exists($tempPath)) {
             unlink($tempPath);
         }
+
         if($result) {
             return true;
         } else {

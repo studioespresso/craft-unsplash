@@ -42,9 +42,8 @@ class UnsplashService extends Component
         ]);
     }
 
-    public function registerDownload($id) {
-        $photo = Photo::find($id);
-        return $photo->download();
+    public function getPhoto($id) {
+        return Photo::find($id);
 
     }
 
