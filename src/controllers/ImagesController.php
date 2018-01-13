@@ -62,11 +62,12 @@ class ImagesController extends Controller
             return false;
         }
         $query = Craft::$app->request->get('q');
+        $page = Craft::$app->request->get('page');
         $unsplash = new UnsplashService();
-        $images = $unsplash->search($query);
+        $data = $unsplash->search($query, $page);
 
         $this->view->setTemplateMode('cp');
-        return $this->renderTemplate('splashing-images/_search', ['images' => $images]);
+        return $this->renderTemplate('splashing-images/_search', $data);
     }
 
     private function prepData($images) {

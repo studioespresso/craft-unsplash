@@ -76,10 +76,14 @@ class UnsplashService extends Component
         if(Craft::$app->cache->get('splashing_'.$query. '_'.$page)) {
             return Craft::$app->cache->get('splashing_'.$query. '_'.$page);
         }
-        $images = Search::photos($query, 1, 20);
-        $images = $this->parseResults($images->getArrayObject());
-        Craft::$app->cache->add('splashing_'.$query. '_'.$page, $images, 60*60*24);
-        return $images;
+        $images = Search::photos($query, $page, 20);
+        $results = $this->parseResults($images->getArrayObject());
+        $data['images'] = $results;
+        $data['pagination']['total_pages'] = $images->getTotalPages();
+        $data['pagination']['pages'] = range(1, $images->getTotalPages());
+        $data['pagination']['total_results'] = $images->getTotal();
+        Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
+        return $data;
     }
 
     private function parseResults($images)
