@@ -1,5 +1,5 @@
 {
-    "name": "studioespresso/splashing-images",
+    "name": "studioespresso/craft-splashingimages",
     "description": "unsplash.com integration for Craft 3",
     "type": "craft-plugin",
     "version": "1.0.0",
