@@ -40,19 +40,21 @@ use craft\web\Controller;
  */
 class ImagesController extends Controller
 {
+
     public function actionIndex() {
         $unsplashService = new UnsplashService();
         $images = $unsplashService->getCurated();
-
-        return $this->renderTemplate('splashing-images/_index', ['images' => $images]);
+        $data = $this->prepData($images);
+        return $this->renderTemplate('splashing-images/_index', $data);
 
     }
 
     public function actionLatest() {
         $unsplashService = new UnsplashService();
         $images = $unsplashService->getLatest();
+        $data = $this->prepData($images);
 
-        return $this->renderTemplate('splashing-images/_index', ['images' => $images]);
+        return $this->renderTemplate('splashing-images/_latest', $data);
     }
 
     public function actionSearch() {
@@ -65,6 +67,14 @@ class ImagesController extends Controller
 
         $this->view->setTemplateMode('cp');
         return $this->renderTemplate('splashing-images/_search', ['images' => $images]);
+    }
+
+    private function prepData($images) {
+        $data['images'] = $images;
+        if(Craft::$app->cache->get('splashing_last_search')) {
+            $data['lastSearch'] = Craft::$app->cache->get('splashing_last_search');
+        }
+        return $data;
     }
 
 }

@@ -39,6 +39,14 @@
     curated: { url: url('splashing-images'), label: 'Curated'},
     latest: { url: url('splashing-images/latest'), label: 'Latest'},
 } %}
+
+{% if lastSearch is defined %}
+    {% set searchTab = {
+        lastSearch: { label: "Last search: "|t ~ lastSearch, url: url('splashing-images/search?q=' ~ lastSearch)},
+    } %}
+    {% set tabs = tabs|merge(searchTab) %}
+{% endif %}
+
 {% set selectedTab = 'curated' %}
 
 {% block actionButton %}
@@ -47,7 +55,6 @@
 
 {# The content of the CP Section#}
 {% block content %}
-
     <div id="splashing-container">
         {% include "splashing-images/_includes/_images" %}
     </div>
