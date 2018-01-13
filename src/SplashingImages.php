@@ -74,16 +74,6 @@ class SplashingImages extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-
-        // Register our site routes
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['siteActionTrigger1'] = 'splashing-images/default';
-            }
-        );
-
         // Register our CP routes
         Event::on(
             UrlManager::class,
@@ -92,17 +82,6 @@ class SplashingImages extends Plugin
                 $event->rules['splashing-images'] = 'splashing-images/images/index';
                 $event->rules['splashing-images/latest'] = 'splashing-images/images/latest';
                 $event->rules['splashing-images/search'] = 'splashing-images/images/search';
-            }
-        );
-
-        // Register our variables
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('splashingImages', SplashingImagesVariable::class);
             }
         );
 
