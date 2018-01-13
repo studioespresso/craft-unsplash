@@ -40,6 +40,21 @@ use craft\web\Controller;
  */
 class ImagesController extends Controller
 {
+    public function actionIndex() {
+        $unsplashService = new UnsplashService();
+        $images = $unsplashService->getCurated();
+
+        return $this->renderTemplate('splashing-images/_index', ['images' => $images]);
+
+    }
+
+    public function actionLatest() {
+        $unsplashService = new UnsplashService();
+        $images = $unsplashService->getLatest();
+
+        return $this->renderTemplate('splashing-images/_index', ['images' => $images]);
+    }
+
     public function actionSearch() {
         if(!Craft::$app->request->get('q')) {
             return false;
