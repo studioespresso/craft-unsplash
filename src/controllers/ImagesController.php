@@ -71,6 +71,7 @@ class ImagesController extends Controller
     }
 
     private function prepData($images) {
+        $data['settings'] = SplashingImages::$plugin->getSettings();;
         $data['images'] = $images;
         if(Craft::$app->cache->get('splashing_last_search')) {
             $data['lastSearch'] = Craft::$app->cache->get('splashing_last_search');
