@@ -1,5 +1,7 @@
 # Splashing Images plugin for Craft CMS 3.x
 
+![Splashing Images](/resources/banner.png?raw=true)
+
 unsplash.com integration for Craft 3
 
 ## Requirements
