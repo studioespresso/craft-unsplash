@@ -43,7 +43,7 @@ class Settings extends Model
 
     public $folder;
 
-
+    public $pluginLabel;
 
     // Public Methods
     // =========================================================================

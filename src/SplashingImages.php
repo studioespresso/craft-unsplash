@@ -138,6 +138,23 @@ class SplashingImages extends Plugin
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getCpNavItem()
+    {
+        $ret = [
+            'label' => $this->getSettings()->pluginLabel ? $this->getSettings()->pluginLabel : $this->name,
+            'url' => $this->id,
+        ];
+
+        if (($iconPath = $this->cpNavIconPath()) !== null) {
+            $ret['icon'] = $iconPath;
+        }
+
+        return $ret;
+    }
+
+    /**
      * Returns the rendered settings HTML, which will be inserted into the content
      * block on the settings page.
      *
