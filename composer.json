@@ -1,0 +1,45 @@
+{
+    "name": "studioespresso/craft-splashingimages",
+    "description": "unsplash.com integration for Craft 3",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "splashing images"
+    ],
+    "support": {
+        "docs": "https://github.com/studioespresso/splashing-images/blob/master/README.md",
+        "issues": "https://github.com/studioespresso/splashing-images/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Studio Espresso",
+            "homepage": "https://studioespresso.co"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1",
+        "crewlabs/unsplash": "^2.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "studioespresso\\splashingimages\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Splashing Images",
+        "handle": "splashing-images",
+        "schemaVersion": "1.0.0",
+        "hasCpSettings": true,
+        "hasCpSection": true,
+        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/splashing-images/master/CHANGELOG.md",
+        "components": {
+            "UnsplashService": "studioespresso\\splashingimages\\services\\UnsplashService"
+        },
+        "class": "studioespresso\\splashingimages\\SplashingImages"
+    }
+}

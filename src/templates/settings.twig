@@ -1,0 +1,59 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Splashing Images plugin for Craft CMS 3.x
+ *
+ * Splashing Images Settings.twig
+ *
+ * @author    Studio Espresso
+ * @copyright Copyright (c) 2017 Studio Espresso
+ * @link      https://studioespresso.co
+ * @package   SplashingImages
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+
+<div class="field first">
+    <div class="heading">
+        <label for="pluginLabel">{{ 'CP label'|t }}</label>
+        <div class="instructions"><p>{{ 'You can give the plugin in different name in the CP navigation here'|t }}</p>
+        </div>
+    </div>
+    <div class="input ltr">
+        <div class="flex">
+            <input type="text" name="pluginLabel" id="pluginLabel" class="text ltr fullwidth"
+                   value="{{ settings['pluginLabel'] }}">
+        </div>
+    </div>
+</div>
+
+<div class="field">
+    <div class="heading">
+        <label>{{ 'Volume'|t }}</label>
+        <div class="instructions"><p>{{ 'Select the volume where your images should be save'|t }}</p>
+        </div>
+    </div>
+    <div class="input ltr">
+        <div class="flex">
+            <div>
+                <div class="select">
+                    <select id="destination" name="destination">
+                        {% for volume in volumes %}
+                            <option value="{{ volume.value }}"
+                                    {% if settings['destination'] == volume.value %}selected{% endif %}>{{ volume.label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+            <div class="flex-grow">
+                <input class="text ltr fullwidth" type="text" id="folder" name="folder" value="{{ settings['folder'] }}"
+                       autocomplete="off" placeholder="path/to/subfolder">
+            </div>
+        </div>
+
+    </div>
+</div>
