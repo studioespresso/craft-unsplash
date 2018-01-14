@@ -38,7 +38,7 @@
         "hasCpSection": true,
         "changelogUrl": "https://raw.githubusercontent.com/studioespresso/splashing-images/master/CHANGELOG.md",
         "components": {
-            "splashingImagesService": "studioespresso\\splashingimages\\services\\SplashingImagesService"
+            "UnsplashService": "studioespresso\\splashingimages\\services\\UnsplashService"
         },
         "class": "studioespresso\\splashingimages\\SplashingImages"
     }
