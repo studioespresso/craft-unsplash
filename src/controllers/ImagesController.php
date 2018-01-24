@@ -65,13 +65,16 @@ class ImagesController extends Controller
         $page = Craft::$app->request->get('page');
         $unsplash = new UnsplashService();
         $data = $unsplash->search($query, $page);
+        
+        // Fixes bug #1
+        $data['settings'] = SplashingImages::$plugin->getSettings();
 
         $this->view->setTemplateMode('cp');
         return $this->renderTemplate('splashing-images/_search', $data);
     }
 
     private function prepData($images) {
-        $data['settings'] = SplashingImages::$plugin->getSettings();;
+        $data['settings'] = SplashingImages::$plugin->getSettings();
         $data['images'] = $images;
         if(Craft::$app->cache->get('splashing_last_search')) {
             $data['lastSearch'] = Craft::$app->cache->get('splashing_last_search');
