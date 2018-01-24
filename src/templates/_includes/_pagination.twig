@@ -6,7 +6,7 @@
     <a href="{{ url('/admin/splashing-images/search', { 'q' : craft.app.request.getParam('q'), 'page' : currentPage-1}) }}">{{ 'Previous'|t }}</a> |
 {% endif %}
 {{ 'Page'|t }} {{ currentPage }}
-{% if currentPage != results.pagination.total_pages %}
+{% if currentPage != pagination.total_pages %}
     | <a href="{{ url('/admin/splashing-images/search', { 'q' : craft.app.request.getParam('q'), 'page' : currentPage+1}) }}">{{ 'Next'|t }}</a> |
-    <a href="{{ url('/admin/splashing-images/search', { 'q' : craft.app.request.getParam('q'), 'page' : results.pagination.total_pages }) }}">{{ 'Last'|t }}</a>
+    <a href="{{ url('/admin/splashing-images/search', { 'q' : craft.app.request.getParam('q'), 'page' : pagination.total_pages }) }}">{{ 'Last'|t }}</a>
 {% endif %}
