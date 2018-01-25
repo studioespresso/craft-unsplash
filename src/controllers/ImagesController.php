@@ -66,7 +66,6 @@ class ImagesController extends Controller
         $unsplash = new UnsplashService();
         $data = $unsplash->search($query, $page);
         
-        // Fixes bug #1
         $data['settings'] = SplashingImages::$plugin->getSettings();
 
         $this->view->setTemplateMode('cp');
