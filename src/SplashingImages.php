@@ -143,7 +143,7 @@ class SplashingImages extends Plugin
     public function getCpNavItem()
     {
         $ret = [
-            'label' => $this->getSettings()->pluginLabel ? $this->getSettings()->pluginLabel : $this->name,
+            'label' => $this->getSettings()->pluginLabel ? $this->getSettings()->pluginLabel : 'Unsplash Images',
             'url' => $this->id,
         ];
 
