@@ -23,8 +23,7 @@
     ],
     "require": {
         "craftcms/cms": "^3.0.0-RC1",
-        "crewlabs/unsplash": "^2.4.0",
-        "guzzlehttp/guzzle": "^6.3.0"
+        "unsplash/unsplash": "2.4.3"
     },
     "autoload": {
         "psr-4": {
