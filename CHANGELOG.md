@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 1.0.3 - 2018.04.17
+### Changed
+* Finall install issue fix, crewlabs/unsplash-php is now unsplash/unsplash
+
 ## 1.0.2 - 2018.03.27
 ### Changed
 * Fixed an issue where installation would failed because of conflicting versions of guzzlehttp/guzzle
