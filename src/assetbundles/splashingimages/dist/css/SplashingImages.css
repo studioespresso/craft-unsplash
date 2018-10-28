@@ -9,30 +9,62 @@
  * @package   SplashingImages
  * @since     1.0.0
  */
-#splashing-container img.item {
-    margin-bottom: 10px;
-}
-
-img.item {
-    cursor: pointer;
-    width: 25%;
-}
-
-input.search-splashing {
-    content: 'search';
-}
-.splashing {
-    position: relative;
-}
-.splashing span.attribute {
-    background-color: #0D3349;
-    width: 100%;
-}
-.splashing span.attribute a {
+.splashing-image-grid .splashing-attribute a {
     position: absolute;
-    bottom: 5px;
+    bottom: 4.5px;
     right: 0px;
     color: white;
-    padding: 3px 5px 3px 5px;
+    padding: 5px 8px 5px 8px;
     background-color: rgba(0, 0, 0, 0.7);
+}
+
+.splashing-image img {
+    width: 100%;
+}
+
+.splashing-image-grid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: #f4f4f4;
+}
+
+.splashing-image-grid {
+    margin-bottom: 20px;
+    max-width: 270px;
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+    z-index: 1;
+    transition: opacity .5s ease;
+}
+.splashing-image-grid .splashing-image.img {
+    z-index: 1;
+}
+
+.splashing-image-grid:after {
+    z-index: 30;
+    content: '';
+    background: rgba(255, 255, 255, .9) url(../img/spinner.gif) center no-repeat;
+    background-size: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease
+}
+
+.splashing-image-grid.saving {
+    pointer-events: none
+}
+
+.splashing-image-grid.saving:after {
+    opacity: 1
+}
+
+@media (max-width: 900px) {
+    .splasing-image-grid {
+    }
 }

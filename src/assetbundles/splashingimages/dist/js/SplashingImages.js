@@ -12,8 +12,11 @@
 
 $(document).ready(function () {
     var grid = jQuery('#splashing-container').masonry({
-        itemSelector: 'div.splashing',
-        gutter: 10,
+        itemSelector: '.splashing-image-grid',
+        columnWidth: '.splashing-image-grid',
+        percentPosition: true,
+        gutter: 20,
+        stagger: 20
     });
     grid.imagesLoaded().progress(function () {
         grid.masonry();
@@ -22,43 +25,30 @@ $(document).ready(function () {
 
 $(document).ready(function ($) {
     var container = $('#splashing-container');
-
-    $.LoadingOverlaySetup({
-        color           : "rgba(241,241,241,0.5)",
-        maxSize         : "80px",
-        minSize         : "20px",
-        resizeInterval  : 0,
-        size            : "30%"
-    });
-
-    $('div.splashing img').click(function (e) {
-        var element = $(this);
+    $('div.splashing-image').click(function (e) {
+        var $element = $(this);
+        $element.parent().addClass('saving');
 
         payload = {
-            id: element.parent().data('id')
+            id: $element.data('id')
         }
         payload[window.csrfTokenName] = window.csrfTokenValue;
+        $.ajax({
+            type: 'POST',
+            url: Craft.getActionUrl('splashing-images/download'),
+            dataType: 'JSON',
+            data: payload,
+            beforeSend: function () {
+            },
+            success: function (response) {
+                console.log(response);
+                $element.parent().removeClass('saving');
+                Craft.cp.displayNotice(Craft.t('splashing-images', 'Image saved!'));
+            },
+            error: function (xhr, status, error) {
+                Craft.cp.displayError(Craft.t('splashing-images', 'Oops, something went wrong...'));
+            }
+        });
 
-        if (!element.hasClass('saving')) {
-            element.addClass('saving');
-            $.ajax({
-                type: 'POST',
-                url: Craft.getActionUrl('splashing-images/download'),
-                dataType: 'JSON',
-                data: payload,
-                beforeSend: function () {
-                    element.LoadingOverlay("show");
-                },
-                success: function (response) {
-                    console.log(response);
-                    element.LoadingOverlay("hide");
-                    Craft.cp.displayNotice(Craft.t('splashing-images','Image saved!'));
-                },
-                error: function (xhr, status, error) {
-                    element.LoadingOverlay("hide");
-                    Craft.cp.displayError(Craft.t('splashing-images', 'Oops, something went wrong...'));
-                }
-            });
-        }
     });
 });
