@@ -16,7 +16,7 @@ $(document).ready(function () {
         columnWidth: '.splashing-image-grid',
         percentPosition: true,
         gutter: 20,
-        stagger: 20
+        stagger: 2
     });
     grid.imagesLoaded().progress(function () {
         grid.masonry();
