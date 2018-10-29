@@ -1,39 +1,11 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
-{#
-/**
- * Splashing Images plugin for Craft CMS 3.x
- *
- * Splashing Images index.twig
- *
- * @author    Studio Espresso
- * @copyright Copyright (c) 2017 Studio Espresso
- * @link      https://studioespresso.co
- * @package   SplashingImages
- * @since     1.0.0
- */
-#}
-
 {% extends "_layouts/cp" %}
-{% import "_includes/forms" as forms %}
 {% import "_includes/tabs" as tabs %}
 
 {% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
 
-{# Link for the ? icon at the bottom of the page #}
-{% set docsUrl = "https://github.com/studioespresso/splashing-images/blob/master/README.md" %}
-
 {# The title of this CP section #}
 {% set title = settings.pluginLabel ? settings.pluginLabel : "Splashing Images" %}
-
-{# The URL to this plugin's base CP section #}
-{% set pluginCpUrl = url('splashing-images') %}
-
-{# Content that should appear in the page header#}
-{% set extraPageHeaderHtml %}
-    <div class="buttons right">
-        <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('splashing-images') }}</a>
-    </div>
-{% endset %}
 
 {% set tabs = {
     curated: { url: url('splashing-images'), label: 'Curated'},
@@ -55,9 +27,7 @@
 
 {# The content of the CP Section#}
 {% block content %}
-    <div id="splashing-container">
-        {% include "splashing-images/_includes/_images" %}
-    </div>
+    {% include "splashing-images/_includes/_images" %}
     <script type="text/javascript">
         window.csrfTokenName = "{{ craft.app.config.general.csrfTokenName }}";
         window.csrfTokenValue = "{{ craft.app.request.csrfToken }}";

@@ -1,10 +1,12 @@
-{% for image in images %}
-    <div class="splashing-image-grid">
-        <div class="splashing-image" data-id="{{ image.id }}">
-            <img src="{{ image.small }}">
+<div id="splashing-container" class="splashing-container">
+    {% for image in images %}
+        <div class="splashing-image-grid">
+            <div class="splashing-image" data-id="{{ image.id }}">
+                <img src="{{ image.small }}">
+            </div>
+            <div class="splashing-attribute">
+                <a href="{{ image.attr.link }}">{{ image.attr.name }}</a>
+            </div>
         </div>
-        <div class="splashing-attribute">
-            <a href="{{ image.attr.link }}">{{ image.attr.name }}</a>
-        </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
