@@ -53,13 +53,15 @@ class DownloadController extends Controller
      */
     public function actionIndex()
     {
-        if(!Craft::$app->request->isAjax) {
+        if (!Craft::$app->request->isAjax) {
             return false;
         }
 
         $path = new Path();
         $dir = $path->getTempAssetUploadsPath() . '/unsplash/';
-        if(!is_dir($dir)){ mkdir($dir); }
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
 
         $id = Craft::$app->request->post('id');
         $unplash = new UnsplashService();
@@ -103,13 +105,13 @@ class DownloadController extends Controller
         $asset->filename = $tmpImage;
         $asset->newFolderId = $folderId;
         $asset->volumeId = $volume->id;
-        $asset->title = 'Photo by ' .  $photo->photographer()->name;
+        $asset->title = 'Photo by ' . $photo->photographer()->name;
         $asset->avoidFilenameConflicts = true;
         $asset->setScenario(Asset::SCENARIO_CREATE);
 
         $result = Craft::$app->elements->saveElement($asset);
 
-        if($result) {
+        if ($result) {
             return true;
         } else {
             return false;

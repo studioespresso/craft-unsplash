@@ -41,41 +41,43 @@ use craft\web\Controller;
 class ImagesController extends Controller
 {
 
-    public function actionIndex() {
-        $unsplashService = new UnsplashService();
-        $images = $unsplashService->getCurated();
-        $data = $this->prepData($images);
-        return $this->renderTemplate('splashing-images/_index', $data);
-
-    }
-
-    public function actionLatest() {
+    public function actionIndex()
+    {
         $unsplashService = new UnsplashService();
         $images = $unsplashService->getLatest();
         $data = $this->prepData($images);
+        return $this->renderTemplate('splashing-images/_index', $data);
+    }
 
+    public function actionCurated()
+    {
+        $unsplashService = new UnsplashService();
+        $images = $unsplashService->getCurated();
+        $data = $this->prepData($images);
         return $this->renderTemplate('splashing-images/_latest', $data);
     }
 
-    public function actionSearch() {
-        if(!Craft::$app->request->get('q')) {
+    public function actionSearch()
+    {
+        if (!Craft::$app->request->get('q')) {
             return false;
         }
         $query = Craft::$app->request->get('q');
         $page = Craft::$app->request->get('page');
         $unsplash = new UnsplashService();
         $data = $unsplash->search($query, $page);
-        
+
         $data['settings'] = SplashingImages::$plugin->getSettings();
 
         $this->view->setTemplateMode('cp');
         return $this->renderTemplate('splashing-images/_search', $data);
     }
 
-    private function prepData($images) {
+    private function prepData($images)
+    {
         $data['settings'] = SplashingImages::$plugin->getSettings();
         $data['images'] = $images;
-        if(Craft::$app->cache->get('splashing_last_search')) {
+        if (Craft::$app->cache->get('splashing_last_search')) {
             $data['lastSearch'] = Craft::$app->cache->get('splashing_last_search');
         }
         return $data;
