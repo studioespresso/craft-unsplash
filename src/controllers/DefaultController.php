@@ -55,6 +55,17 @@ class DefaultController extends Controller
         return $this->renderTemplate('splashing-images/_curated', ['images' => $images]);
     }
 
+
+    /**
+     * Redirect search form submit to correct results url
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionFind() {
+        $resultsPage = Craft::$app->request->getRequiredBodyParam('redirect');
+        $query = Craft::$app->request->getRequiredBodyParam('query');
+        $this->redirect($resultsPage . '/' . $query . '/1');
+    }
+
     /**
      * Handles searching & returning images from Unsplash
      * @param $query string

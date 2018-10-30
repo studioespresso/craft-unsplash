@@ -68,6 +68,7 @@ class SplashingImages extends Plugin
             function (RegisterUrlRulesEvent $event) {
                 $event->rules['splashing-images'] = 'splashing-images/default/index';
                 $event->rules['splashing-images/curated'] = 'splashing-images/default/curated';
+                $event->rules['splashing-images/find'] = 'splashing-images/default/find';
                 $event->rules['splashing-images/search/<query>/<page:\d+>'] = 'splashing-images/default/search';
             }
         );

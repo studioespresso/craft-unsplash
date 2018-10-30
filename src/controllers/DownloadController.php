@@ -12,7 +12,6 @@ namespace studioespresso\splashingimages\controllers;
 
 use craft\elements\Asset;
 use craft\errors\InvalidSubpathException;
-use craft\services\Path;
 use studioespresso\splashingimages\services\UnsplashService;
 use studioespresso\splashingimages\SplashingImages;
 
@@ -57,7 +56,7 @@ class DownloadController extends Controller
             return false;
         }
 
-        $path = new Path();
+        $path = Craft::$app->getPath();
         $dir = $path->getTempAssetUploadsPath() . '/unsplash/';
         if (!is_dir($dir)) {
             mkdir($dir);
