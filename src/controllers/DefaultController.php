@@ -78,8 +78,8 @@ class DefaultController extends Controller
         if (!$query) {
             return false;
         }
-        $images = $this->unsplash->search($query, $page);
-        return $this->renderTemplate('splashing-images/_search', $images);
+        $data = $this->unsplash->search($query, $page);
+        return $this->renderTemplate('splashing-images/_search', $data);
     }
 
 }
