@@ -1,15 +1,15 @@
 $(document).ready(function () {
-    var $grid = $('.splashing-container').imagesLoaded( function() {
+    var $grid = $('.splashing-container').imagesLoaded().progress( function() {
         // init Masonry after all images have loaded
         $grid.masonry({
             itemSelector: '.splashing-image-grid',
-            columnWidth: '.splashing-image-grid',
+            columnWidth: '.splashing-image-sizer',
             percentPosition: true,
             gutter: 20,
             stagger: 2
         });
     });
-
+    
     $('.splashing-image').click(function (e) {
         var $image = $(this);
         $image.parent().addClass('saving');
