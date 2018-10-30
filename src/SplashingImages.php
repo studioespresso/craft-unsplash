@@ -66,9 +66,9 @@ class SplashingImages extends Plugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
-                $event->rules['splashing-images'] = 'splashing-images/images/index';
-                $event->rules['splashing-images/curated'] = 'splashing-images/images/curated';
-                $event->rules['splashing-images/search'] = 'splashing-images/images/search';
+                $event->rules['splashing-images'] = 'splashing-images/default/index';
+                $event->rules['splashing-images/curated'] = 'splashing-images/default/curated';
+                $event->rules['splashing-images/search/<query>/<page:\d+>'] = 'splashing-images/default/search';
             }
         );
 

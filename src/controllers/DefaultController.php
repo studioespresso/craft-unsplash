@@ -38,7 +38,7 @@ use craft\web\Controller;
  * @package   SplashingImages
  * @since     1.0.0
  */
-class ImagesController extends Controller
+class DefaultController extends Controller
 {
 
     public function actionIndex()
@@ -57,7 +57,7 @@ class ImagesController extends Controller
         return $this->renderTemplate('splashing-images/_curated', $data);
     }
 
-    public function actionSearch()
+    public function actionSearch($query, $page)
     {
         if (!Craft::$app->request->get('q')) {
             return false;
@@ -67,15 +67,12 @@ class ImagesController extends Controller
         $unsplash = new UnsplashService();
         $data = $unsplash->search($query, $page);
 
-        $data['settings'] = SplashingImages::$plugin->getSettings();
-
         $this->view->setTemplateMode('cp');
         return $this->renderTemplate('splashing-images/_search', $data);
     }
 
     private function prepData($images)
     {
-        $data['settings'] = SplashingImages::$plugin->getSettings();
         $data['images'] = $images;
         if (Craft::$app->cache->get('splashing_last_search')) {
             $data['lastSearch'] = Craft::$app->cache->get('splashing_last_search');
