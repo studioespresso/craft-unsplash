@@ -47,7 +47,7 @@ class UnsplashService extends Component
 
     }
 
-    public function getCurated($count = 20)
+    public function getCurated($count = 30)
     {
         if(Craft::$app->cache->get('splashing_curated')) {
             return Craft::$app->cache->get('splashing_curated');
@@ -58,7 +58,7 @@ class UnsplashService extends Component
         return $images;
     }
 
-    public function getLatest($count = 20)
+    public function getLatest($count = 30)
     {
         if(Craft::$app->cache->get('splashing_latest')) {
             return Craft::$app->cache->get('splashing_latest');
@@ -69,7 +69,7 @@ class UnsplashService extends Component
         return $images;
     }
 
-    public function search($query, $page = 1, $count = 20) {
+    public function search($query, $page = 1, $count = 30) {
         if(Craft::$app->cache->get('splashing_last_search') != $query) {
             Craft::$app->cache->delete('splashing_last_search');
             Craft::$app->cache->add('splashing_last_search', $query, 60*60*2);
@@ -77,7 +77,7 @@ class UnsplashService extends Component
         if(Craft::$app->cache->get('splashing_'.$query. '_'.$page)) {
             return Craft::$app->cache->get('splashing_'.$query. '_'.$page);
         }
-        $images = Search::photos($query, $page, 20);
+        $images = Search::photos($query, $page, $count);
         $results = $this->parseResults($images->getArrayObject());
         $data['images'] = $results;
         $data['pagination']['total_pages'] = $images->getTotalPages();
