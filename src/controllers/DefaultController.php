@@ -10,74 +10,65 @@
 
 namespace studioespresso\splashingimages\controllers;
 
-use craft\elements\Asset;
-use craft\services\Path;
 use studioespresso\splashingimages\services\UnsplashService;
-use studioespresso\splashingimages\SplashingImages;
 
 use Craft;
 use craft\web\Controller;
 
 /**
- * Default Controller
- *
- * Generally speaking, controllers are the middlemen between the front end of
- * the CP/website and your plugin’s services. They contain action methods which
- * handle individual tasks.
- *
- * A common pattern used throughout Craft involves a controller action gathering
- * post data, saving it on a model, passing the model off to a service, and then
- * responding to the request appropriately depending on the service method’s response.
- *
- * Action methods begin with the prefix “action”, followed by a description of what
- * the method does (for example, actionSaveIngredient()).
- *
- * https://craftcms.com/docs/plugins/controllers
- *
  * @author    Studio Espresso
  * @package   SplashingImages
  * @since     1.0.0
  */
 class DefaultController extends Controller
 {
+    /**
+     * @var
+     */
+    public $unsplash;
 
+    /**
+     * Spin up the Unsplash service
+     */
+    public function init()
+    {
+        $this->unsplash = new UnsplashService();
+    }
+
+    /**
+     * Render the plugins main page and show the latest Unsplash images
+     * @return \yii\web\Response
+     */
     public function actionIndex()
     {
-        $unsplashService = new UnsplashService();
-        $images = $unsplashService->getLatest();
-        $data = $this->prepData($images);
-        return $this->renderTemplate('splashing-images/_index', $data);
+        $images = $this->unsplash->getLatest();
+        return $this->renderTemplate('splashing-images/_index', ['images' => $images]);
     }
 
+    /**
+     * Renders an overview of curated images from Unsplash
+     * @return \yii\web\Response
+     */
     public function actionCurated()
     {
-        $unsplashService = new UnsplashService();
-        $images = $unsplashService->getCurated();
-        $data = $this->prepData($images);
-        return $this->renderTemplate('splashing-images/_curated', $data);
+        $images = $this->unsplash->getCurated();
+        return $this->renderTemplate('splashing-images/_curated', ['images' => $images]);
     }
 
+    /**
+     * Handles searching & returning images from Unsplash
+     * @param $query string
+     * @param $page int
+     * @return bool|\yii\web\Response
+     * @throws \yii\base\Exception
+     */
     public function actionSearch($query, $page)
     {
-        if (!Craft::$app->request->get('q')) {
+        if (!$query) {
             return false;
         }
-        $query = Craft::$app->request->get('q');
-        $page = Craft::$app->request->get('page');
-        $unsplash = new UnsplashService();
-        $data = $unsplash->search($query, $page);
-
-        $this->view->setTemplateMode('cp');
-        return $this->renderTemplate('splashing-images/_search', $data);
-    }
-
-    private function prepData($images)
-    {
-        $data['images'] = $images;
-        if (Craft::$app->cache->get('splashing_last_search')) {
-            $data['lastSearch'] = Craft::$app->cache->get('splashing_last_search');
-        }
-        return $data;
+        $images = $this->unsplash->search($query, $page);
+        return $this->renderTemplate('splashing-images/_search', $images);
     }
 
 }
