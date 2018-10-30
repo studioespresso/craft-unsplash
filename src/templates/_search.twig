@@ -6,7 +6,8 @@
 {% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
 
 {# The title of this CP section #}
-{% set title = settings.pluginLabel ? settings.pluginLabel : "Splashing Images" %}
+{% set plugin = craft.app.plugins.getPlugin('splashing-images') %}
+{% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
 
 {% set tabs = {
     curated: { url: url('splashing-images'), label: 'Latest'},
@@ -21,6 +22,7 @@
 
 {# The content of the CP Section#}
 {% block content %}
+
     {% include "splashing-images/_includes/_pagination" %}
     <hr>
     {% include "splashing-images/_includes/_images" %}
