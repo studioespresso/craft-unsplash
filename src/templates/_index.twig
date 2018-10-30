@@ -8,8 +8,8 @@
 {% set title = settings.pluginLabel ? settings.pluginLabel : "Splashing Images" %}
 
 {% set tabs = {
-    curated: { url: url('splashing-images'), label: 'Curated'},
-    latest: { url: url('splashing-images/latest'), label: 'Latest'},
+    curated: { url: url('splashing-images'), label: 'Latest'},
+    latest: { url: url('splashing-images/curated'), label: 'Curated'},
 } %}
 
 {% if lastSearch is defined %}

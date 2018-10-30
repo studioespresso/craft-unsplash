@@ -54,7 +54,7 @@ class ImagesController extends Controller
         $unsplashService = new UnsplashService();
         $images = $unsplashService->getCurated();
         $data = $this->prepData($images);
-        return $this->renderTemplate('splashing-images/_latest', $data);
+        return $this->renderTemplate('splashing-images/_curated', $data);
     }
 
     public function actionSearch()
