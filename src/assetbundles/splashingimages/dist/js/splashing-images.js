@@ -33,6 +33,10 @@ $(document).ready(function () {
         debug: true,
     });
 
+    $grid.on( 'append.infiniteScroll', function( event, response, path, items ) {
+        $('.splashing-attribute').show();
+    });
+
     $('#content').on('click', '.splashing-image', function (e) {
         var $image = $(this);
 
