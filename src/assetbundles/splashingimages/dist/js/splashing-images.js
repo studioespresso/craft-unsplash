@@ -4,10 +4,9 @@ $(document).ready(function () {
         columnWidth: '.splashing-image-sizer',
         gutter: 20,
         percentPosition: true,
-        stagger: 20,
         visibleStyle: {transform: 'translateY(0)', opacity: 1},
         hiddenStyle: {transform: 'translateY(100px)', opacity: 0},
-        status: '.page-load-status'
+        transitionDuration: '0.3s'
     });
 
     $grid.imagesLoaded(function () {
