@@ -38,7 +38,7 @@
     max-width: 270px;
     position: relative;
     overflow: hidden;
-    transition: opacity .5s ease;
+    transition: opacity .8s ease;
 }
 
 .splashing-image-grid:hover {

@@ -12,18 +12,18 @@ $(document).ready(function () {
     
     $('.splashing-image').click(function (e) {
         var $image = $(this);
-        $image.parent().addClass('saving');
 
-        payload = {
-            id: $image.data('id')
-        }
+        payload = {}
+        payload['id'] = $image.data('id');
         payload[window.csrfTokenName] = window.csrfTokenValue;
+
         $.ajax({
             type: 'POST',
             url: Craft.getActionUrl('splashing-images/download'),
             dataType: 'JSON',
             data: payload,
             beforeSend: function () {
+                $image.parent().addClass('saving');
             },
             success: function (response) {
                 $image.parent().removeClass('saving');
