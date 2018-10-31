@@ -35,7 +35,7 @@
 .splashing-image-sizer,
 .splashing-image-grid {
     margin-bottom: 20px;
-    max-width: 270px;
+    max-width: 23.5%;
     position: relative;
     overflow: hidden;
     transition: opacity .8s ease;
