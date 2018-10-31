@@ -1,16 +1,38 @@
 $(document).ready(function () {
-    var $grid = $('.splashing-container').imagesLoaded().progress( function() {
-        // init Masonry after all images have loaded
-        $grid.masonry({
-            itemSelector: '.splashing-image-grid',
-            columnWidth: '.splashing-image-sizer',
-            percentPosition: true,
-            gutter: 20,
-            stagger: 2
-        });
+    // init Masonry
+    var $grid = $('.splashing-container').masonry({
+        itemSelector: 'none', // select none at first
+        columnWidth: '.splashing-image-sizer',
+        gutter: 20,
+        percentPosition: true,
+        stagger: 20,
+        // nicer reveal transition
+        visibleStyle: { transform: 'translateY(0)', opacity: 1 },
+        hiddenStyle: { transform: 'translateY(100px)', opacity: 0 },
+    });
+
+    $grid.imagesLoaded( function() {
+        $grid.removeClass('are-images-unloaded');
+        $grid.masonry( 'option', { itemSelector: '.splashing-image-grid' });
+        var $items = $grid.find('.splashing-image-grid');
+        $grid.masonry( 'appended', $items );
         $('.splashing-attribute').show();
     });
-    
+
+
+    function getNextUrl() {
+    return $('.js-pagination__next').attr('href');
+    }
+
+    var msnry = $grid.data('masonry');
+    console.log(msnry);
+    $grid.infiniteScroll({
+        path: getNextUrl,
+        append: '.splashing-image-grid',
+        outlayer: msnry,
+        status: '.page-load-status',
+    });
+
     $('.splashing-image').click(function (e) {
         var $image = $(this);
 

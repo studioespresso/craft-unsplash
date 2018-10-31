@@ -58,6 +58,10 @@
     pointer-events: none
 }
 
+.splashing-container.are-images-unloaded {
+    opacity: 0;
+}
+
 .splashing-image-grid.saving:before {
     opacity: 1;
     z-index: 2;

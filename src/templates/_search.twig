@@ -23,7 +23,7 @@
 {# The content of the CP Section#}
 {% block content %}
     {% include "splashing-images/_includes/_images" %}
-    <a href="{{ url(next_page) }}">{{ 'Next'|t }}</a>
+    <a href="{{ url(next_page) }}" class="js-pagination__next">{{ 'Next'|t }}</a>
     <script type="text/javascript">
         window.csrfTokenName = "{{ craft.app.config.general.csrfTokenName }}";
         window.csrfTokenValue = "{{ craft.app.request.csrfToken }}";
