@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // init Masonry
     var $grid = $('.splashing-container').masonry({
         itemSelector: 'none', // select none at first
         columnWidth: '.splashing-image-sizer',
@@ -19,28 +18,19 @@ $(document).ready(function () {
         $('.splashing-attribute').show();
     });
 
-
-    function getNextUrl() {
-    return $('.js-pagination__next').attr('href');
-    }
-
     var msnry = $grid.data('masonry');
 
     $grid.infiniteScroll({
-        scrollThreshold: 800,
+        scrollThreshold: 200,
         path: '.js-pagination__next',
+        elementScroll: '#content',
         append: '.splashing-image-grid',
         outlayer: msnry,
         status: '.page-load-status',
         hideNav: '.pagination',
-        debug: true,
         historyTitle: true,
         history: 'push',
     });
-
-    // $grid.on( 'scrollThreshold.infiniteScroll', function( event ) {
-    //     console.log('Scroll at bottom');
-    // });
 
     $('.splashing-image').click(function (e) {
         var $image = $(this);
