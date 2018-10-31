@@ -8,6 +8,7 @@ $(document).ready(function () {
             gutter: 20,
             stagger: 2
         });
+        $('.splashing-attribute').show();
     });
     
     $('.splashing-image').click(function (e) {
