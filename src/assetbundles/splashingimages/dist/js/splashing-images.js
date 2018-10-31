@@ -6,9 +6,9 @@ $(document).ready(function () {
         gutter: 20,
         percentPosition: true,
         stagger: 20,
-        // nicer reveal transition
         visibleStyle: { transform: 'translateY(0)', opacity: 1 },
         hiddenStyle: { transform: 'translateY(100px)', opacity: 0 },
+        status: '.page-load-status'
     });
 
     $grid.imagesLoaded( function() {
@@ -25,13 +25,22 @@ $(document).ready(function () {
     }
 
     var msnry = $grid.data('masonry');
-    console.log(msnry);
+
     $grid.infiniteScroll({
-        path: getNextUrl,
+        scrollThreshold: 800,
+        path: '.js-pagination__next',
         append: '.splashing-image-grid',
         outlayer: msnry,
         status: '.page-load-status',
+        hideNav: '.pagination',
+        debug: true,
+        historyTitle: true,
+        history: 'push',
     });
+
+    // $grid.on( 'scrollThreshold.infiniteScroll', function( event ) {
+    //     console.log('Scroll at bottom');
+    // });
 
     $('.splashing-image').click(function (e) {
         var $image = $(this);
