@@ -69,7 +69,7 @@ class UnsplashService extends Component
         return $images;
     }
 
-    public function search($query, $page = 1, $count = 30) {
+    public function search($query, $page = 1, $count = 10) {
         if(Craft::$app->cache->get('splashing_last_search') != $query) {
             Craft::$app->cache->delete('splashing_last_search');
             Craft::$app->cache->add('splashing_last_search', $query, 60*60*2);

@@ -5,16 +5,16 @@ $(document).ready(function () {
         gutter: 20,
         percentPosition: true,
         stagger: 20,
-        visibleStyle: { transform: 'translateY(0)', opacity: 1 },
-        hiddenStyle: { transform: 'translateY(100px)', opacity: 0 },
+        visibleStyle: {transform: 'translateY(0)', opacity: 1},
+        hiddenStyle: {transform: 'translateY(100px)', opacity: 0},
         status: '.page-load-status'
     });
 
-    $grid.imagesLoaded( function() {
+    $grid.imagesLoaded(function () {
         $grid.removeClass('are-images-unloaded');
-        $grid.masonry( 'option', { itemSelector: '.splashing-image-grid' });
+        $grid.masonry('option', {itemSelector: '.splashing-image-grid'});
         var $items = $grid.find('.splashing-image-grid');
-        $grid.masonry( 'appended', $items );
+        $grid.masonry('appended', $items);
         $('.splashing-attribute').show();
     });
 
@@ -30,9 +30,10 @@ $(document).ready(function () {
         hideNav: '.pagination',
         historyTitle: true,
         history: 'push',
+        debug: true,
     });
 
-    $('.splashing-image').click(function (e) {
+    $('#content').on('click', '.splashing-image', function (e) {
         var $image = $(this);
 
         payload = {}
@@ -56,6 +57,5 @@ $(document).ready(function () {
                 Craft.cp.displayError(Craft.t('splashing-images', 'Oops, something went wrong...'));
             }
         });
-
     });
 });
