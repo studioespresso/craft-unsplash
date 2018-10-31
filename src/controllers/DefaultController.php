@@ -37,22 +37,24 @@ class DefaultController extends Controller
 
     /**
      * Render the plugins main page and show the latest Unsplash images
+     * @param $page int
      * @return \yii\web\Response
      */
-    public function actionIndex()
+    public function actionIndex($page = 1)
     {
-        $images = $this->unsplash->getLatest();
-        return $this->renderTemplate('splashing-images/_index', ['images' => $images]);
+        $data = $this->unsplash->getLatest($page);
+        return $this->renderTemplate('splashing-images/_index', $data);
     }
 
     /**
      * Renders an overview of curated images from Unsplash
+     * @param $page int
      * @return \yii\web\Response
      */
-    public function actionCurated()
+    public function actionCurated($page = 1)
     {
-        $images = $this->unsplash->getCurated();
-        return $this->renderTemplate('splashing-images/_curated', ['images' => $images]);
+        $data = $this->unsplash->getCurated($page);
+        return $this->renderTemplate('splashing-images/_curated', $data);
     }
 
 
