@@ -47,29 +47,33 @@ class UnsplashService extends Component
 
     }
 
-    public function getCurated($count = 20)
-    {
-        if(Craft::$app->cache->get('splashing_curated')) {
-            return Craft::$app->cache->get('splashing_curated');
-        }
-        $images = Photo::curated(1, $count);
-        $images = $this->parseResults($images);
-        Craft::$app->cache->add('splashing_curated', $images, 60*60*24);
-        return $images;
-    }
-
-    public function getLatest($count = 20)
+    public function getLatest($page, $count = 30)
     {
         if(Craft::$app->cache->get('splashing_latest')) {
             return Craft::$app->cache->get('splashing_latest');
         }
-        $images = Photo::all(1, $count);
-        $images = $this->parseResults($images);
-        Craft::$app->cache->add('splashing_latest', $images, 60*60*12);
-        return $images;
+        $images = Photo::all($page, $count);
+
+        $data['images'] = $this->parseResults($images);
+        $data['next_page'] = $this->getNextUrl();
+        Craft::$app->cache->add('splashing_latest_'.$page, $data, 60*60*12);
+        return $data;
     }
 
-    public function search($query, $page = 1, $count = 20) {
+    public function getCurated($page, $count = 30)
+    {
+        if(Craft::$app->cache->get('splashing_curated')) {
+            return Craft::$app->cache->get('splashing_curated');
+        }
+        $images = Photo::curated($page, $count);
+
+        $data['images'] = $this->parseResults($images);
+        $data['next_page'] = $this->getNextUrl();
+        Craft::$app->cache->add('splashing_curated_'.$page, $data, 60*60*24);
+        return $data;
+    }
+
+    public function search($query, $page = 1, $count = 30) {
         if(Craft::$app->cache->get('splashing_last_search') != $query) {
             Craft::$app->cache->delete('splashing_last_search');
             Craft::$app->cache->add('splashing_last_search', $query, 60*60*2);
@@ -77,14 +81,24 @@ class UnsplashService extends Component
         if(Craft::$app->cache->get('splashing_'.$query. '_'.$page)) {
             return Craft::$app->cache->get('splashing_'.$query. '_'.$page);
         }
-        $images = Search::photos($query, $page, 20);
+
+        $images = Search::photos($query, $page, $count);
+
         $results = $this->parseResults($images->getArrayObject());
         $data['images'] = $results;
-        $data['pagination']['total_pages'] = $images->getTotalPages();
-        $data['pagination']['pages'] = range(1, $images->getTotalPages());
-        $data['pagination']['total_results'] = $images->getTotal();
+        $data['next_page'] = $this->getNextUrl();
         Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
         return $data;
+    }
+
+    private function getNextUrl() {
+        $segments  = Craft::$app->request->getSegments();
+        if(count($segments) > 2) {
+            $segments[count($segments)-1] = $segments[count($segments)-1] +1;
+        } else {
+            $segments[count($segments)] = 2;
+        }
+        return implode('/', $segments);
     }
 
     private function parseResults($images)

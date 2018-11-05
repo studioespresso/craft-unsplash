@@ -1,9 +1,17 @@
 # Splashing Images changelog
 
+## 1.1.0 - 2018.11.05
+### Added
+* Latest, Curated & Search results now all have infinite scrolling of more results
+
+### Fixed
+* Cleaned up all the javascript, css & templates
+* Better "image loading" animation
+* Image loading & refreshing is much smoother now 
+
 ## 1.0.4 - 2018.09.17
 ### Fixed
 * Fixed an issue where the plugin would crash on case-sensitive systems [#7](https://github.com/studioespresso/craft3-unsplash/pull/7)
-
 
 ## 1.0.3 - 2018.04.17
 ### Changed

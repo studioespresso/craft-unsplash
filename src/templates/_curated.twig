@@ -1,5 +1,6 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 {% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
 {% import "_includes/tabs" as tabs %}
 
 {% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
@@ -7,6 +8,10 @@
 {# The title of this CP section #}
 {% set plugin = craft.app.plugins.getPlugin('splashing-images') %}
 {% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
+
+{% block actionButton %}
+    {% include "splashing-images/_includes/_search" %}
+{% endblock %}
 
 {% set tabs = {
     curated: { url: url('splashing-images'), label: 'Latest'},
@@ -20,11 +25,7 @@
     {% set tabs = tabs|merge(searchTab) %}
 {% endif %}
 
-{% set selectedTab = 'curated' %}
-
-{% block actionButton %}
-    {% include "splashing-images/_includes/_search" %}
-{% endblock %}
+{% set selectedTab = 'latest' %}
 
 {# The content of the CP Section#}
 {% block content %}

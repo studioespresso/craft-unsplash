@@ -1,8 +1,10 @@
-<form action="{{ url('splashing-images/search') }}" method="get">
+<form action="{{ url('splashing-images/find') }}" method="post">
+    {{ csrfInput() }}
     <div class="flex-grow texticon search icon clearable">
-        <input type="text" class="text" name="q" placeholder="Search"
+        <input type="text" class="text" name="query" placeholder="Search"
                {% if craft.app.request.get('q') is defined %}value="{{ craft.app.request.get('q') }}"{% endif %}>
         <input type="hidden" name="page" value="1">
-        <input type="submit" class="btn submit search-splashing" value="search">
+        <input type="hidden" name="redirect" value="{{ url('splashing-images/search') }}">
+        <input type="submit" class="btn submit search-splashing" value="Search">
     </div>
 </form>
