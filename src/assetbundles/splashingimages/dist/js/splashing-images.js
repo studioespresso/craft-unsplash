@@ -15,6 +15,7 @@ $(document).ready(function () {
         var $items = $grid.find('.splashing-image-grid');
         $grid.masonry('appended', $items);
         $('.splashing-attribute').show();
+        $('.page-load-status').show();
     });
 
     var msnry = $grid.data('masonry');
