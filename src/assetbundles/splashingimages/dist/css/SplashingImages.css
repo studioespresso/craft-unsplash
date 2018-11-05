@@ -14,7 +14,9 @@
     bottom: 4.5px;
     right: 0px;
     color: white;
-    padding: 5px 8px 5px 8px;
+    font-size: 0.9em;
+    padding: 3px 6px 3px 6px;
+    color: #d7d7d7;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
