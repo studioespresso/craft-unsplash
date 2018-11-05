@@ -2,7 +2,7 @@ $(document).ready(function () {
     var $grid = $('.splashing-container').masonry({
         itemSelector: 'none', // select none at first
         columnWidth: '.splashing-image-sizer',
-        gutter: 20,
+        gutter: 18,
         percentPosition: true,
         visibleStyle: {transform: 'translateY(0)', opacity: 1},
         hiddenStyle: {transform: 'translateY(100px)', opacity: 0},
