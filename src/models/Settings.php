@@ -45,6 +45,8 @@ class Settings extends Model
 
     public $pluginLabel;
 
+    public $accessToken;
+
     // Public Methods
     // =========================================================================
 

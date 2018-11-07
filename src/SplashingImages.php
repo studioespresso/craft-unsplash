@@ -13,6 +13,7 @@ namespace studioespresso\splashingimages;
 use craft\helpers\UrlHelper;
 use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
 use studioespresso\splashingimages\services\UnsplashService;
+use studioespresso\splashingimages\services\UserService;
 use studioespresso\splashingimages\variables\SplashingImagesVariable;
 use studioespresso\splashingimages\models\Settings;
 
@@ -72,6 +73,8 @@ class SplashingImages extends Plugin
                 $event->rules['splashing-images/curated/<page:\d+>'] = 'splashing-images/default/curated';
                 $event->rules['splashing-images/find'] = 'splashing-images/default/find';
                 $event->rules['splashing-images/search/<query>/<page:\d+>'] = 'splashing-images/default/search';
+                $event->rules['splashing-images/oauth'] = 'splashing-images/default/oauth';
+                $event->rules['splashing-images/oauth/disconnect'] = 'splashing-images/default/disconnect';
             }
         );
 
@@ -111,16 +114,16 @@ class SplashingImages extends Plugin
      */
     public function getCpNavItem()
     {
-        $ret = [
+        $navItem = [
             'label' => $this->getSettings()->pluginLabel ? $this->getSettings()->pluginLabel : 'Unsplash Images',
             'url' => $this->id,
         ];
 
         if (($iconPath = $this->cpNavIconPath()) !== null) {
-            $ret['icon'] = $iconPath;
+            $navItem['icon'] = $iconPath;
         }
 
-        return $ret;
+        return $navItem;
     }
 
     /**
@@ -136,11 +139,17 @@ class SplashingImages extends Plugin
         foreach ($volumes->getAllVolumes() as $source) {
             $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
+        $user = false;
+        if($this->getSettings()->accessToken) {
+            $userService = new UserService();
+            $user = $userService->getUser();
+        }
         return Craft::$app->view->renderTemplate(
             'splashing-images/settings',
             [
                 'settings' => $this->getSettings(),
-                'volumes' => $destinationOptions
+                'volumes' => $destinationOptions,
+                'user' => $user,
             ]
         );
     }

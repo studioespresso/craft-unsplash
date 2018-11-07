@@ -14,6 +14,7 @@ use studioespresso\splashingimages\services\UnsplashService;
 
 use Craft;
 use craft\web\Controller;
+use studioespresso\splashingimages\SplashingImages;
 
 /**
  * @author    Studio Espresso
@@ -82,6 +83,23 @@ class DefaultController extends Controller
         }
         $data = $this->unsplash->search($query, $page);
         return $this->renderTemplate('splashing-images/_search', $data);
+    }
+
+    public function actionOauth() {
+        $session = Craft::$app->request->getRequiredQueryParam('session');
+        $settings = SplashingImages::$plugin->getSettings();
+        $settings->accessToken = base64_decode($session);
+        Craft::$app->plugins->savePluginSettings(SplashingImages::$plugin, $settings->toArray());
+        Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
+        $this->redirect('settings/plugins/splashing-images');
+    }
+
+    public function actionDisconnect() {
+        $settings = SplashingImages::$plugin->getSettings();
+        $settings->accessToken = null;
+        Craft::$app->plugins->savePluginSettings(SplashingImages::$plugin, $settings->toArray());
+        Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
+        $this->redirect('settings/plugins/splashing-images');
     }
 
 }

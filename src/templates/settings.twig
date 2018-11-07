@@ -57,3 +57,19 @@
 
     </div>
 </div>
+<hr>
+<div class="field">
+    <div class="heading">
+        <h2>{{ 'Unsplash account'|title|t }}</h2>
+        <div class="instructions">
+            <p>{{ 'Sign in with your Unsplash account to get access to your own liked photos and collections in the control panel of your site.'|t }}</p>
+        </div>
+    </div>
+    {% if not user %}
+        {% set oauthUrl = 'https://www.studioespresso.co/craft-unsplash?redirect=' ~ url('splashing-images/oauth') %}
+        <a href="{{ oauthUrl }}" class="btn submit" target="_blank">{{ 'Sign in with Unsplash'|t }}</a>
+    {% else %}
+        <div>{{ "Connected to Unsplash as <a href='{profile}' target='_blank'>{name}</a>"|t({ profile: user.links.html, name: user.name})|raw }}</div>
+        <a href="{{ url('splashing-images/oauth/disconnect') }}" class="warning">{{ 'Disconnect this account'|t }}</a>
+    {% endif %}
+</div>
