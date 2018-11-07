@@ -9,9 +9,17 @@
 {% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
 
 {% set tabs = {
-    curated: { url: url('splashing-images'), label: 'Latest'},
-    latest: { url: url('splashing-images/curated'), label: 'Curated'},
+    curated: { url: url('splashing-images'), label: '⏱ Latest'},
+    latest: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
 } %}
+
+{% if user %}
+    {% set tabs = tabs|merge({
+        likes: { url: url('splashing-images/likes'), label: '❤️ Likes' },
+        collections: { url: url('splashing-images/collections'), label: '📖 Collections' }
+    }) %}
+{% endif %}
+
 
 {% if lastSearch is defined %}
     {% set searchTab = {
