@@ -30,7 +30,7 @@ $(document).ready(function () {
         hideNav: '.pagination',
         historyTitle: true,
         history: 'push',
-        debug: true,
+        debug: false,
     });
 
     $grid.on( 'append.infiniteScroll', function( event, response, path, items ) {
