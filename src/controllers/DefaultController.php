@@ -102,17 +102,13 @@ class DefaultController extends Controller
 
     public function actionOauth() {
         $session = Craft::$app->request->getRequiredQueryParam('session');
-        $settings = SplashingImages::$plugin->getSettings();
-        $settings->accessToken = base64_decode($session);
-        Craft::$app->plugins->savePluginSettings(SplashingImages::$plugin, $settings->toArray());
+        // Add token to currentuser record
         Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
         $this->redirect('settings/plugins/splashing-images');
     }
 
     public function actionDisconnect() {
-        $settings = SplashingImages::$plugin->getSettings();
-        $settings->accessToken = null;
-        Craft::$app->plugins->savePluginSettings(SplashingImages::$plugin, $settings->toArray());
+        // Remove current user's token from the record
         Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
         $this->redirect('settings/plugins/splashing-images');
     }
