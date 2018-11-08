@@ -53,4 +53,41 @@ class UserService extends Component
         return User::current();
     }
 
+    public function getLikes($page, $count = 30) {
+        if(Craft::$app->cache->get('splashing_likes_'.$page)) {
+            return Craft::$app->cache->get('splashing_likes_'.$page);
+        }
+        $images = User::current()->likes($page, $count);
+
+        $data['images'] = $this->parseResults($images);
+        $data['next_page'] = $this->getNextUrl();
+        $data['user'] = true;
+        Craft::$app->cache->add('splashing_likes_'.$page, $data, 60*60*24);
+        return $data;
+    }
+
+    private function getNextUrl() {
+        $segments  = Craft::$app->request->getSegments();
+        if(count($segments) > 2) {
+            $segments[count($segments)-1] = $segments[count($segments)-1] +1;
+        } else {
+            $segments[count($segments)] = 2;
+        }
+        return implode('/', $segments);
+    }
+
+    private function parseResults($images)
+    {
+        $data = [];
+        foreach($images as $image) {
+            $data[$image->id]['id'] = $image->id;
+            $data[$image->id]['thumb'] = $image->urls['thumb'];
+            $data[$image->id]['small'] = $image->urls['small'];
+            $data[$image->id]['full'] = $image->urls['full'];
+            $data[$image->id]['attr']['name'] = $image->user['name'];
+            $data[$image->id]['attr']['link'] = $image->user['links']['html'];
+        }
+        return $data;
+    }
+
 }

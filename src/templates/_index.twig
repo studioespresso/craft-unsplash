@@ -9,8 +9,8 @@
 {% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
 
 {% set tabs = {
-    curated: { url: url('splashing-images'), label: '⏱ Latest'},
-    latest: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
+    latest: { url: url('splashing-images'), label: '⏱ Latest'},
+    curated: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
 } %}
 
 {% if user %}
@@ -28,7 +28,7 @@
     {% set tabs = tabs|merge(searchTab) %}
 {% endif %}
 
-{% set selectedTab = 'curated' %}
+{% set selectedTab = 'latest' %}
 
 {% block actionButton %}
     {% include "splashing-images/_includes/_search" %}

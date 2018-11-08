@@ -14,6 +14,7 @@ use studioespresso\splashingimages\services\UnsplashService;
 
 use Craft;
 use craft\web\Controller;
+use studioespresso\splashingimages\services\UserService;
 use studioespresso\splashingimages\SplashingImages;
 
 /**
@@ -26,7 +27,12 @@ class DefaultController extends Controller
     /**
      * @var
      */
-    public $unsplash;
+    private $unsplash;
+
+    /**
+     * @var
+     */
+    private $userService;
 
     /**
      * Spin up the Unsplash service
@@ -34,6 +40,9 @@ class DefaultController extends Controller
     public function init()
     {
         $this->unsplash = new UnsplashService();
+        if(SplashingImages::$plugin->getSettings()->accessToken) {
+            $this->userService = new UserService();
+        }
     }
 
     /**
@@ -83,6 +92,12 @@ class DefaultController extends Controller
         }
         $data = $this->unsplash->search($query, $page);
         return $this->renderTemplate('splashing-images/_search', $data);
+    }
+
+    public function actionLikes($page = 1) {
+        $data = $this->userService->getLikes($page);
+        return $this->renderTemplate('splashing-images/_likes', $data);
+
     }
 
     public function actionOauth() {

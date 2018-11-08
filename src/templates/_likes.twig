@@ -1,6 +1,5 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 {% extends "_layouts/cp" %}
-{% import "_includes/forms" as forms %}
 {% import "_includes/tabs" as tabs %}
 
 {% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
@@ -9,14 +8,18 @@
 {% set plugin = craft.app.plugins.getPlugin('splashing-images') %}
 {% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
 
-{% block actionButton %}
-    {% include "splashing-images/_includes/_search" %}
-{% endblock %}
-
 {% set tabs = {
-    latest: { url: url('splashing-images'), label: '⏱ Latest'},
-    curated: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
+    curated: { url: url('splashing-images'), label: '⏱ Latest'},
+    latest: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
 } %}
+
+{% if user %}
+    {% set tabs = tabs|merge({
+        likes: { url: url('splashing-images/likes'), label: '❤️ Likes' },
+        collections: { url: url('splashing-images/collections'), label: '📖 Collections' }
+    }) %}
+{% endif %}
+
 
 {% if lastSearch is defined %}
     {% set searchTab = {
@@ -25,7 +28,11 @@
     {% set tabs = tabs|merge(searchTab) %}
 {% endif %}
 
-{% set selectedTab = 'curated' %}
+{% set selectedTab = 'likes' %}
+
+{% block actionButton %}
+    {% include "splashing-images/_includes/_search" %}
+{% endblock %}
 
 {# The content of the CP Section#}
 {% block content %}
