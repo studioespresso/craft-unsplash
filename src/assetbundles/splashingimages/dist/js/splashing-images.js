@@ -5,8 +5,8 @@ $(document).ready(function () {
         gutter: 18,
         percentPosition: true,
         visibleStyle: {transform: 'translateY(0)', opacity: 1},
-        hiddenStyle: {transform: 'translateY(100px)', opacity: 0},
-        transitionDuration: '0.3s'
+        hiddenStyle: {transform: 'translateY(10px)', opacity: 0},
+        transitionDuration: '0.4s'
     });
 
     $grid.imagesLoaded(function () {
