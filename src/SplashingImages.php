@@ -142,10 +142,6 @@ class SplashingImages extends Plugin
             $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
         $user = false;
-        if ($this->getSettings()->accessToken) {
-            $userService = new UserService();
-            $user = $userService->getUser();
-        }
         return Craft::$app->view->renderTemplate(
             'splashing-images/settings',
             [

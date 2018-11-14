@@ -14,6 +14,7 @@ use Crew\Unsplash\HttpClient;
 use Crew\Unsplash\Photo;
 use Crew\Unsplash\Search;
 use Crew\Unsplash\User;
+use studioespresso\splashingimages\records\UserRecord;
 use studioespresso\splashingimages\SplashingImages;
 
 use Craft;
@@ -37,15 +38,19 @@ class UserService extends Component
 
     public function __construct(array $config = [])
     {
-        HttpClient::init(
-            [
-            'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
-            'utmSource' => 'Craft 3 Unsplash'
-            ], [
-                'access_token' => SplashingImages::$plugin->getSettings()->accessToken,
-                'expires_in' => 300000,
-            ]
-        );
+        $userRecord = UserRecord::findOne(['user' => Craft::$app->getUser()->id]);
+        if ($userRecord) {
+
+            HttpClient::init(
+                [
+                    'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
+                    'utmSource' => 'Craft 3 Unsplash'
+                ], [
+                    'access_token' => $userRecord->token,
+                    'expires_in' => 300000,
+                ]
+            );
+        }
     }
 
     public function getUser()
@@ -53,23 +58,38 @@ class UserService extends Component
         return User::current();
     }
 
-    public function getLikes($page, $count = 30) {
-        if(Craft::$app->cache->get('splashing_likes_'.$page)) {
-            return Craft::$app->cache->get('splashing_likes_'.$page);
+    public function saveToken($token)
+    {
+        $userRecord = new UserRecord();
+        $userRecord->token = base64_decode($token);
+        $userRecord->user = Craft::$app->getUser()->getId();
+        return $userRecord->save();
+    }
+
+    public function removeToken() {
+        $record = UserRecord::findOne(['user' => Craft::$app->getUser()->getId()]);
+        return $record->delete();
+    }
+
+    public function getLikes($page, $count = 30)
+    {
+        if (Craft::$app->cache->get('splashing_likes_' . $page)) {
+            return Craft::$app->cache->get('splashing_likes_' . $page);
         }
         $images = User::current()->likes($page, $count);
 
         $data['images'] = $this->parseResults($images);
         $data['next_page'] = $this->getNextUrl();
         $data['user'] = true;
-        Craft::$app->cache->add('splashing_likes_'.$page, $data, 60*60*24);
+        Craft::$app->cache->add('splashing_likes_' . $page, $data, 60 * 60 * 24);
         return $data;
     }
 
-    private function getNextUrl() {
-        $segments  = Craft::$app->request->getSegments();
-        if(count($segments) > 2) {
-            $segments[count($segments)-1] = $segments[count($segments)-1] +1;
+    private function getNextUrl()
+    {
+        $segments = Craft::$app->request->getSegments();
+        if (count($segments) > 2) {
+            $segments[count($segments) - 1] = $segments[count($segments) - 1] + 1;
         } else {
             $segments[count($segments)] = 2;
         }
@@ -79,7 +99,7 @@ class UserService extends Component
     private function parseResults($images)
     {
         $data = [];
-        foreach($images as $image) {
+        foreach ($images as $image) {
             $data[$image->id]['id'] = $image->id;
             $data[$image->id]['thumb'] = $image->urls['thumb'];
             $data[$image->id]['small'] = $image->urls['small'];

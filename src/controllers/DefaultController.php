@@ -40,9 +40,7 @@ class DefaultController extends Controller
     public function init()
     {
         $this->unsplash = new UnsplashService();
-        if(SplashingImages::$plugin->getSettings()->accessToken) {
-            $this->userService = new UserService();
-        }
+        $this->userService = new UserService();
     }
 
     /**
@@ -72,7 +70,8 @@ class DefaultController extends Controller
      * Redirect search form submit to correct results url
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionFind() {
+    public function actionFind()
+    {
         $resultsPage = Craft::$app->request->getRequiredBodyParam('redirect');
         $query = Craft::$app->request->getRequiredBodyParam('query');
         $this->redirect($resultsPage . '/' . $query . '/1');
@@ -94,23 +93,28 @@ class DefaultController extends Controller
         return $this->renderTemplate('splashing-images/_search', $data);
     }
 
-    public function actionLikes($page = 1) {
+    public function actionLikes($page = 1)
+    {
         $data = $this->userService->getLikes($page);
         return $this->renderTemplate('splashing-images/_likes', $data);
 
     }
 
-    public function actionOauth() {
-        $session = Craft::$app->request->getRequiredQueryParam('session');
-        // Add token to currentuser record
-        Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
-        $this->redirect('settings/plugins/splashing-images');
+    public function actionOauth()
+    {
+        $token = Craft::$app->request->getRequiredQueryParam('session');
+        if ($this->userService->saveToken($token)) {
+            Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
+            $this->redirect('settings/plugins/splashing-images');
+        }
     }
 
-    public function actionDisconnect() {
-        // Remove current user's token from the record
-        Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
-        $this->redirect('settings/plugins/splashing-images');
+    public function actionDisconnect()
+    {
+        if ($this->userService->removeToken()) {
+            Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
+            $this->redirect('settings/plugins/splashing-images');
+        }
     }
 
 }
