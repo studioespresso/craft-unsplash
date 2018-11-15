@@ -1,0 +1,26 @@
+{% set tabs = {
+    latest: { url: url('splashing-images'), label: '⏱ Latest'},
+    curated: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
+} %}
+
+{% if hasUser %}
+    {% set tabs = tabs|merge({
+        likes: { url: url('splashing-images/likes'), label: '❤️ Likes' },
+        collections: { url: url('splashing-images/collections'), label: '📖 Collections' }
+    }) %}
+{% endif %}
+
+{% if search is defined %}
+    {% set tabs = tabs|merge({
+        search: { url: url('splashing-images/search'), label: '🔍️️ Search' },
+    }) %}
+{% endif %}
+
+{% if lastSearch is defined %}
+    {% set searchTab = {
+        lastSearch: { label: "Last search: "|t ~ lastSearch, url: url('splashing-images/search?q=' ~ lastSearch)},
+    } %}
+    {% set tabs = tabs|merge(searchTab) %}
+{% endif %}
+
+{% include '_includes/tabs' with { tabs: tabs, selectedTab: selectedTab } %}
