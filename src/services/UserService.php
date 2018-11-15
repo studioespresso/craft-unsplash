@@ -40,7 +40,6 @@ class UserService extends Component
     {
         $userRecord = UserRecord::findOne(['user' => Craft::$app->getUser()->id]);
         if ($userRecord) {
-
             HttpClient::init(
                 [
                     'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
@@ -80,7 +79,7 @@ class UserService extends Component
 
         $data['images'] = $this->parseResults($images);
         $data['next_page'] = $this->getNextUrl();
-        $data['user'] = true;
+        $data['hasUser'] = $this->getUser();
         Craft::$app->cache->add('splashing_likes_' . $page, $data, 60 * 60 * 24);
         return $data;
     }

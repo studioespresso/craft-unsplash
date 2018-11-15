@@ -13,7 +13,7 @@
     latest: { url: url('splashing-images/curated'), label: '⭐ Curated️'},
 } %}
 
-{% if user %}
+{% if hasUser %}
     {% set tabs = tabs|merge({
         likes: { url: url('splashing-images/likes'), label: '❤️ Likes' },
         collections: { url: url('splashing-images/collections'), label: '📖 Collections' }
