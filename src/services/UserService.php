@@ -10,6 +10,7 @@
 
 namespace studioespresso\splashingimages\services;
 
+use Crew\Unsplash\Collection;
 use Crew\Unsplash\HttpClient;
 use Crew\Unsplash\Photo;
 use Crew\Unsplash\Search;
@@ -65,7 +66,8 @@ class UserService extends Component
         return $userRecord->save();
     }
 
-    public function removeToken() {
+    public function removeToken()
+    {
         $record = UserRecord::findOne(['user' => Craft::$app->getUser()->getId()]);
         return $record->delete();
     }
@@ -81,6 +83,31 @@ class UserService extends Component
         $data['next_page'] = $this->getNextUrl();
         $data['hasUser'] = $this->getUser();
         Craft::$app->cache->add('splashing_likes_' . $page, $data, 60 * 60 * 24);
+        return $data;
+    }
+
+    public function getCollections($page, $count = 30)
+    {
+
+        $collections = User::current()->collections($page, $count);
+        if($collections) {
+            foreach($collections as $collection) {
+                $data['collections'][$collection->id]['id'] = $collection->id;
+                $data['collections'][$collection->id]['title'] = $collection->title;
+                $data['collections'][$collection->id]['cover'] = $collection->cover_photo;
+            }
+            $data['next_page'] = $this->getNextUrl();
+            $data['hasUser'] = $this->getUser();
+            return $data;
+        }
+    }
+
+    public function getCollection($collection, $page, $count = 30)
+    {
+        $images = Collection::find($collection)->photos($page, $count);
+        $data['images'] = $this->parseResults($images);
+        $data['next_page'] = $this->getNextUrl();
+        $data['hasUser'] = $this->getUser();
         return $data;
     }
 

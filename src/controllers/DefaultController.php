@@ -97,7 +97,18 @@ class DefaultController extends Controller
     {
         $data = $this->userService->getLikes($page);
         return $this->renderTemplate('splashing-images/_likes', $data);
+    }
 
+    public function actionCollections($page = 1)
+    {
+        $data = $this->userService->getCollections($page);
+        return $this->renderTemplate('splashing-images/_collections', $data);
+    }
+
+    public function actionCollection($collection, $page = 1)
+    {
+        $data = $this->userService->getCollection($collection, $page);
+        return $this->renderTemplate('splashing-images/_collection', $data);
     }
 
     public function actionOauth()

@@ -1,0 +1,34 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{% extends "_layouts/cp" %}
+
+{% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
+
+{% set plugin = craft.app.plugins.getPlugin('splashing-images') %}
+{% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
+
+{% block tabs %}
+    {% include 'splashing-images/_includes/_tabs' with { selectedTab: 'collections'} %}
+{% endblock %}
+
+{% block actionButton %}
+    {% include "splashing-images/_includes/_search" %}
+{% endblock %}
+
+{% block content %}
+    <div id="splashing-container" class="splashing-container are-images-unloaded">
+        <div class="splashing-image-sizer"></div>
+        {% for collection in collections %}
+            <a href="{{ url('splashing-images/collections/' ~ collection.id) }}" class="splashing-image-grid">
+                <div class="splashing-image">
+                    <img src="{{ collection.cover.urls.small }}">
+                </div>
+                <div class="splashing-attribute" style="display: none;">
+                    <span href="">{{ collection.title }}</span>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <a href="{{ url(next_page) }}" class="js-pagination__next" >{{ 'Next'|t }}</a>
+    </div>
+{% endblock %}
