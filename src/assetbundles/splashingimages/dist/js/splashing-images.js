@@ -37,7 +37,7 @@ $(document).ready(function () {
         $('.splashing-attribute').show();
     });
 
-    $('#content').on('click', '.splashing-image', function (e) {
+    $('#content').on('click', '.js-splashing-image', function (e) {
         var $image = $(this);
 
         payload = {}
