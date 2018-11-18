@@ -120,7 +120,7 @@ class DefaultController extends Controller
         $token = Craft::$app->request->getRequiredQueryParam('session');
         if ($this->userService->saveToken($token)) {
             Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
-            $this->redirect('settings/plugins/splashing-images');
+            $this->redirect('splashing-images');
         }
     }
 
@@ -128,7 +128,7 @@ class DefaultController extends Controller
     {
         if ($this->userService->removeToken()) {
             Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
-            $this->redirect('settings/plugins/splashing-images');
+            $this->redirect('splashing-images');
         }
     }
 
