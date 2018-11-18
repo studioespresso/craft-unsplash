@@ -105,9 +105,12 @@ class UserService extends Component
     public function getCollection($collection, $page, $count = 30)
     {
         $images = Collection::find($collection)->photos($page, $count);
+
         $data['images'] = $this->parseResults($images);
-        $data['next_page'] = $this->getNextUrl();
         $data['hasUser'] = $this->getUser();
+        if($images->getPages()['next']) {
+            $data['next_page'] = $this->getNextUrl();
+        }
         return $data;
     }
 

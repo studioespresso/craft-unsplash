@@ -10,12 +10,14 @@
 
 namespace studioespresso\splashingimages\controllers;
 
+use studioespresso\splashingimages\records\UserRecord;
 use studioespresso\splashingimages\services\UnsplashService;
 
 use Craft;
 use craft\web\Controller;
 use studioespresso\splashingimages\services\UserService;
 use studioespresso\splashingimages\SplashingImages;
+use yii\web\NotFoundHttpException;
 
 /**
  * @author    Studio Espresso
@@ -101,12 +103,14 @@ class DefaultController extends Controller
 
     public function actionCollections($page = 1)
     {
+        $this->checkUser();
         $data = $this->userService->getCollections($page);
         return $this->renderTemplate('splashing-images/_collections', $data);
     }
 
     public function actionCollection($collection, $page = 1)
     {
+        $this->checkUser();
         $data = $this->userService->getCollection($collection, $page);
         return $this->renderTemplate('splashing-images/_collection', $data);
     }
@@ -125,6 +129,14 @@ class DefaultController extends Controller
         if ($this->userService->removeToken()) {
             Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
             $this->redirect('settings/plugins/splashing-images');
+        }
+    }
+
+    private function checkUser()
+    {
+        $userRecord = UserRecord::findOne(['user' => Craft::$app->getUser()->id]);
+        if (!$userRecord) {
+            throw new NotFoundHttpException('No Unsplash user configured for this account');
         }
     }
 
