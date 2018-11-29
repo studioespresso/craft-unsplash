@@ -39,7 +39,7 @@
         <div class="flex">
             <div>
                 <div class="select">
-                    <select id="destination" name="destination">
+                    <select id="destination" name="destination" required="required">
                         {% for volume in volumes %}
                             <option value="{{ volume.value }}"
                                     {% if settings['destination'] == volume.value %}selected{% endif %}>{{ volume.label }}</option>

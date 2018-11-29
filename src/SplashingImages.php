@@ -139,7 +139,6 @@ class SplashingImages extends Plugin
     protected function settingsHtml(): string
     {
         $volumes = Craft::$app->getVolumes();
-        $destinationOptions[] = array('label' => '---', 'value' => "");
         foreach ($volumes->getAllVolumes() as $source) {
             $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
