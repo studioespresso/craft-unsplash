@@ -33,13 +33,9 @@
     "extra": {
         "name": "Splashing Images",
         "handle": "splashing-images",
-        "schemaVersion": "1.0.0",
         "hasCpSettings": true,
         "hasCpSection": true,
         "changelogUrl": "https://github.com/studioespresso/craft3-unsplash/blob/develop/CHANGELOG.md",
-        "components": {
-            "UnsplashService": "studioespresso\\splashingimages\\services\\UnsplashService"
-        },
         "class": "studioespresso\\splashingimages\\SplashingImages"
     }
 }
