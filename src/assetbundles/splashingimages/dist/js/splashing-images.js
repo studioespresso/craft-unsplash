@@ -54,11 +54,16 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $image.parent().removeClass('saving');
-                Craft.cp.displayNotice(Craft.t('splashing-images', 'Image saved!'));
+                console.log(response);
+                if (response.success) {
+                    Craft.cp.displayNotice(response.message);
+                } else {
+                    Craft.cp.displayError(response.message);
+                }
             },
             error: function (xhr, status, error) {
                 $image.parent().removeClass('saving');
-                Craft.cp.displayError(Craft.t('splashing-images', 'Oops, something went wrong...'));
+                Craft.cp.displayError(response.message);
             }
         });
     });
