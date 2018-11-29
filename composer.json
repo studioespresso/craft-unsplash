@@ -35,6 +35,7 @@
         "handle": "splashing-images",
         "hasCpSettings": true,
         "hasCpSection": true,
+        "schemaVersion": "1.2.0",
         "changelogUrl": "https://github.com/studioespresso/craft3-unsplash/blob/develop/CHANGELOG.md",
         "class": "studioespresso\\splashingimages\\SplashingImages"
     }
