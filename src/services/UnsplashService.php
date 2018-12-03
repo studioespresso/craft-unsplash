@@ -13,6 +13,7 @@ namespace studioespresso\splashingimages\services;
 use Crew\Unsplash\HttpClient;
 use Crew\Unsplash\Photo;
 use Crew\Unsplash\Search;
+use studioespresso\splashingimages\records\UserRecord;
 use studioespresso\splashingimages\SplashingImages;
 
 use Craft;
@@ -34,52 +35,62 @@ use craft\base\Component;
 class UnsplashService extends Component
 {
 
+    public $hasUser = false;
+
     public function __construct(array $config = [])
     {
         HttpClient::init([
             'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
             'utmSource' => 'Craft 3 Unsplash'
         ]);
+
+        if(UserRecord::findOne(['user' => Craft::$app->getUser()->id])) {
+            $userService = new UserService();
+            $this->hasUser = $userService->getUser();
+        }
     }
 
-    public function getPhoto($id) {
+    public function getPhoto($id)
+    {
         return Photo::find($id);
-
     }
 
     public function getLatest($page, $count = 30)
     {
-        if(Craft::$app->cache->get('splashing_latest')) {
+        if (Craft::$app->cache->get('splashing_latest')) {
             return Craft::$app->cache->get('splashing_latest');
         }
         $images = Photo::all($page, $count);
 
         $data['images'] = $this->parseResults($images);
         $data['next_page'] = $this->getNextUrl();
-        Craft::$app->cache->add('splashing_latest_'.$page, $data, 60*60*12);
+        $data['hasUser'] = $this->hasUser;
+        Craft::$app->cache->add('splashing_latest_' . $page, $data, 60 * 60 * 12);
         return $data;
     }
 
     public function getCurated($page, $count = 30)
     {
-        if(Craft::$app->cache->get('splashing_curated')) {
+        if (Craft::$app->cache->get('splashing_curated')) {
             return Craft::$app->cache->get('splashing_curated');
         }
         $images = Photo::curated($page, $count);
 
         $data['images'] = $this->parseResults($images);
         $data['next_page'] = $this->getNextUrl();
-        Craft::$app->cache->add('splashing_curated_'.$page, $data, 60*60*24);
+        $data['hasUser'] = $this->hasUser;
+        Craft::$app->cache->add('splashing_curated_' . $page, $data, 60 * 60 * 24);
         return $data;
     }
 
-    public function search($query, $page = 1, $count = 30) {
-        if(Craft::$app->cache->get('splashing_last_search') != $query) {
+    public function search($query, $page = 1, $count = 30)
+    {
+        if (Craft::$app->cache->get('splashing_last_search') != $query) {
             Craft::$app->cache->delete('splashing_last_search');
-            Craft::$app->cache->add('splashing_last_search', $query, 60*60*2);
+            Craft::$app->cache->add('splashing_last_search', $query, 60 * 60 * 2);
         }
-        if(Craft::$app->cache->get('splashing_'.$query. '_'.$page)) {
-            return Craft::$app->cache->get('splashing_'.$query. '_'.$page);
+        if (Craft::$app->cache->get('splashing_' . $query . '_' . $page)) {
+            return Craft::$app->cache->get('splashing_' . $query . '_' . $page);
         }
 
         $images = Search::photos($query, $page, $count);
@@ -87,14 +98,16 @@ class UnsplashService extends Component
         $results = $this->parseResults($images->getArrayObject());
         $data['images'] = $results;
         $data['next_page'] = $this->getNextUrl();
-        Craft::$app->cache->add('splashing_'.$query. '_'.$page, $data, 60*60*24);
+        $data['hasUser'] = $this->hasUser;
+        Craft::$app->cache->add('splashing_' . $query . '_' . $page, $data, 60 * 60 * 24);
         return $data;
     }
 
-    private function getNextUrl() {
-        $segments  = Craft::$app->request->getSegments();
-        if(count($segments) > 2) {
-            $segments[count($segments)-1] = $segments[count($segments)-1] +1;
+    private function getNextUrl()
+    {
+        $segments = Craft::$app->request->getSegments();
+        if (count($segments) > 2) {
+            $segments[count($segments) - 1] = $segments[count($segments) - 1] + 1;
         } else {
             $segments[count($segments)] = 2;
         }
@@ -104,7 +117,7 @@ class UnsplashService extends Component
     private function parseResults($images)
     {
         $data = [];
-        foreach($images as $image) {
+        foreach ($images as $image) {
             $data[$image->id]['id'] = $image->id;
             $data[$image->id]['thumb'] = $image->urls['thumb'];
             $data[$image->id]['small'] = $image->urls['small'];

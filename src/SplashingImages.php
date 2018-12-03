@@ -13,6 +13,7 @@ namespace studioespresso\splashingimages;
 use craft\helpers\UrlHelper;
 use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
 use studioespresso\splashingimages\services\UnsplashService;
+use studioespresso\splashingimages\services\UserService;
 use studioespresso\splashingimages\variables\SplashingImagesVariable;
 use studioespresso\splashingimages\models\Settings;
 
@@ -70,8 +71,14 @@ class SplashingImages extends Plugin
                 $event->rules['splashing-images/<page:\d+>'] = 'splashing-images/default/index';
                 $event->rules['splashing-images/curated'] = 'splashing-images/default/curated';
                 $event->rules['splashing-images/curated/<page:\d+>'] = 'splashing-images/default/curated';
+                $event->rules['splashing-images/likes'] = 'splashing-images/default/likes';
+                $event->rules['splashing-images/likes/<page:\d+>'] = 'splashing-images/default/likes';
+                $event->rules['splashing-images/collections'] = 'splashing-images/default/collections';
+                $event->rules['splashing-images/collections/<collection:\d+>'] = 'splashing-images/default/collection';
                 $event->rules['splashing-images/find'] = 'splashing-images/default/find';
                 $event->rules['splashing-images/search/<query>/<page:\d+>'] = 'splashing-images/default/search';
+                $event->rules['splashing-images/oauth'] = 'splashing-images/default/oauth';
+                $event->rules['splashing-images/oauth/disconnect'] = 'splashing-images/default/disconnect';
             }
         );
 
@@ -111,16 +118,16 @@ class SplashingImages extends Plugin
      */
     public function getCpNavItem()
     {
-        $ret = [
+        $navItem = [
             'label' => $this->getSettings()->pluginLabel ? $this->getSettings()->pluginLabel : 'Unsplash Images',
             'url' => $this->id,
         ];
 
         if (($iconPath = $this->cpNavIconPath()) !== null) {
-            $ret['icon'] = $iconPath;
+            $navItem['icon'] = $iconPath;
         }
 
-        return $ret;
+        return $navItem;
     }
 
     /**
@@ -132,15 +139,16 @@ class SplashingImages extends Plugin
     protected function settingsHtml(): string
     {
         $volumes = Craft::$app->getVolumes();
-        $destinationOptions[] = array('label' => '---', 'value' => "");
         foreach ($volumes->getAllVolumes() as $source) {
             $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
+        $user = false;
         return Craft::$app->view->renderTemplate(
             'splashing-images/settings',
             [
                 'settings' => $this->getSettings(),
-                'volumes' => $destinationOptions
+                'volumes' => $destinationOptions,
+                'user' => $user,
             ]
         );
     }

@@ -62,6 +62,14 @@ class DownloadController extends Controller
             mkdir($dir);
         }
 
+        $assets = Craft::$app->getAssets();
+        $settings = SplashingImages::$plugin->getSettings();
+        if(!isset($settings->destination)) {
+            $returnData['success'] = false;
+            $returnData['message'] = Craft::t('splashing-images', 'Please set a file destination in settings so images can be saved');
+            return $this->asJson($returnData);
+        }
+
         $id = Craft::$app->request->post('id');
         $unplash = new UnsplashService();
         $photo = $unplash->getPhoto($id);
@@ -80,9 +88,6 @@ class DownloadController extends Controller
         $tmpImage = 'photo-' . rand() . '.jpg';
         $tempPath = $dir . $tmpImage;
         $saved = file_put_contents($tempPath, $picture);
-
-        $assets = Craft::$app->getAssets();
-        $settings = SplashingImages::$plugin->getSettings();
 
         $volume = Craft::$app->volumes->getVolumeById($settings->destination);
 
@@ -111,10 +116,13 @@ class DownloadController extends Controller
         $result = Craft::$app->elements->saveElement($asset);
 
         if ($result) {
-            return true;
+            $returnData['success'] = true;
+            $returnData['message'] = Craft::t('splashing-images', 'Image saved!');
         } else {
-            return false;
+            $returnData['success'] = false;
+            $returnData['message'] = Craft::t('splashing-images', 'Oops, something went wrong...');
         }
+        return $this->asJson($returnData);
         exit;
 
     }

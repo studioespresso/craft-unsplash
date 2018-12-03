@@ -10,10 +10,14 @@
 
 namespace studioespresso\splashingimages\controllers;
 
+use studioespresso\splashingimages\records\UserRecord;
 use studioespresso\splashingimages\services\UnsplashService;
 
 use Craft;
 use craft\web\Controller;
+use studioespresso\splashingimages\services\UserService;
+use studioespresso\splashingimages\SplashingImages;
+use yii\web\NotFoundHttpException;
 
 /**
  * @author    Studio Espresso
@@ -25,7 +29,12 @@ class DefaultController extends Controller
     /**
      * @var
      */
-    public $unsplash;
+    private $unsplash;
+
+    /**
+     * @var
+     */
+    private $userService;
 
     /**
      * Spin up the Unsplash service
@@ -33,6 +42,7 @@ class DefaultController extends Controller
     public function init()
     {
         $this->unsplash = new UnsplashService();
+        $this->userService = new UserService();
     }
 
     /**
@@ -62,7 +72,8 @@ class DefaultController extends Controller
      * Redirect search form submit to correct results url
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionFind() {
+    public function actionFind()
+    {
         $resultsPage = Craft::$app->request->getRequiredBodyParam('redirect');
         $query = Craft::$app->request->getRequiredBodyParam('query');
         $this->redirect($resultsPage . '/' . $query . '/1');
@@ -82,6 +93,51 @@ class DefaultController extends Controller
         }
         $data = $this->unsplash->search($query, $page);
         return $this->renderTemplate('splashing-images/_search', $data);
+    }
+
+    public function actionLikes($page = 1)
+    {
+        $data = $this->userService->getLikes($page);
+        return $this->renderTemplate('splashing-images/_likes', $data);
+    }
+
+    public function actionCollections($page = 1)
+    {
+        $this->checkUser();
+        $data = $this->userService->getCollections($page);
+        return $this->renderTemplate('splashing-images/_collections', $data);
+    }
+
+    public function actionCollection($collection, $page = 1)
+    {
+        $this->checkUser();
+        $data = $this->userService->getCollection($collection, $page);
+        return $this->renderTemplate('splashing-images/_collection', $data);
+    }
+
+    public function actionOauth()
+    {
+        $token = Craft::$app->request->getRequiredQueryParam('session');
+        if ($this->userService->saveToken($token)) {
+            Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
+            $this->redirect('splashing-images');
+        }
+    }
+
+    public function actionDisconnect()
+    {
+        if ($this->userService->removeToken()) {
+            Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
+            $this->redirect('splashing-images');
+        }
+    }
+
+    private function checkUser()
+    {
+        $userRecord = UserRecord::findOne(['user' => Craft::$app->getUser()->id]);
+        if (!$userRecord) {
+            throw new NotFoundHttpException('No Unsplash user configured for this account');
+        }
     }
 
 }

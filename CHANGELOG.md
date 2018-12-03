@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 1.2.0 - 2018.11.19
+### Added
+* You can now log in with your unsplash.com account to get access to your own liked photos and collections in the plugin
+
 ## 1.1.0 - 2018.11.05
 ### Added
 * Latest, Curated & Search results now all have infinite scrolling of more results

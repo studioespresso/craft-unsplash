@@ -5,8 +5,8 @@ $(document).ready(function () {
         gutter: 18,
         percentPosition: true,
         visibleStyle: {transform: 'translateY(0)', opacity: 1},
-        hiddenStyle: {transform: 'translateY(100px)', opacity: 0},
-        transitionDuration: '0.3s'
+        hiddenStyle: {transform: 'translateY(10px)', opacity: 0},
+        transitionDuration: '0.4s'
     });
 
     $grid.imagesLoaded(function () {
@@ -30,14 +30,14 @@ $(document).ready(function () {
         hideNav: '.pagination',
         historyTitle: true,
         history: 'push',
-        debug: true,
+        debug: false,
     });
 
     $grid.on( 'append.infiniteScroll', function( event, response, path, items ) {
         $('.splashing-attribute').show();
     });
 
-    $('#content').on('click', '.splashing-image', function (e) {
+    $('#content').on('click', '.js-splashing-image', function (e) {
         var $image = $(this);
 
         payload = {}
@@ -54,11 +54,16 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $image.parent().removeClass('saving');
-                Craft.cp.displayNotice(Craft.t('splashing-images', 'Image saved!'));
+                console.log(response);
+                if (response.success) {
+                    Craft.cp.displayNotice(response.message);
+                } else {
+                    Craft.cp.displayError(response.message);
+                }
             },
             error: function (xhr, status, error) {
                 $image.parent().removeClass('saving');
-                Craft.cp.displayError(Craft.t('splashing-images', 'Oops, something went wrong...'));
+                Craft.cp.displayError(response.message);
             }
         });
     });

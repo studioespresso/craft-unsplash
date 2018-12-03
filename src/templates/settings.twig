@@ -15,7 +15,6 @@
 
 {% import "_includes/forms" as forms %}
 
-
 <div class="field first">
     <div class="heading">
         <label for="pluginLabel">{{ 'CP label'|t }}</label>
@@ -40,20 +39,18 @@
         <div class="flex">
             <div>
                 <div class="select">
-                    <select id="destination" name="destination">
+                    <select id="destination" name="destination" required="required">
                         {% for volume in volumes %}
                             <option value="{{ volume.value }}"
                                     {% if settings['destination'] == volume.value %}selected{% endif %}>{{ volume.label }}</option>
                         {% endfor %}
                     </select>
                 </div>
-
             </div>
             <div class="flex-grow">
                 <input class="text ltr fullwidth" type="text" id="folder" name="folder" value="{{ settings['folder'] }}"
                        autocomplete="off" placeholder="path/to/subfolder">
             </div>
         </div>
-
     </div>
 </div>

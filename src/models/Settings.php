@@ -61,8 +61,9 @@ class Settings extends Model
     public function rules()
     {
         return [
+            ['destination', 'required'],
             ['destination', 'string'],
-            ['destination', 'default', 'value' => 'Some Default'],
+            ['destination', 'default', 'value' => ''],
         ];
     }
 }

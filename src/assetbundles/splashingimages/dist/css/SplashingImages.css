@@ -9,7 +9,7 @@
  * @package   SplashingImages
  * @since     1.0.0
  */
-.splashing-image-grid .splashing-attribute a {
+.splashing-image-grid .splashing-attribute a, .splashing-image-grid .splashing-attribute span {
     position: absolute;
     bottom: 4.5px;
     right: 0px;
