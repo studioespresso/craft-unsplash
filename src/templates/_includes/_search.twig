@@ -1,12 +1,3 @@
-<div style="padding-right: 20px;">
-    {% if not hasUser %}
-        {% set oauthUrl = 'https://www.studioespresso.co/craft-unsplash?redirect=' ~ url('splashing-images/oauth') %}
-        <a href="{{ oauthUrl }}">{{ 'Sign in with Unsplash'|t }}</a>
-    {% else %}
-        {% set disconnectUrl = url('splashing-images/oauth/disconnect') %}
-        {{ 'Signed as {user}'|t({user: hasUser.name}) }} - <a href="{{ disconnectUrl }}">{{ 'Disconnect account'|t }}</a>
-    {% endif %}
-</div>
 <form action="{{ url('splashing-images/find') }}" method="post">
     {{ csrfInput() }}
     <div class="flex-grow texticon search icon clearable">
