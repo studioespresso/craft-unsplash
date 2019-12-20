@@ -1,5 +1,11 @@
 # Splashing Images changelog
 
+
+## 1.3.0 - 2019.12.20
+### Removed
+* Removed the unsplash account integration as I'm no longer able to host the redirect page.
+
+
 ## 1.2.0 - 2018.11.19
 ### Added
 * You can now log in with your unsplash.com account to get access to your own liked photos and collections in the plugin
