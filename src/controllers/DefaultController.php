@@ -115,29 +115,4 @@ class DefaultController extends Controller
         return $this->renderTemplate('splashing-images/_collection', $data);
     }
 
-    public function actionOauth()
-    {
-        $token = Craft::$app->request->getRequiredQueryParam('session');
-        if ($this->userService->saveToken($token)) {
-            Craft::$app->session->setNotice(Craft::t('splashing-images', 'Unsplash account linked successfully'));
-            $this->redirect('splashing-images');
-        }
-    }
-
-    public function actionDisconnect()
-    {
-        if ($this->userService->removeToken()) {
-            Craft::$app->session->setNotice(Craft::t('splashing-images', 'Removed Unsplash account'));
-            $this->redirect('splashing-images');
-        }
-    }
-
-    private function checkUser()
-    {
-        $userRecord = UserRecord::findOne(['user' => Craft::$app->getUser()->id]);
-        if (!$userRecord) {
-            throw new NotFoundHttpException('No Unsplash user configured for this account');
-        }
-    }
-
 }
