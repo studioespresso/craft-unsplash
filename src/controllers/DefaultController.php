@@ -57,18 +57,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * Renders an overview of curated images from Unsplash
-     * @param $page int
-     * @return \yii\web\Response
-     */
-    public function actionCurated($page = 1)
-    {
-        $data = $this->unsplash->getCurated($page);
-        return $this->renderTemplate('splashing-images/_curated', $data);
-    }
-
-
-    /**
      * Redirect search form submit to correct results url
      * @throws \yii\web\BadRequestHttpException
      */
