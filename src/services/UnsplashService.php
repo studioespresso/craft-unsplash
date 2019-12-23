@@ -69,20 +69,6 @@ class UnsplashService extends Component
         return $data;
     }
 
-    public function getCurated($page, $count = 30)
-    {
-        if (Craft::$app->cache->get('splashing_curated')) {
-            return Craft::$app->cache->get('splashing_curated');
-        }
-        $images = Photo::curated($page, $count);
-
-        $data['images'] = $this->parseResults($images);
-        $data['next_page'] = $this->getNextUrl();
-        $data['hasUser'] = $this->hasUser;
-        Craft::$app->cache->add('splashing_curated_' . $page, $data, 60 * 60 * 24);
-        return $data;
-    }
-
     public function search($query, $page = 1, $count = 30)
     {
         if (Craft::$app->cache->get('splashing_last_search') != $query) {

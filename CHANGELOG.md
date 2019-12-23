@@ -1,10 +1,12 @@
 # Splashing Images changelog
 
+## 1.4.0 - 2019-12-23
+### Removed
+* Removed the curated tab since it is no longer included in the [API](https://changelog.unsplash.com/deprecations/2019/10/22/curated-search-stats.html)
 
 ## 1.3.0 - 2019.12.20
 ### Removed
 * Removed the unsplash account integration as I'm no longer able to host the redirect page.
-
 
 ## 1.2.0 - 2018.11.19
 ### Added
