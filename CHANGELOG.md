@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 2.0.0 - 2020-03-24
+### Changed
+* Update layout and infinite scroll to work with Craft 3.4
+
 ## 1.4.0 - 2019-12-23
 ### Removed
 * Removed the curated tab since it is no longer included in the [API](https://changelog.unsplash.com/deprecations/2019/10/22/curated-search-stats.html)
