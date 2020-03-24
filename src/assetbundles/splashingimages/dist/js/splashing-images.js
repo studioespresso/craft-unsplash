@@ -23,7 +23,6 @@ $(document).ready(function () {
     $grid.infiniteScroll({
         scrollThreshold: 200,
         path: '.js-pagination__next',
-        elementScroll: '#content',
         append: '.splashing-image-grid',
         outlayer: msnry,
         status: '.page-load-status',
