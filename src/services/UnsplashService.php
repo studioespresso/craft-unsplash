@@ -10,14 +10,11 @@
 
 namespace studioespresso\splashingimages\services;
 
+use Craft;
+use craft\base\Component;
 use Crew\Unsplash\HttpClient;
 use Crew\Unsplash\Photo;
 use Crew\Unsplash\Search;
-use studioespresso\splashingimages\records\UserRecord;
-use studioespresso\splashingimages\SplashingImages;
-
-use Craft;
-use craft\base\Component;
 
 /**
  * SplashingImagesService Service
@@ -35,19 +32,12 @@ use craft\base\Component;
 class UnsplashService extends Component
 {
 
-    public $hasUser = false;
-
     public function __construct(array $config = [])
     {
         HttpClient::init([
             'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
             'utmSource' => 'Craft 3 Unsplash'
         ]);
-
-        if(UserRecord::findOne(['user' => Craft::$app->getUser()->id])) {
-            $userService = new UserService();
-            $this->hasUser = $userService->getUser();
-        }
     }
 
     public function getPhoto($id)
@@ -64,7 +54,6 @@ class UnsplashService extends Component
 
         $data['images'] = $this->parseResults($images);
         $data['next_page'] = $this->getNextUrl();
-        $data['hasUser'] = $this->hasUser;
         Craft::$app->cache->add('splashing_latest_' . $page, $data, 60 * 60 * 12);
         return $data;
     }
@@ -84,7 +73,6 @@ class UnsplashService extends Component
         $results = $this->parseResults($images->getArrayObject());
         $data['images'] = $results;
         $data['next_page'] = $this->getNextUrl();
-        $data['hasUser'] = $this->hasUser;
         Craft::$app->cache->add('splashing_' . $query . '_' . $page, $data, 60 * 60 * 24);
         return $data;
     }

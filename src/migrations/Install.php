@@ -51,14 +51,6 @@ class Install extends Migration
      */
     public function safeUp()
     {
-        $this->driver = Craft::$app->getConfig()->getDb()->driver;
-        if ($this->createTables()) {
-            $this->addForeignKeys();
-            // Refresh the db schema caches
-            Craft::$app->db->schema->refresh();
-            $this->insertDefaultData();
-        }
-
         return true;
     }
 
@@ -89,52 +81,6 @@ class Install extends Migration
      * @return bool
      */
 
-
-    protected function createTables()
-    {
-        $tablesCreated = false;
-
-        // splashing_images_users table
-        $tableSchema = Craft::$app->db->schema->getTableSchema(UserRecord::tableName());
-        if ($tableSchema === null) {
-            $tablesCreated = true;
-            $this->createTable(
-                UserRecord::tableName(),
-                [
-                    'id' => $this->primaryKey(),
-                    'user' => $this->integer(),
-                    'token' => $this->tinyText(),
-                    'dateCreated' => $this->dateTime()->notNull(),
-                    'dateUpdated' => $this->dateTime()->notNull(),
-                    'uid' => $this->uid(),
-
-                ]
-            );
-        }
-
-        return $tablesCreated;
-    }
-
-
-    /**
-     * Creates the foreign keys needed for the Records used by the plugin
-     *
-     * @return void
-     */
-    protected function addForeignKeys()
-    {
-
-        // $name, $table, $columns, $refTable, $refColumns, $delete = null, $update = null)
-        $this->addForeignKey(
-            $this->db->getForeignKeyName('{{%splashing_images_users}}', 'user'),
-            '{{%splashing_images_users}}',
-            'user',
-            '{{%users}}',
-            'id',
-            'CASCADE'
-        );
-
-    }
 
     /**
      * Populates the DB with the default data.
