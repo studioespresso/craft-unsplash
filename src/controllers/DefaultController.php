@@ -43,6 +43,7 @@ class DefaultController extends Controller
     {
         $this->unsplash = new UnsplashService();
         $this->userService = new UserService();
+        parent::init();
     }
 
     /**
