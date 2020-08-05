@@ -1,5 +1,10 @@
 # Splashing Images changelog
 
+## 2.1.0 - 2020-08-05
+### Fixed
+* Fixed indexController to work with Craft 3.5
+* Removed left-over User/OAuth code
+
 ## 2.0.0 - 2020-03-24
 ### Changed
 * Update layout and infinite scroll to work with Craft 3.4
