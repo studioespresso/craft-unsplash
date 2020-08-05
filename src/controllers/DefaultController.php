@@ -32,17 +32,12 @@ class DefaultController extends Controller
     private $unsplash;
 
     /**
-     * @var
-     */
-    private $userService;
-
-    /**
      * Spin up the Unsplash service
      */
     public function init()
     {
         $this->unsplash = new UnsplashService();
-        $this->userService = new UserService();
+        parent::init();
     }
 
     /**
@@ -81,26 +76,6 @@ class DefaultController extends Controller
         }
         $data = $this->unsplash->search($query, $page);
         return $this->renderTemplate('splashing-images/_search', $data);
-    }
-
-    public function actionLikes($page = 1)
-    {
-        $data = $this->userService->getLikes($page);
-        return $this->renderTemplate('splashing-images/_likes', $data);
-    }
-
-    public function actionCollections($page = 1)
-    {
-        $this->checkUser();
-        $data = $this->userService->getCollections($page);
-        return $this->renderTemplate('splashing-images/_collections', $data);
-    }
-
-    public function actionCollection($collection, $page = 1)
-    {
-        $this->checkUser();
-        $data = $this->userService->getCollection($collection, $page);
-        return $this->renderTemplate('splashing-images/_collection', $data);
     }
 
 }

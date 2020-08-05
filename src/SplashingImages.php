@@ -10,21 +10,16 @@
 
 namespace studioespresso\splashingimages;
 
-use craft\helpers\UrlHelper;
-use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
-use studioespresso\splashingimages\services\UnsplashService;
-use studioespresso\splashingimages\services\UserService;
-use studioespresso\splashingimages\variables\SplashingImagesVariable;
-use studioespresso\splashingimages\models\Settings;
-
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
 use craft\events\PluginEvent;
-use craft\web\UrlManager;
-use craft\web\twig\variables\CraftVariable;
 use craft\events\RegisterUrlRulesEvent;
-
+use craft\helpers\UrlHelper;
+use craft\services\Plugins;
+use craft\web\UrlManager;
+use studioespresso\splashingimages\models\Settings;
+use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
+use studioespresso\splashingimages\variables\SplashingImagesVariable;
 use yii\base\Event;
 
 /**
@@ -140,13 +135,11 @@ class SplashingImages extends Plugin
         foreach ($volumes->getAllVolumes() as $source) {
             $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
-        $user = false;
         return Craft::$app->view->renderTemplate(
             'splashing-images/settings',
             [
                 'settings' => $this->getSettings(),
                 'volumes' => $destinationOptions,
-                'user' => $user,
             ]
         );
     }
