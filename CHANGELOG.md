@@ -1,5 +1,10 @@
 # Splashing Images changelog
 
+## 2.1.1 - 2020-08-13
+### Fixed
+* Fixed a crash on the settings page when the site doesn't have any volumes defined. ([#10](https://github.com/studioespresso/craft3-unsplash/issues/10))
+
+
 ## 2.1.0 - 2020-08-05
 ### Fixed
 * Fixed indexController to work with Craft 3.5
