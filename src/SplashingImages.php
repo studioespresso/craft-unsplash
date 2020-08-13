@@ -139,7 +139,7 @@ class SplashingImages extends Plugin
             'splashing-images/settings',
             [
                 'settings' => $this->getSettings(),
-                'volumes' => $destinationOptions,
+                'volumes' => $destinationOptions ?? null,
             ]
         );
     }
