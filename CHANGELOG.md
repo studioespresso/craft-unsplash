@@ -1,9 +1,12 @@
 # Splashing Images changelog
 
+## 2.1.2 - 2020-11-03
+### Fixed
+* The plugin now works correctly with Composer 2.0 ([#11](https://github.com/studioespresso/craft3-unsplash/issues/11))
+
 ## 2.1.1 - 2020-08-13
 ### Fixed
 * Fixed a crash on the settings page when the site doesn't have any volumes defined. ([#10](https://github.com/studioespresso/craft3-unsplash/issues/10))
-
 
 ## 2.1.0 - 2020-08-05
 ### Fixed
