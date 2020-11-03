@@ -1,0 +1,145 @@
+/**
+ * Splashing Images plugin for Craft CMS
+ *
+ * Splashing Images CSS
+ *
+ * @author    Studio Espresso
+ * @copyright Copyright (c) 2017 Studio Espresso
+ * @link      https://studioespresso.co
+ * @package   SplashingImages
+ * @since     1.0.0
+ */
+.splashing-image-grid .splashing-attribute a, .splashing-image-grid .splashing-attribute span {
+    position: absolute;
+    bottom: 4.5px;
+    right: 0px;
+    color: white;
+    font-size: 0.9em;
+    padding: 3px 6px 3px 6px;
+    color: #d7d7d7;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.splashing-image img {
+    width: 100%;
+}
+
+.splashing-image-grid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: #f4f4f4;
+}
+.splashing-image-sizer,
+.splashing-image-grid {
+    margin-bottom: 13px;
+    max-width: 23.5%;
+    position: relative;
+    overflow: hidden;
+    transition: opacity .8s ease;
+}
+
+.splashing-image-grid:hover {
+    cursor: pointer;
+}
+.splashing-image-grid:before {
+    z-index: 30;
+    content: '';
+    background: rgba(255, 255, 255, .7) url(../img/spinner.gif) center no-repeat;
+    background-size: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease
+}
+
+.splashing-image-grid.saving {
+    pointer-events: none
+}
+
+.splashing-container.are-images-unloaded {
+    opacity: 0;
+}
+
+.splashing-image-grid.saving:before {
+    opacity: 1;
+    z-index: 2;
+}
+
+
+.loader {
+    position: relative;
+    margin: 0 auto;
+    width: 50px;
+    margin-bottom: 20px;
+}
+.loader:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}
+
+.circular {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+}
+
+@-webkit-keyframes rotate {
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@keyframes rotate {
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-webkit-keyframes dash {
+    0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 89, 200; stroke-dashoffset: -35px; }
+    100% { stroke-dasharray: 89, 200; stroke-dashoffset: -124px; }
+}
+@keyframes dash {
+    0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 89, 200; stroke-dashoffset: -35px; }
+    100% { stroke-dasharray: 89, 200; stroke-dashoffset: -124px; }
+}
+@-webkit-keyframes color {
+    100%, 0% { stroke: #de564c; }
+    40% { stroke: #d62d20; }
+    66% { stroke: #801b13; }
+    80%, 90% { stroke: #2a0906; }
+}
+@keyframes color {
+    100%, 0% { stroke: #de564c; }
+    40% { stroke: #d62d20; }
+    66% { stroke: #801b13; }
+    80%, 90% { stroke: #2a0906; }
+}
+
+.showbox {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5%;
+}
