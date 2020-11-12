@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 2.1.3 - 2020-11-12
+### Fixed
+* Fixed a case issue with the asset bundle path after the last update
+
 ## 2.1.2 - 2020-11-03
 ### Fixed
 * The plugin now works correctly with Composer 2.0 ([#11](https://github.com/studioespresso/craft3-unsplash/issues/11))
