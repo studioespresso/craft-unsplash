@@ -1,7 +1,7 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 {% extends "_layouts/cp" %}
 
-{% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\splashingimages\\SplashingImagesAsset") %}
+{% do view.registerAssetBundle("studioespresso\\splashingimages\\assetbundles\\SplashingImages\\SplashingImagesAsset") %}
 
 {% set plugin = craft.app.plugins.getPlugin('splashing-images') %}
 {% set title = plugin.settings.pluginLabel ?? "Splashing Images" %}
