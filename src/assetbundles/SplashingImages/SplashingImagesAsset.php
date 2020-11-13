@@ -43,7 +43,7 @@ class SplashingImagesAsset extends AssetBundle
     public function init()
     {
         // define the path that your publishable resources live
-        $this->sourcePath = "@studioespresso/splashingimages/assetbundles/splashingimages/dist";
+        $this->sourcePath = "@studioespresso/splashingimages/assetbundles/SplashingImages/dist";
 
         // define the dependencies
         $this->depends = [
