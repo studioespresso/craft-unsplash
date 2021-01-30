@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 2.1.6 - 2021-01-30
+### Fixed
+* Updated unsplash/unsplash-php to work with Craft 3.6
+
 
 ## 2.1.5 - 2021-01-30
 ### Fixed
