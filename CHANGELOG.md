@@ -1,5 +1,10 @@
 # Splashing Images changelog
 
+
+## 2.1.5 - 2021-01-30
+### Fixed
+* Updated unsplash/unsplash-php to work with Craft 3.6
+
 ## 2.1.4 - 2020-11-14
 ### Fixed
 * Fixed another capitalisation issue [#13](https://github.com/studioespresso/craft3-unsplash/issues/13)
