@@ -12,9 +12,9 @@ namespace studioespresso\splashingimages\services;
 
 use Craft;
 use craft\base\Component;
-use Crew\Unsplash\HttpClient;
-use Crew\Unsplash\Photo;
-use Crew\Unsplash\Search;
+use Unsplash\Photo;
+use Unsplash\Search;
+use Unsplash\HttpClient;
 
 /**
  * SplashingImagesService Service
