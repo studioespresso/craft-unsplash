@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-splashingimages",
     "description": "unsplash.com integration for Craft 3",
     "type": "craft-plugin",
-    "version": "2.1.7",
+    "version": "2.1.8",
     "keywords": [
         "craft",
         "cms",
@@ -18,7 +18,7 @@
     "authors": [
         {
             "name": "Studio Espresso",
-            "homepage": "https://studioespresso.co"
+            "homepage": "https://studioespresso.dev"
         }
     ],
     "require": {
