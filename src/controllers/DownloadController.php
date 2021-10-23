@@ -57,7 +57,7 @@ class DownloadController extends Controller
         }
 
         $path = Craft::$app->getPath();
-        $dir = $path->getTempAssetUploadsPath() . '/unsplash/';
+        $dir = $path->getTempPath() . '/unsplash/';
         if (!is_dir($dir)) {
             mkdir($dir);
         }
