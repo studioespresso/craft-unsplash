@@ -11,6 +11,7 @@
 namespace studioespresso\splashingimages;
 
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\PluginEvent;
 use craft\events\RegisterUrlRulesEvent;
@@ -53,7 +54,7 @@ class SplashingImages extends Plugin
      */
     public static $plugin;
 
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -71,6 +72,7 @@ class SplashingImages extends Plugin
                 $event->rules['splashing-images/collections'] = 'splashing-images/default/collections';
                 $event->rules['splashing-images/collections/<collection:\d+>'] = 'splashing-images/default/collection';
                 $event->rules['splashing-images/find'] = 'splashing-images/default/find';
+                $event->rules['splashing-images/search'] = 'splashing-images/default/search';
                 $event->rules['splashing-images/search/<query>/<page:\d+>'] = 'splashing-images/default/search';
             }
         );
@@ -101,7 +103,7 @@ class SplashingImages extends Plugin
      *
      * @return \craft\base\Model|null
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Model
     {
         return new Settings();
     }
@@ -109,7 +111,7 @@ class SplashingImages extends Plugin
     /**
      * @inheritdoc
      */
-    public function getCpNavItem()
+    public function getCpNavItem(): array
     {
         $navItem = [
             'label' => $this->getSettings()->pluginLabel ? $this->getSettings()->pluginLabel : 'Unsplash Images',
