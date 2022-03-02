@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 3.0.0-beta.1 - 2022-03-02
+### Added
+* Craft CMS 4 compatibility
+
 ## 2.1.8 - 2021-10-23
 ### Fixed
 * Changed temporary file location to fix in issue introduction in Craft 3.7.17.2 ([#14](https://github.com/studioespresso/craft3-unsplash/issues/14))
@@ -7,7 +11,6 @@
 ## 2.1.7 - 2021-01-30
 ### Fixed
 * Updated unsplash/unsplash-php to 3.0.0
-
 
 ## 2.1.6 - 2021-01-30
 ### Fixed
