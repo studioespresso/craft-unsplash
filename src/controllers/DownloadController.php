@@ -59,7 +59,9 @@ class DownloadController extends Controller
         $path = Craft::$app->getPath();
         $dir = $path->getTempPath() . '/unsplash/';
         if (!is_dir($dir)) {
-            mkdir($dir);
+            if (!mkdir($dir) && !is_dir($dir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+            }
         }
 
         $assets = Craft::$app->getAssets();
@@ -90,7 +92,6 @@ class DownloadController extends Controller
         $saved = file_put_contents($tempPath, $picture);
 
         $volume = Craft::$app->volumes->getVolumeById($settings->destination);
-
         $subpath = (string)SplashingImages::$plugin->getSettings()->folder;
 
         if ($subpath) {
@@ -102,12 +103,12 @@ class DownloadController extends Controller
         }
         $assetsService = Craft::$app->getAssets();
 
-        $folderId = $assetsService->ensureFolderByFullPathAndVolume($subpath, $volume);
+        $folder = $assetsService->ensureFolderByFullPathAndVolume($subpath, $volume);
 
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
         $asset->filename = $tmpImage;
-        $asset->newFolderId = $folderId;
+        $asset->newFolderId = $folder->id;
         $asset->volumeId = $volume->id;
         $asset->title = 'Photo by ' . $photo->photographer()->name;
         $asset->avoidFilenameConflicts = true;
