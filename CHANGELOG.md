@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 3.0.0 - 20222-04-26
+### Added
+- Craft 4 🚀
+
 ## 3.0.0-beta.1 - 2022-03-02
 ### Added
 * Craft CMS 4 compatibility
