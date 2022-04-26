@@ -10,6 +10,7 @@
 
 namespace studioespresso\splashingimages\controllers;
 
+use craft\helpers\UrlHelper;
 use studioespresso\splashingimages\records\UserRecord;
 use studioespresso\splashingimages\services\UnsplashService;
 
@@ -34,7 +35,7 @@ class DefaultController extends Controller
     /**
      * Spin up the Unsplash service
      */
-    public function init()
+    public function init(): void
     {
         $this->unsplash = new UnsplashService();
         parent::init();
@@ -57,9 +58,8 @@ class DefaultController extends Controller
      */
     public function actionFind()
     {
-        $resultsPage = Craft::$app->request->getRequiredBodyParam('redirect');
         $query = Craft::$app->request->getRequiredBodyParam('query');
-        $this->redirect($resultsPage . '/' . $query . '/1');
+        return $this->redirect(UrlHelper::cpUrl('splashing-images/search' . '/' . $query . '/1'));
     }
 
     /**
@@ -69,7 +69,7 @@ class DefaultController extends Controller
      * @return bool|\yii\web\Response
      * @throws \yii\base\Exception
      */
-    public function actionSearch($query, $page)
+    public function actionSearch(string $query, int $page)
     {
         if (!$query) {
             return false;
