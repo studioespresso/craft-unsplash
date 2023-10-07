@@ -82,6 +82,9 @@ class DownloadController extends Controller
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
         $asset->filename = $tmpImage;
+        if($photo->description) {
+            $asset->alt = $photo->description;
+        }
         $asset->newFolderId = $folder->id;
         $asset->volumeId = $volume->id;
         $asset->title = 'Photo by ' . $photo->photographer()->name;
