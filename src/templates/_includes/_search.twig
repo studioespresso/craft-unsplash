@@ -1,10 +1,10 @@
 <form action="{{ url('splashing-images/find') }}" method="post">
     {{ csrfInput() }}
     <div class="flex-grow texticon search icon clearable">
-        <input type="text" class="text" name="query" placeholder="Search"
+        <input type="text" class="text" name="query" placeholder="{{ "Search"|t('app') }}"
                {% if query is defined %}value="{{ query }}"{% endif %}>
         <input type="hidden" name="page" value="1">
         <input type="hidden" name="redirect" value="{{ cpUrl('splashing-images/search') }}">
-        <input type="submit" class="btn submit search-splashing" value="Search">
+        <input type="submit" class="btn submit search-splashing" value="{{ "Search"|t('app') }}">
     </div>
 </form>
