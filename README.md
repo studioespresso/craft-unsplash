@@ -1,25 +1,22 @@
-# Splashing Images plugin for Craft CMS 3.x
+# Splashing Images plugin for Craft CMS
 
-![Splashing Images](/resources/banner.png?raw=true)
+![Splashing Images](https://www.studioespresso.co/assets/github-banner-unsplash.png)
 
-unsplash.com integration for Craft 3
+unsplash.com integration for Craft CMS
 
-## Requirements
-
-This plugin requires Craft CMS 3.0.0-RC1 or later.
 
 ## Installation
 
-To install the plugin, follow these instructions.
+Open your terminal and go to your Craft project:
 
-1. Open your terminal and go to your Craft project:
+```bash
+# go to the project directory
+cd /path/to/my-craft-project.dev
 
-        cd /path/to/project
+# tell Composer to install the plugin
+composer require studioespresso/craft-splashingimages
 
-2. Then tell Composer to load the plugin:
-
-        composer require studioespresso/craft-splashingimages
-
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Splashing Images.
-
-Brought to you by [Studio Espresso](https://studioespresso.co)
+# tell Craft to install the plugin
+php craft plugin/install splashing-images
+```
+Brought to you by [Studio Espresso](https://www.studioespresso.co)
