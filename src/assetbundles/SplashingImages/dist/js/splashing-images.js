@@ -20,17 +20,19 @@ $(document).ready(function () {
 
     var msnry = $grid.data('masonry');
 
-    $grid.infiniteScroll({
-        scrollThreshold: 200,
-        path: '.js-pagination__next',
-        append: '.splashing-image-grid',
-        outlayer: msnry,
-        status: '.page-load-status',
-        hideNav: '.pagination',
-        historyTitle: true,
-        history: 'push',
-        debug: false,
-    });
+    if($('.js-pagination__next').length) {
+        $grid.infiniteScroll({
+            scrollThreshold: 200,
+            path: '.js-pagination__next',
+            append: '.splashing-image-grid',
+            outlayer: msnry,
+            status: '.page-load-status',
+            hideNav: '.pagination',
+            historyTitle: true,
+            history: 'push',
+            debug: false,
+        });
+    }
 
     $grid.on( 'append.infiniteScroll', function( event, response, path, items ) {
         $('.splashing-attribute').show();
