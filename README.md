@@ -19,9 +19,16 @@ composer require studioespresso/craft-splashingimages
 php craft plugin/install splashing-images
 ```
 
+
+## Settings
+
+In the plugin settings, you can do the following:
+- Change the plugin's name in the CP sidebar
+- Set where the plugin will store the images you select.
+
 ## License
 
 This plugin is licensed for free under the MIT License.
 
 ---
-Brought to you by [Studio Espresso](https://www.studioespresso.co)
+Brought to you by [Studio Espresso](https://www.studioespresso.co) - 
