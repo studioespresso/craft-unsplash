@@ -40,7 +40,7 @@ class UnsplashService extends Component
         ]);
     }
 
-    public function getPhoto($id)
+    public function getPhoto($id): Photo
     {
         return Photo::find($id);
     }
@@ -77,7 +77,7 @@ class UnsplashService extends Component
         return $data;
     }
 
-    private function getNextUrl()
+    private function getNextUrl(): string
     {
         $segments = Craft::$app->request->getSegments();
         if (count($segments) > 2) {
@@ -88,7 +88,7 @@ class UnsplashService extends Component
         return implode('/', $segments);
     }
 
-    private function parseResults($images)
+    private function parseResults($images): array
     {
         $data = [];
         foreach ($images as $image) {

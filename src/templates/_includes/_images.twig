@@ -1,6 +1,6 @@
 <div id="splashing-container" class="splashing-container are-images-unloaded" style="margin-top: 5px;">
     <div class="splashing-image-sizer"></div>
-    {% for image in images %}
+    {% for image in data.images %}
         <div class="splashing-image-grid">
             <div class="splashing-image js-splashing-image" data-id="{{ image.id }}">
                 <img src="{{ image.small }}">

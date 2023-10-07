@@ -41,9 +41,9 @@ class Settings extends Model
      */
     public $destination;
 
-    public $folder;
+    public string $folder;
 
-    public $pluginLabel;
+    public string $pluginLabel;
 
     // Public Methods
     // =========================================================================

@@ -1,8 +1,8 @@
 <?php
 /**
- * Splashing Images plugin for Craft CMS 3.x
+ * Splashing Images plugin for Craft CMS
  *
- * unsplash.com integration for Craft 3
+ * unsplash.com integration for Craft
  *
  * @link      https://studioespresso.co
  * @copyright Copyright (c) 2017 Studio Espresso
@@ -10,15 +10,11 @@
 
 namespace studioespresso\splashingimages\controllers;
 
-use craft\helpers\UrlHelper;
-use studioespresso\splashingimages\records\UserRecord;
-use studioespresso\splashingimages\services\UnsplashService;
-
 use Craft;
+use craft\helpers\UrlHelper;
 use craft\web\Controller;
-use studioespresso\splashingimages\services\UserService;
-use studioespresso\splashingimages\SplashingImages;
-use yii\web\NotFoundHttpException;
+use studioespresso\splashingimages\services\UnsplashService;
+use yii\web\Response;
 
 /**
  * @author    Studio Espresso
@@ -27,10 +23,11 @@ use yii\web\NotFoundHttpException;
  */
 class DefaultController extends Controller
 {
+
     /**
-     * @var
+     * @var UnsplashService
      */
-    private $unsplash;
+    private UnsplashService $unsplash;
 
     /**
      * Spin up the Unsplash service
@@ -44,19 +41,21 @@ class DefaultController extends Controller
     /**
      * Render the plugins main page and show the latest Unsplash images
      * @param $page int
-     * @return \yii\web\Response
+     * @return Response
      */
-    public function actionIndex($page = 1)
+    public function actionIndex($page = 1): Response
     {
         $data = $this->unsplash->getLatest($page);
-        return $this->renderTemplate('splashing-images/_index', $data);
+        return $this->renderTemplate('splashing-images/_index', [
+            'data' => $data
+        ]);
     }
 
     /**
      * Redirect search form submit to correct results url
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionFind()
+    public function actionFind(): Response
     {
         $query = Craft::$app->request->getRequiredBodyParam('query');
         return $this->redirect(UrlHelper::cpUrl('splashing-images/search' . '/' . $query . '/1'));
@@ -66,16 +65,18 @@ class DefaultController extends Controller
      * Handles searching & returning images from Unsplash
      * @param $query string
      * @param $page int
-     * @return bool|\yii\web\Response
-     * @throws \yii\base\Exception
+     * @return bool|Response
      */
-    public function actionSearch(string $query, int $page)
+    public function actionSearch(string $query, int $page): bool|Response
     {
         if (!$query) {
             return false;
         }
         $data = $this->unsplash->search($query, $page);
-        return $this->renderTemplate('splashing-images/_search', $data);
+        return $this->renderTemplate('splashing-images/_index', [
+            'query' => $query,
+            'data' => $data
+        ]);
     }
 
 }
