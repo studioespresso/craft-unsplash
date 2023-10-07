@@ -1,9 +1,8 @@
-# Splashing Images plugin for Craft CMS
-
 ![Splashing Images](https://www.studioespresso.co/assets/github-banner-unsplash.png)
 
-unsplash.com integration for Craft CMS
+# Splashing Images plugin for Craft CMS
 
+unsplash.com integration for Craft CMS
 
 ## Installation
 
