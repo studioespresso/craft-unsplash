@@ -11,9 +11,9 @@
         </div>
     {% endfor %}
 </div>
-{% if next_page is defined %}
+{% if data.next_page is defined %}
     <div class="pagination">
-        <a href="{{ url(next_page) }}" class="js-pagination__next" >{{ 'Next'|t }}</a>
+        <a href="{{ url(data.next_page) }}" class="js-pagination__next" >{{ 'Next'|t }}</a>
     </div>
     <div class="page-load-status" style="display: none;">
         <div class="infinite-scroll-request">
