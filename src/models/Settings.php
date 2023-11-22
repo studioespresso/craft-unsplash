@@ -39,11 +39,11 @@ class Settings extends Model
      *
      * @var string
      */
-    public $destination;
+    public $destination = '';
 
-    public string $folder;
+    public string $folder = '';
 
-    public string $pluginLabel;
+    public string $pluginLabel = "Unsplash";
 
     // Public Methods
     // =========================================================================
