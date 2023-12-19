@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-splashingimages",
     "description": "unsplash.com integration for Craft 3",
     "type": "craft-plugin",
-    "version": "5.0.0-alpha.2",
+    "version": "5.0.0-alpha.3",
     "keywords": [
         "craft",
         "cms",
@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "5.0.x-dev as 5.0.0-alpha",
+        "craftcms/cms": "^5.0.0-alpha",
         "unsplash/unsplash": "^3.0.0"
     },
     "autoload": {

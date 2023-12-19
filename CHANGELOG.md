@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 5.0.0-alpha.3 - 2023-12-19
+### Added
+- Initial Craft 5 support
+
 ## 3.0.0 - 20222-04-26
 ### Added
 - Craft 4 🚀
