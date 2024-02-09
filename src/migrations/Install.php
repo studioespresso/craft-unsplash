@@ -8,7 +8,6 @@
 namespace studioespresso\splashingimages\migrations;
 
 use Craft;
-use craft\config\DbConfig;
 use craft\db\Migration;
 use studioespresso\splashingimages\records\UserRecord;
 

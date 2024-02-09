@@ -20,7 +20,6 @@ use craft\services\Plugins;
 use craft\web\UrlManager;
 use studioespresso\splashingimages\models\Settings;
 use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
-use studioespresso\splashingimages\variables\SplashingImagesVariable;
 use yii\base\Event;
 
 /**
@@ -62,7 +61,7 @@ class SplashingImages extends Plugin
         Event::on(
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
+            function(RegisterUrlRulesEvent $event) {
                 $event->rules['splashing-images'] = 'splashing-images/default/index';
                 $event->rules['splashing-images/<page:\d+>'] = 'splashing-images/default/index';
                 $event->rules['splashing-images/curated'] = 'splashing-images/default/curated';
@@ -80,7 +79,7 @@ class SplashingImages extends Plugin
         Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
+            function(PluginEvent $event) {
                 if ($event->plugin->id === $this->id) {
                     // Redirect to plugin settings
                     $request = Craft::$app->getRequest();
@@ -92,7 +91,6 @@ class SplashingImages extends Plugin
                 }
             }
         );
-
     }
 
     // Protected Methods

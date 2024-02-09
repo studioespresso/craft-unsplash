@@ -12,9 +12,9 @@ namespace studioespresso\splashingimages\services;
 
 use Craft;
 use craft\base\Component;
+use Unsplash\HttpClient;
 use Unsplash\Photo;
 use Unsplash\Search;
-use Unsplash\HttpClient;
 
 /**
  * SplashingImagesService Service
@@ -31,12 +31,11 @@ use Unsplash\HttpClient;
  */
 class UnsplashService extends Component
 {
-
     public function __construct(array $config = [])
     {
         HttpClient::init([
             'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
-            'utmSource' => 'Craft 3 Unsplash'
+            'utmSource' => 'Craft 3 Unsplash',
         ]);
     }
 

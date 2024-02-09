@@ -10,10 +10,10 @@
 
 namespace studioespresso\splashingimages\models;
 
-use studioespresso\splashingimages\SplashingImages;
-
 use Craft;
+
 use craft\base\Model;
+use studioespresso\splashingimages\SplashingImages;
 
 /**
  * SplashingImages Settings Model

@@ -25,6 +25,6 @@ return [
     "Plugin Label" => "Plugin Label",
     "You can give the plugin in different name in the CP navigation here" => "Met dit veld kan je de naam van de plugin in het controle paneel veranderen.",
     "Volume" => "Volume",
-    "Select the volume where your images should be save" => "Selecteer het volume waar je de afbeeldingen in wil bewaren    "
+    "Select the volume where your images should be save" => "Selecteer het volume waar je de afbeeldingen in wil bewaren    ",
 
 ];

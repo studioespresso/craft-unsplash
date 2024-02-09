@@ -23,7 +23,6 @@ use yii\web\Response;
  */
 class DefaultController extends Controller
 {
-
     /**
      * @var UnsplashService
      */
@@ -47,7 +46,7 @@ class DefaultController extends Controller
     {
         $data = $this->unsplash->getLatest($page);
         return $this->renderTemplate('splashing-images/_index', [
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -75,8 +74,7 @@ class DefaultController extends Controller
         $data = $this->unsplash->search($query, $page);
         return $this->renderTemplate('splashing-images/_index', [
             'query' => $query,
-            'data' => $data
+            'data' => $data,
         ]);
     }
-
 }

@@ -10,7 +10,6 @@
 
 namespace studioespresso\splashingimages\assetbundles\SplashingImages;
 
-use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 

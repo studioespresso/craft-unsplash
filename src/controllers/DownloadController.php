@@ -40,7 +40,7 @@ class DownloadController extends Controller
 
         $assets = Craft::$app->getAssets();
         $settings = SplashingImages::$plugin->getSettings();
-        if(!isset($settings->destination)) {
+        if (!isset($settings->destination)) {
             $returnData['success'] = false;
             $returnData['message'] = Craft::t('splashing-images', 'Please set a file destination in settings so images can be saved');
             return $this->asJson($returnData);
@@ -82,7 +82,7 @@ class DownloadController extends Controller
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
         $asset->filename = $tmpImage;
-        if($photo->description) {
+        if ($photo->description) {
             $asset->alt = $photo->description;
         }
         $asset->newFolderId = $folder->id;
@@ -102,7 +102,5 @@ class DownloadController extends Controller
         }
         return $this->asJson($returnData);
         exit;
-
     }
-
 }
