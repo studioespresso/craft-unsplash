@@ -18,12 +18,21 @@
     "authors": [
         {
             "name": "Studio Espresso",
-            "homepage": "https://studioespresso.dev"
+            "homepage": "https://www.studioespresso.co"
         }
     ],
     "require": {
         "craftcms/cms": "^5.0.0-alpha",
         "unsplash/unsplash": "^3.0.0"
+    },
+    "require-dev": {
+        "craftcms/ecs": "dev-main",
+        "craftcms/phpstan": "dev-main"
+    },
+    "scripts": {
+        "check-cs": "ecs check --ansi",
+        "fix-cs": "ecs check --ansi --fix",
+        "phpstan": "phpstan --memory-limit=1G"
     },
     "autoload": {
         "psr-4": {
@@ -44,5 +53,11 @@
             "type": "github",
             "url": "https://github.com/sponsors/janhenckens"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    }
 }
