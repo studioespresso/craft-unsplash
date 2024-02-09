@@ -1,8 +1,11 @@
-![Splashing Images](https://www.studioespresso.co/assets/github-banner-unsplash.png)
+# Unsplash for Craft CMS
 
-# Splashing Images for Craft CMS
+unsplash.com, integrated right into your Craft CMS control panel 📸
 
-unsplash.com integration for Craft CMS
+
+![Unsplash for Craft CMS](https://www.studioespresso.co/assets/Unsplash-Github-banner.png)
+
+
 
 ## Installation
 

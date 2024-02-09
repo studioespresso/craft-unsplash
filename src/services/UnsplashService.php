@@ -37,6 +37,7 @@ class UnsplashService extends Component
             'applicationId' => 'f2f0833b9b95a11260cdbb20622e4990579254f787705ebe298cfdad4415198e',
             'utmSource' => 'Craft 3 Unsplash',
         ]);
+        parent::__construct($config);
     }
 
     public function getPhoto($id): Photo

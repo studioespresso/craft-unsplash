@@ -82,11 +82,13 @@ class DownloadController extends Controller
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
         $asset->filename = $tmpImage;
+        /** @phpstan-ignore-next-line */
         if ($photo->description) {
             $asset->alt = $photo->description;
         }
         $asset->newFolderId = $folder->id;
         $asset->volumeId = $volume->id;
+        /** @phpstan-ignore-next-line */
         $asset->title = 'Photo by ' . $photo->photographer()->name;
         $asset->avoidFilenameConflicts = true;
         $asset->setScenario(Asset::SCENARIO_CREATE);
