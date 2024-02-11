@@ -12,6 +12,7 @@ namespace studioespresso\splashingimages\services;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\UrlHelper;
 use Unsplash\Photo;
 use Unsplash\Search;
 use Unsplash\HttpClient;
@@ -72,7 +73,7 @@ class UnsplashService extends Component
 
         $results = $this->parseResults($images->getArrayObject());
         $data['images'] = $results;
-        $data['next_page'] = $this->getNextUrl();
+        $data['next_page'] = UrlHelper::cpUrl($this->getNextUrl(), ['search' => $query]);
         Craft::$app->cache->add('splashing_' . $query . '_' . $page, $data, 60 * 60 * 24);
         return $data;
     }
@@ -83,6 +84,7 @@ class UnsplashService extends Component
         if (count($segments) > 2) {
             $segments[count($segments) - 1] = $segments[count($segments) - 1] + 1;
         } else {
+
             $segments[count($segments)] = 2;
         }
         return implode('/', $segments);
