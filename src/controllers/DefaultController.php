@@ -59,7 +59,7 @@ class DefaultController extends Controller
     public function actionFind()
     {
         $query = Craft::$app->request->getRequiredBodyParam('query');
-        return $this->redirect(UrlHelper::cpUrl('splashing-images/search' . '/' . $query . '/1'));
+        return $this->redirect(UrlHelper::cpUrl('splashing-images/search/1', ['search' => $query]));
     }
 
     /**
@@ -69,8 +69,9 @@ class DefaultController extends Controller
      * @return bool|\yii\web\Response
      * @throws \yii\base\Exception
      */
-    public function actionSearch(string $query, int $page)
+    public function actionSearch(int $page)
     {
+        $query = $this->request->getRequiredQueryParam('search');
         if (!$query) {
             return false;
         }
