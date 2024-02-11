@@ -1,5 +1,10 @@
 # Splashing Images changelog
 
+## 3.0.1 - 2024-02-11
+### Fixed
+- Fixed an error with multiple search terms ([#16](https://github.com/studioespresso/craft-unsplash/issues/16))
+
+
 ## 3.0.0 - 20222-04-26
 ### Added
 - Craft 4 🚀
