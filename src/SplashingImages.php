@@ -72,7 +72,7 @@ class SplashingImages extends Plugin
                 $event->rules['splashing-images/collections/<collection:\d+>'] = 'splashing-images/default/collection';
                 $event->rules['splashing-images/find'] = 'splashing-images/default/find';
                 $event->rules['splashing-images/search'] = 'splashing-images/default/search';
-                $event->rules['splashing-images/search/<query>/<page:\d+>'] = 'splashing-images/default/search';
+                $event->rules['splashing-images/search/<page:\d+>'] = 'splashing-images/default/search';
             }
         );
 
