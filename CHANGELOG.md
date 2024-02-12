@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 5.0.2 - 2024-02-12
+## Fixed
+- Fixed an issue with pagination when searching
+
 ## 5.0.1 - 2024-02-11
 ## Fixed
 - Fixed an error with multiple search terms ([#16](https://github.com/studioespresso/craft-unsplash/issues/16))
@@ -11,6 +15,10 @@
 ## 5.0.0-alpha.3 - 2023-12-19
 ### Added
 - Initial Craft 5 support
+
+## 3.0.2 - 2024-02-11
+### Fixed
+- Fixed an issue with pagination when searching
 
 ## 3.0.1 - 2024-02-11
 ### Fixed
