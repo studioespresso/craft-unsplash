@@ -1,5 +1,10 @@
 # Splashing Images changelog
 
+## 5.0.3 - 2024-02-12
+## Fixed
+- Fixed an issue searching
+
+
 ## 5.0.2 - 2024-02-12
 ## Fixed
 - Fixed an issue with pagination when searching
