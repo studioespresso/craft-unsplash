@@ -54,10 +54,10 @@ class DefaultController extends Controller
      * Redirect search form submit to correct results url
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionFind(): Response
+    public function actionFind()
     {
         $query = Craft::$app->request->getRequiredBodyParam('query');
-        return $this->redirect(UrlHelper::cpUrl('splashing-images/search' . '/' . $query . '/1'));
+        return $this->redirect(UrlHelper::cpUrl('splashing-images/search/1', ['search' => $query]));
     }
 
     /**
@@ -66,15 +66,13 @@ class DefaultController extends Controller
      * @param $page int
      * @return bool|Response
      */
-    public function actionSearch(string $query, int $page): bool|Response
+    public function actionSearch(int $page)
     {
+        $query = $this->request->getRequiredQueryParam('search');
         if (!$query) {
             return false;
         }
         $data = $this->unsplash->search($query, $page);
-        return $this->renderTemplate('splashing-images/_index', [
-            'query' => $query,
-            'data' => $data,
-        ]);
+        return $this->renderTemplate('splashing-images/_search',['data' => $data]);
     }
 }
