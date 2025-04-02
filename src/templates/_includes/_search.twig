@@ -1,5 +1,6 @@
 <form action="{{ url('splashing-images/find') }}" method="post">
     {{ csrfInput() }}
+    {% set query = craft.app.request.getQueryParam('search') %}
     <div class="flex-grow texticon search icon clearable">
         <input type="text" class="text" name="query" placeholder="{{ "Search"|t('app') }}"
                {% if query is defined %}value="{{ query }}"{% endif %}>
