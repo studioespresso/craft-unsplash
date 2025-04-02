@@ -57,6 +57,20 @@ class SplashingImages extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+
+        $settings = $this->getSettings();
+        $destination = $settings->destination;
+
+        if (is_numeric($destination)) {
+            $volume = Craft::$app->volumes->getVolumeById($destination);
+
+            if ($volume !== null) {
+                $settings->destination = $volume->handle;
+                Craft::$app->plugins->savePluginSettings($this, $settings->toArray());
+            }
+        }
+
+
         // Register our CP routes
         Event::on(
             UrlManager::class,
@@ -125,7 +139,7 @@ class SplashingImages extends Plugin
     {
         $volumes = Craft::$app->getVolumes();
         foreach ($volumes->getAllVolumes() as $source) {
-            $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
+            $destinationOptions[] = array('label' => $source->name, 'value' => $source->handle);
         }
         return Craft::$app->view->renderTemplate(
             'splashing-images/settings',

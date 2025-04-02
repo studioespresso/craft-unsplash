@@ -65,7 +65,7 @@ class DownloadController extends Controller
         $tempPath = $dir . $tmpImage;
         $saved = file_put_contents($tempPath, $picture);
 
-        $volume = Craft::$app->volumes->getVolumeById($settings->destination);
+        $volume = Craft::$app->volumes->getVolumeByHandle($settings->destination);
         $subpath = (string)SplashingImages::$plugin->getSettings()->folder;
 
         if ($subpath) {
