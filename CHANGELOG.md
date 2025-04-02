@@ -1,9 +1,12 @@
 # Splashing Images changelog
 
+## 5.0.4 - 2025-04-02
+## Fixed
+- Volumes are now saved and used by their handle instead of id, the fix differences between environments ([#18](https://github.com/studioespresso/craft-unsplash/pull/18))
+
 ## 5.0.3 - 2024-02-12
 ## Fixed
 - Fixed an issue searching
-
 
 ## 5.0.2 - 2024-02-12
 ## Fixed

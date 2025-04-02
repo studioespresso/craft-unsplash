@@ -64,7 +64,7 @@ class DownloadController extends Controller
         $tmpImage = 'photo-' . rand() . '.jpg';
         $tempPath = $dir . $tmpImage;
         $saved = file_put_contents($tempPath, $picture);
-        
+
         if(is_numeric($settings->destination)) {
             $volume = Craft::$app->volumes->getVolumeById($settings->destination);
         } else {
