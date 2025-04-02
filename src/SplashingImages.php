@@ -20,6 +20,7 @@ use craft\services\Plugins;
 use craft\web\UrlManager;
 use studioespresso\splashingimages\models\Settings;
 use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
+use studioespresso\splashingimages\services\UnsplashService;
 use yii\base\Event;
 
 /**
@@ -36,7 +37,7 @@ use yii\base\Event;
  * @package   SplashingImages
  * @since     1.0.0
  *
- * @property  SplashingImagesServiceService $splashingImagesService
+ * @property  UnsplashService $unsplash
  * @property  Settings $settings
  * @method    Settings getSettings()
  */
@@ -125,7 +126,7 @@ class SplashingImages extends Plugin
     {
         $volumes = Craft::$app->getVolumes();
         foreach ($volumes->getAllVolumes() as $source) {
-            $destinationOptions[] = array('label' => $source->name, 'value' => $source->id);
+            $destinationOptions[] = array('label' => $source->name, 'value' => $source->handle);
         }
         return Craft::$app->view->renderTemplate(
             'splashing-images/settings',
