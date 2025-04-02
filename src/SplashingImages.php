@@ -19,7 +19,6 @@ use craft\helpers\UrlHelper;
 use craft\services\Plugins;
 use craft\web\UrlManager;
 use studioespresso\splashingimages\models\Settings;
-use studioespresso\splashingimages\services\SplashingImagesService as SplashingImagesServiceService;
 use studioespresso\splashingimages\services\UnsplashService;
 use yii\base\Event;
 

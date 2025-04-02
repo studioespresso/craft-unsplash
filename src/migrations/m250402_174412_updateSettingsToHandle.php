@@ -16,7 +16,7 @@ class m250402_174412_updateSettingsToHandle extends Migration
      */
     public function safeUp(): bool
     {
-        if(Craft::$app->config->general->allowAdminChanges === false) {
+        if (Craft::$app->config->general->allowAdminChanges === false) {
             return true;
         }
 
