@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 6.0.0-alpha.1 - 2026-05-20
+### Added
+- Initial support for Craft 6.0.0
+
 ## 5.0.4 - 2025-04-02
 ## Fixed
 - Volumes are now saved and used by their handle instead of id, the fix differences between environments ([#18](https://github.com/studioespresso/craft-unsplash/pull/18))
