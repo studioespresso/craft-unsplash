@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Splashing Images plugin for Craft CMS
  *
  * unsplash.com integration for Craft
  *
  * @link      https://studioespresso.co
+ *
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
@@ -26,20 +28,20 @@ use function CraftCms\Cms\t;
 
 /**
  * @author    Studio Espresso
- * @package   SplashingImages
+ *
  * @since     1.0.0
  *
- * @method    Settings getSettings()
+ * @method Settings getSettings()
  */
 class SplashingImages extends Plugin
 {
     protected array $publishables = [
-        __DIR__ . '/../resources/dist' => 'dist',
+        __DIR__.'/../resources/dist' => 'dist',
     ];
 
     protected static function createSettings(): ?PluginSettings
     {
-        return new Settings();
+        return new Settings;
     }
 
     public function getCpNavItem(): NavItem|array|null
@@ -47,13 +49,13 @@ class SplashingImages extends Plugin
         return new NavItem()
             ->label($this->getSettings()->pluginLabel ?: 'Unsplash Images')
             ->href($this->handle)
-            ->iconSvg(file_get_contents($this->getBasePath() . '/icon-mask.svg'));
+            ->iconSvg(file_get_contents($this->getBasePath().'/icon-mask.svg'));
     }
 
-    public function settingsForm(FormContext $context = new FormContext()): ?Form
+    public function settingsForm(FormContext $context = new FormContext): ?Form
     {
         $volumes = Volumes::getAllVolumes()
-            ->map(fn(Volume $volume) => ['label' => $volume->name, 'value' => $volume->handle])
+            ->map(fn (Volume $volume) => ['label' => $volume->name, 'value' => $volume->handle])
             ->values()
             ->all();
 

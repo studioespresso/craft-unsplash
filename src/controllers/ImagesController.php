@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Splashing Images plugin for Craft CMS
  *
  * unsplash.com integration for Craft
  *
  * @link      https://studioespresso.co
+ *
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
@@ -21,40 +23,38 @@ use function CraftCms\Cms\template;
 
 /**
  * @author    Studio Espresso
- * @package   SplashingImages
+ *
  * @since     1.0.0
  */
 class ImagesController
 {
-    public function __construct(private UnsplashService $unsplash)
-    {
-    }
+    public function __construct(private UnsplashService $unsplash) {}
 
     public function index(Request $request, int $page = 1): mixed
     {
         return $this->respond($request, [
             'images' => $this->unsplash->getLatest($page),
-            'next_page' => cp_url('splashing-images/' . ($page + 1)),
+            'next_page' => cp_url('splashing-images/'.($page + 1)),
         ]);
     }
 
     public function search(Request $request, int $page = 1): mixed
     {
-        $query = (string)$request->query('search');
+        $query = (string) $request->query('search');
         if ($query === '') {
             return $this->index($request);
         }
 
         return $this->respond($request, [
             'images' => $this->unsplash->search($query, $page),
-            'next_page' => cp_url('splashing-images/search/' . ($page + 1), ['search' => $query]),
+            'next_page' => cp_url('splashing-images/search/'.($page + 1), ['search' => $query]),
         ], $query);
     }
 
     private function respond(Request $request, array $data, ?string $query = null): mixed
     {
         // Infinite Scroll fetches the next page over XHR and only needs the images
-        if ($request->ajax() && !$request->inertia()) {
+        if ($request->ajax() && ! $request->inertia()) {
             return response(template('splashing-images/_includes/_images', ['data' => $data]));
         }
 
@@ -77,8 +77,8 @@ class ImagesController
     private function assetUrl(string $path): string
     {
         $plugin = SplashingImages::getInstance();
-        $version = filemtime($plugin->getResourcesPath() . '/' . $path);
+        $version = filemtime($plugin->getResourcesPath().'/'.$path);
 
-        return $plugin->asset($path) . "?v=$version";
+        return $plugin->asset($path)."?v=$version";
     }
 }

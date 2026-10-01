@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Splashing Images plugin for Craft CMS
  *
  * unsplash.com integration for Craft
  *
  * @link      https://studioespresso.co
+ *
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
@@ -17,7 +19,7 @@ use Unsplash\Search;
 
 /**
  * @author    Studio Espresso
- * @package   SplashingImages
+ *
  * @since     1.0.0
  */
 class UnsplashService
@@ -37,12 +39,12 @@ class UnsplashService
 
     public function getLatest(int $page, int $count = 30): array
     {
-        return Cache::remember('splashing_latest_' . $page, 60 * 60 * 12, fn() => $this->parseResults(Photo::all($page, $count)));
+        return Cache::remember('splashing_latest_'.$page, 60 * 60 * 12, fn () => $this->parseResults(Photo::all($page, $count)));
     }
 
     public function search(string $query, int $page = 1, int $count = 30): array
     {
-        return Cache::remember('splashing_' . md5($query) . '_' . $page, 60 * 60 * 24, fn() => $this->parseResults(Search::photos($query, $page, $count)->getArrayObject()));
+        return Cache::remember('splashing_'.md5($query).'_'.$page, 60 * 60 * 24, fn () => $this->parseResults(Search::photos($query, $page, $count)->getArrayObject()));
     }
 
     private function parseResults($images): array
@@ -56,6 +58,7 @@ class UnsplashService
             $data[$image->id]['attr']['name'] = $image->user['name'];
             $data[$image->id]['attr']['link'] = $image->user['links']['html'];
         }
+
         return $data;
     }
 }

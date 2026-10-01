@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Splashing Images plugin for Craft CMS
  *
  * unsplash.com integration for Craft
  *
  * @link      https://studioespresso.co
+ *
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
@@ -26,7 +28,7 @@ use function CraftCms\Cms\t;
 
 /**
  * @author    Studio Espresso
- * @package   SplashingImages
+ *
  * @since     1.0.0
  */
 class DownloadController
@@ -35,19 +37,19 @@ class DownloadController
     {
         $settings = SplashingImages::getInstance()->getSettings();
         $volume = $settings->destination ? Volumes::getVolumeByHandle($settings->destination) : null;
-        if (!$volume) {
+        if (! $volume) {
             return $this->result(false, 'Please set a file destination in settings so images can be saved');
         }
 
         $photo = $unsplash->getPhoto($request->input('id'));
-        $tempPath = tempnam(sys_get_temp_dir(), 'unsplash') . '.jpg';
+        $tempPath = tempnam(sys_get_temp_dir(), 'unsplash').'.jpg';
         Http::sink($tempPath)->get($photo->download())->throw();
 
         $subpath = $settings->folder ? Template::renderObjectTemplate($settings->folder, $settings) : '';
 
-        $asset = new Asset();
+        $asset = new Asset;
         $asset->tempFilePath = $tempPath;
-        $asset->filename = 'photo-' . $photo->id . '.jpg';
+        $asset->filename = 'photo-'.$photo->id.'.jpg';
         /** @phpstan-ignore-next-line */
         if ($photo->description) {
             $asset->alt = $photo->description;
@@ -55,7 +57,7 @@ class DownloadController
         $asset->newFolderId = Folders::ensureFolderByFullPathAndVolume($subpath, $volume)->id;
         $asset->volumeId = $volume->id;
         /** @phpstan-ignore-next-line */
-        $asset->title = 'Photo by ' . $photo->photographer()->name;
+        $asset->title = 'Photo by '.$photo->photographer()->name;
         $asset->avoidFilenameConflicts = true;
         $asset->ruleset->useScenario(AssetRules::SCENARIO_CREATE);
 

@@ -26,18 +26,21 @@
         "unsplash/unsplash": "^3.0.0"
     },
     "require-dev": {
-        "craftcms/ecs": "dev-main",
-        "craftcms/phpstan": "dev-main"
+        "larastan/larastan": "^3.12",
+        "laravel/pint": "^1.27",
+        "orchestra/testbench": "^11.0"
     },
+    "minimum-stability": "alpha",
+    "prefer-stable": true,
     "scripts": {
-        "check-cs": "ecs check --ansi",
-        "fix-cs": "ecs check --ansi --fix",
+        "check-cs": "pint --test",
+        "fix-cs": "pint",
         "phpstan": "phpstan --memory-limit=1G",
-        "ci": "ecs check --ansi --fix && phpstan --memory-limit=1G"
+        "ci": "pint && phpstan --memory-limit=1G"
     },
     "autoload": {
         "psr-4": {
-          "studioespresso\\splashingimages\\": "src/"
+            "studioespresso\\splashingimages\\": "src/"
         }
     },
     "extra": {

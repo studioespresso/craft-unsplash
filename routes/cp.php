@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use studioespresso\splashingimages\controllers\ImagesController;
 use studioespresso\splashingimages\controllers\DownloadController;
+use studioespresso\splashingimages\controllers\ImagesController;
 
 Route::middleware(['auth', 'can:accessCp', 'can:accessPlugin-splashing-images'])->group(function () {
     Route::post('splashing-images/download', DownloadController::class);

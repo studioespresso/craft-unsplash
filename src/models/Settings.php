@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Splashing Images plugin for Craft CMS 3.x
  *
  * unsplash.com integration for Craft 3
  *
  * @link      https://studioespresso.co
+ *
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
@@ -23,7 +25,7 @@ use CraftCms\Cms\Plugin\PluginSettings;
  * https://craftcms.com/docs/plugins/models
  *
  * @author    Studio Espresso
- * @package   SplashingImages
+ *
  * @since     1.0.0
  */
 class Settings extends PluginSettings
@@ -40,7 +42,7 @@ class Settings extends PluginSettings
 
     public string $folder = '';
 
-    public string $pluginLabel = "Unsplash";
+    public string $pluginLabel = 'Unsplash';
 
     // Public Methods
     // =========================================================================
