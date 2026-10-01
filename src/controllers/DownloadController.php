@@ -10,104 +10,62 @@
 
 namespace studioespresso\splashingimages\controllers;
 
-use Craft;
-use craft\elements\Asset;
-use craft\errors\InvalidSubpathException;
-use craft\web\Controller;
+use CraftCms\Cms\Asset\Elements\Asset;
+use CraftCms\Cms\Asset\Validation\AssetRules;
+use CraftCms\Cms\Support\Facades\Elements;
+use CraftCms\Cms\Support\Facades\Folders;
+use CraftCms\Cms\Support\Facades\Template;
+use CraftCms\Cms\Support\Facades\Volumes;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use studioespresso\splashingimages\services\UnsplashService;
 use studioespresso\splashingimages\SplashingImages;
+
+use function CraftCms\Cms\t;
 
 /**
  * @author    Studio Espresso
  * @package   SplashingImages
  * @since     1.0.0
  */
-class DownloadController extends Controller
+class DownloadController
 {
-    public function actionIndex(): \yii\web\Response|false
+    public function __invoke(Request $request, UnsplashService $unsplash): JsonResponse
     {
-        if (!Craft::$app->request->isAjax) {
-            return false;
+        $settings = SplashingImages::getInstance()->getSettings();
+        $volume = $settings->destination ? Volumes::getVolumeByHandle($settings->destination) : null;
+        if (!$volume) {
+            return $this->result(false, 'Please set a file destination in settings so images can be saved');
         }
 
-        $path = Craft::$app->getPath();
-        $dir = $path->getTempPath() . '/unsplash/';
-        if (!is_dir($dir)) {
-            if (!mkdir($dir) && !is_dir($dir)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
-            }
-        }
+        $photo = $unsplash->getPhoto($request->input('id'));
+        $tempPath = tempnam(sys_get_temp_dir(), 'unsplash') . '.jpg';
+        Http::sink($tempPath)->get($photo->download())->throw();
 
-        $assets = Craft::$app->getAssets();
-        $settings = SplashingImages::$plugin->getSettings();
-        if (!isset($settings->destination)) {
-            $returnData['success'] = false;
-            $returnData['message'] = Craft::t('splashing-images', 'Please set a file destination in settings so images can be saved');
-            return $this->asJson($returnData);
-        }
-
-        $id = Craft::$app->request->post('id');
-        $unplash = new UnsplashService();
-        $photo = $unplash->getPhoto($id);
-        $payload = $photo->download();
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $payload);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        $picture = curl_exec($ch);
-        curl_close($ch);
-
-
-        $tmpImage = 'photo-' . rand() . '.jpg';
-        $tempPath = $dir . $tmpImage;
-        $saved = file_put_contents($tempPath, $picture);
-
-        if (is_numeric($settings->destination)) {
-            $volume = Craft::$app->volumes->getVolumeById($settings->destination);
-        } else {
-            $volume = Craft::$app->volumes->getVolumeByHandle($settings->destination);
-        }
-
-        $subpath = (string)SplashingImages::$plugin->getSettings()->folder;
-
-        if ($subpath) {
-            try {
-                $subpath = Craft::$app->getView()->renderObjectTemplate($subpath, $settings);
-            } catch (\Throwable $e) {
-                throw new InvalidSubpathException($subpath);
-            }
-        }
-        $assetsService = Craft::$app->getAssets();
-
-        $folder = $assetsService->ensureFolderByFullPathAndVolume($subpath, $volume);
+        $subpath = $settings->folder ? Template::renderObjectTemplate($settings->folder, $settings) : '';
 
         $asset = new Asset();
         $asset->tempFilePath = $tempPath;
-        $asset->filename = $tmpImage;
+        $asset->filename = 'photo-' . $photo->id . '.jpg';
         /** @phpstan-ignore-next-line */
         if ($photo->description) {
             $asset->alt = $photo->description;
         }
-        $asset->newFolderId = $folder->id;
+        $asset->newFolderId = Folders::ensureFolderByFullPathAndVolume($subpath, $volume)->id;
         $asset->volumeId = $volume->id;
         /** @phpstan-ignore-next-line */
         $asset->title = 'Photo by ' . $photo->photographer()->name;
         $asset->avoidFilenameConflicts = true;
-        $asset->setScenario(Asset::SCENARIO_CREATE);
+        $asset->ruleset->useScenario(AssetRules::SCENARIO_CREATE);
 
-        $result = Craft::$app->elements->saveElement($asset);
+        return Elements::saveElement($asset)
+            ? $this->result(true, 'Image saved!')
+            : $this->result(false, 'Oops, something went wrong...');
+    }
 
-        if ($result) {
-            $returnData['success'] = true;
-            $returnData['message'] = Craft::t('splashing-images', 'Image saved!');
-        } else {
-            $returnData['success'] = false;
-            $returnData['message'] = Craft::t('splashing-images', 'Oops, something went wrong...');
-        }
-        return $this->asJson($returnData);
-        exit;
+    private function result(bool $success, string $message): JsonResponse
+    {
+        return new JsonResponse(['success' => $success, 'message' => t($message, category: 'splashing-images')]);
     }
 }

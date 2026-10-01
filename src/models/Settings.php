@@ -10,10 +10,7 @@
 
 namespace studioespresso\splashingimages\models;
 
-use Craft;
-
-use craft\base\Model;
-use studioespresso\splashingimages\SplashingImages;
+use CraftCms\Cms\Plugin\PluginSettings;
 
 /**
  * SplashingImages Settings Model
@@ -29,7 +26,7 @@ use studioespresso\splashingimages\SplashingImages;
  * @package   SplashingImages
  * @since     1.0.0
  */
-class Settings extends Model
+class Settings extends PluginSettings
 {
     // Public Properties
     // =========================================================================
@@ -48,22 +45,10 @@ class Settings extends Model
     // Public Methods
     // =========================================================================
 
-    /**
-     * Returns the validation rules for attributes.
-     *
-     * Validation rules are used by [[validate()]] to check if attribute values are valid.
-     * Child classes may override this method to declare different validation rules.
-     *
-     * More info: http://www.yiiframework.com/doc-2.0/guide-input-validation.html
-     *
-     * @return array
-     */
-    public function rules(): array
+    public function getRules(): array
     {
         return [
-            ['destination', 'required'],
-            ['destination', 'string'],
-            ['destination', 'default', 'value' => ''],
+            'destination' => ['required', 'string'],
         ];
     }
 }

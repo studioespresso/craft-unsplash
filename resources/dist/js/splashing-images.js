@@ -1,8 +1,15 @@
-$(document).ready(function () {
-    var $grid = $('.splashing-container').masonry({
+// The Craft 6 CP renders page content with Vue, so the grid can appear after this script runs
+function initSplashingGrid() {
+    var $container = $('.splashing-container:not(.is-initialized)');
+    if (!$container.length || !$.fn.masonry || !$.fn.imagesLoaded || !$.fn.infiniteScroll) {
+        return;
+    }
+    $container.addClass('is-initialized');
+
+    var $grid = $container.masonry({
         itemSelector: 'none', // select none at first
         columnWidth: '.splashing-image-sizer',
-        gutter: 18,
+        gutter: 16,
         percentPosition: true,
         visibleStyle: {transform: 'translateY(0)', opacity: 1},
         hiddenStyle: {transform: 'translateY(10px)', opacity: 0},
@@ -14,8 +21,6 @@ $(document).ready(function () {
         $grid.masonry('option', {itemSelector: '.splashing-image-grid'});
         var $items = $grid.find('.splashing-image-grid');
         $grid.masonry('appended', $items);
-        $('.splashing-attribute').show();
-        $('.page-load-status').show();
     });
 
     var msnry = $grid.data('masonry');
@@ -34,20 +39,24 @@ $(document).ready(function () {
         });
     }
 
-    $grid.on( 'append.infiniteScroll', function( event, response, path, items ) {
-        $('.splashing-attribute').show();
-    });
+}
 
-    $('#content').on('click', '.js-splashing-image', function (e) {
+new MutationObserver(initSplashingGrid).observe(document.body, {childList: true, subtree: true});
+// Scripts injected on Inertia visits load in any order, so retry as each one finishes
+document.addEventListener('load', initSplashingGrid, true);
+initSplashingGrid();
+
+$(function () {
+    $(document).on('click', '.js-splashing-image', function (e) {
         var $image = $(this);
 
         payload = {}
         payload['id'] = $image.data('id');
-        payload[window.csrfTokenName] = window.csrfTokenValue;
+        payload[Craft.csrfTokenName] = Craft.csrfTokenValue;
 
         $.ajax({
             type: 'POST',
-            url: Craft.getActionUrl('splashing-images/download'),
+            url: Craft.getCpUrl('splashing-images/download'),
             dataType: 'JSON',
             data: payload,
             beforeSend: function () {
@@ -64,7 +73,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 $image.parent().removeClass('saving');
-                Craft.cp.displayError(response.message);
+                Craft.cp.displayError(xhr.responseJSON?.message ?? error);
             }
         });
     });

@@ -1,46 +1,24 @@
 <?php
 
-namespace studioespresso\splashingimages\migrations;
-
-use Craft;
-use craft\db\Migration;
+use CraftCms\Cms\Cms;
+use CraftCms\Cms\Support\Facades\Plugins;
+use CraftCms\Cms\Support\Facades\Volumes;
+use Illuminate\Database\Migrations\Migration;
 use studioespresso\splashingimages\SplashingImages;
 
-/**
- * m250402_174412_updateSettingsToHandle migration.
- */
-class m250402_174412_updateSettingsToHandle extends Migration
-{
-    /**
-     * @inheritdoc
-     */
-    public function safeUp(): bool
+return new class extends Migration {
+    public function up(): void
     {
-        if (Craft::$app->config->general->allowAdminChanges === false) {
-            return true;
+        if (!Cms::config()->allowAdminChanges) {
+            return;
         }
 
-        $settings = SplashingImages::getInstance()->settings;
-        $destination = $settings->destination;
+        $plugin = SplashingImages::getInstance();
+        $settings = $plugin->getSettings();
 
-        if (is_numeric($destination)) {
-            $volume = Craft::$app->volumes->getVolumeById($destination);
-
-            if ($volume !== null) {
-                $settings->destination = $volume->handle;
-                Craft::$app->plugins->savePluginSettings(SplashingImages::getInstance(), $settings->toArray());
-            }
+        if (is_numeric($settings->destination) && $volume = Volumes::getVolumeById((int)$settings->destination)) {
+            $settings->destination = $volume->handle;
+            Plugins::savePluginSettings($plugin, $settings->toArray());
         }
-
-        return true;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function safeDown(): bool
-    {
-        echo "m250402_174412_updateSettingsToHandle cannot be reverted.\n";
-        return false;
-    }
-}
+};
