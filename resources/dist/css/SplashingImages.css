@@ -76,3 +76,17 @@
     text-align: center;
     color: var(--c-text-quiet);
 }
+
+.splashing-search {
+    padding-block: var(--c-spacing-md);
+}
+
+.splashing-search craft-input {
+    width: 24rem;
+    max-width: 100%;
+}
+
+/* Push cp/Screen's toolbar group (which wraps our form) to the right of the header row */
+:has(> * > * > .splashing-search) {
+    margin-inline-start: auto;
+}
