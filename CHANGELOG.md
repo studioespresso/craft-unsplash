@@ -1,5 +1,10 @@
 # Splashing Images changelog
 
+## 6.0.0-beta.1 - 2026-11-15
+### Changed
+- Requires Craft CMS 6.0.0-beta.1 and PHP 8.5
+- Updated Settings UI to match Craft's new UI style
+
 ## 6.0.0-alpha.1 - 2026-05-20
 ### Added
 - Initial support for Craft 6.0.0

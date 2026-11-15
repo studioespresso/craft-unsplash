@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-splashingimages",
     "description": "unsplash.com integration for Craft CMS",
     "type": "craft-plugin",
-    "version": "6.0.0-alpha.1",
+    "version": "6.0.0-beta.1",
     "keywords": [
         "craft",
         "cms",
@@ -22,13 +22,14 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^6.0.0-alpha.4",
-        "unsplash/unsplash": "^3.0.0"
+        "php": ">=8.5",
+        "craftcms/cms": "^6.0.0-beta.1",
+        "unsplash/unsplash": "^3.2.1"
     },
     "require-dev": {
-        "larastan/larastan": "^3.12",
-        "laravel/pint": "^1.27",
-        "orchestra/testbench": "^11.0"
+        "larastan/larastan": "^3.15",
+        "laravel/pint": "^1.32.3",
+        "orchestra/testbench": "^11.3"
     },
     "minimum-stability": "alpha",
     "prefer-stable": true,
@@ -60,7 +61,8 @@
     ],
     "config": {
         "allow-plugins": {
-            "craftcms/plugin-installer": true
+            "craftcms/plugin-installer": true,
+            "php-http/discovery": true
         }
     }
 }
