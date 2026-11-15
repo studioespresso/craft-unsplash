@@ -15,6 +15,7 @@ namespace studioespresso\splashingimages\controllers;
 use CraftCms\Cms\Http\Responses\CpScreenResponse;
 use CraftCms\Cms\Support\Facades\HtmlStack;
 use Illuminate\Http\Request;
+use Inertia\Support\Header;
 use studioespresso\splashingimages\services\UnsplashService;
 use studioespresso\splashingimages\SplashingImages;
 
@@ -54,7 +55,7 @@ class ImagesController
     private function respond(Request $request, array $data, ?string $query = null): mixed
     {
         // Infinite Scroll fetches the next page over XHR and only needs the images
-        if ($request->ajax() && ! $request->inertia()) {
+        if ($request->ajax() && ! $request->header(Header::INERTIA)) {
             return response(template('splashing-images/_includes/_images', ['data' => $data]));
         }
 

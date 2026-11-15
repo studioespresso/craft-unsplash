@@ -14,14 +14,14 @@ namespace studioespresso\splashingimages;
 
 use CraftCms\Cms\Asset\Data\Volume;
 use CraftCms\Cms\Cp\Data\NavItem;
-use CraftCms\Cms\Form\Controls\Choice;
-use CraftCms\Cms\Form\Controls\Text;
-use CraftCms\Cms\Form\Form;
-use CraftCms\Cms\Form\FormContext;
-use CraftCms\Cms\Form\Nodes\Field;
 use CraftCms\Cms\Plugin\Plugin;
 use CraftCms\Cms\Plugin\PluginSettings;
 use CraftCms\Cms\Support\Facades\Volumes;
+use CraftCms\Cms\Ui\Controls\Choice;
+use CraftCms\Cms\Ui\Controls\Text;
+use CraftCms\Cms\Ui\Nodes\Field;
+use CraftCms\Cms\Ui\Ui;
+use CraftCms\Cms\Ui\UiContext;
 use studioespresso\splashingimages\models\Settings;
 
 use function CraftCms\Cms\t;
@@ -52,14 +52,14 @@ class SplashingImages extends Plugin
             ->iconSvg(file_get_contents($this->getBasePath().'/icon-mask.svg'));
     }
 
-    public function settingsForm(FormContext $context = new FormContext): ?Form
+    public function settingsUi(UiContext $context = new UiContext): ?Ui
     {
         $volumes = Volumes::getAllVolumes()
             ->map(fn (Volume $volume) => ['label' => $volume->name, 'value' => $volume->handle])
             ->values()
             ->all();
 
-        return Form::make([
+        return Ui::make([
             Field::make(t('Plugin label', category: 'splashing-images'), Text::make('pluginLabel'))
                 ->instructions(t('You can give the plugin in different name in the CP navigation here', category: 'splashing-images')),
             Field::make(t('Volume', category: 'splashing-images'), Choice::make('destination')->options($volumes)->placeholder(t('Select a volume', category: 'splashing-images')))
