@@ -35,8 +35,12 @@ use function CraftCms\Cms\t;
  */
 class SplashingImages extends Plugin
 {
-    protected array $publishables = [
-        __DIR__.'/../resources/dist' => 'dist',
+    protected array $styles = [
+        __DIR__.'/../resources/dist/css/SplashingImages.css' => 'css/SplashingImages.css',
+    ];
+
+    protected array $scripts = [
+        __DIR__.'/../resources/dist/js/splashing-images.js' => 'js/splashing-images.js',
     ];
 
     protected static function createSettings(): ?PluginSettings

@@ -4,6 +4,7 @@
 ### Changed
 - Requires Craft CMS 6.0.0-beta.1 and PHP 8.5
 - Updated Settings UI to match Craft's new UI style
+- The image browser is now a native Control Panel screen; masonry, infinite scroll and imagesLoaded are no longer bundled
 
 ## 6.0.0-alpha.1 - 2026-05-20
 ### Added

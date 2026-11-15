@@ -13,14 +13,12 @@
 namespace studioespresso\splashingimages\controllers;
 
 use CraftCms\Cms\Http\Responses\CpScreenResponse;
-use CraftCms\Cms\Support\Facades\HtmlStack;
 use Illuminate\Http\Request;
-use Inertia\Support\Header;
 use studioespresso\splashingimages\services\UnsplashService;
 use studioespresso\splashingimages\SplashingImages;
 
 use function CraftCms\Cms\cp_url;
-use function CraftCms\Cms\template;
+use function CraftCms\Cms\t;
 
 /**
  * @author    Studio Espresso
@@ -54,32 +52,29 @@ class ImagesController
 
     private function respond(Request $request, array $data, ?string $query = null): mixed
     {
-        // Infinite Scroll fetches the next page over XHR and only needs the images
-        if ($request->ajax() && ! $request->header(Header::INERTIA)) {
-            return response(template('splashing-images/_includes/_images', ['data' => $data]));
-        }
+        $images = array_values($data['images']);
 
-        $plugin = SplashingImages::getInstance();
-        HtmlStack::cssFile($this->assetUrl('dist/css/SplashingImages.css'));
-        foreach (['infinite-scroll.pkgd.min.js', 'masonry.pkgd.min.js', 'imagesloaded.pkgd.min.js', 'splashing-images.js'] as $script) {
-            HtmlStack::jsFile($this->assetUrl("dist/js/$script"), ['defer' => true]);
+        // The gallery fetches further pages as JSON while you scroll
+        if ($request->wantsJson()) {
+            return response()->json(['images' => $images, 'nextPageUrl' => $images ? $data['next_page'] : null]);
         }
 
         return new CpScreenResponse()
-            ->title($plugin->getSettings()->pluginLabel ?: 'Splashing Images')
-            ->toolbarTemplate('splashing-images/_includes/_search', ['query' => $query])
-            ->contentTemplate('splashing-images/_includes/_images', ['data' => $data])
-            ->inertiaPage('cp/Screen');
-    }
-
-    /**
-     * Published asset URL, cache-busted by the source file's modification time
-     */
-    private function assetUrl(string $path): string
-    {
-        $plugin = SplashingImages::getInstance();
-        $version = filemtime($plugin->getResourcesPath().'/'.$path);
-
-        return $plugin->asset($path)."?v=$version";
+            ->title(SplashingImages::getInstance()->getSettings()->pluginLabel ?: 'Splashing Images')
+            ->inertiaPage('splashing-images/Gallery', [
+                'images' => $images,
+                'nextPageUrl' => $images ? $data['next_page'] : null,
+                'searchUrl' => cp_url('splashing-images/search'),
+                'query' => $query,
+                'labels' => [
+                    'search' => t('Search', category: 'app'),
+                    'save' => t('Save to Assets', category: 'splashing-images'),
+                    'photoBy' => t('Photo by {name}', category: 'splashing-images'),
+                    'end' => t('End of content', category: 'splashing-images'),
+                    'empty' => t('No images found', category: 'splashing-images'),
+                ],
+                // The grid uses the full width
+                'contentMaxWidth' => false,
+            ]);
     }
 }

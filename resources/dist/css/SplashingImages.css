@@ -1,13 +1,25 @@
-/* Masonry sizes columns from .splashing-image-sizer; the gutter is set in splashing-images.js */
-.splashing-image-sizer,
-.splashing-image-grid {
-    width: calc((100% - 3 * 16px) / 4);
+.splashing-search {
+    display: flex;
+    gap: var(--c-spacing-sm);
+    align-items: center;
 }
 
-.splashing-image-grid {
+.splashing-search craft-input {
+    width: 24rem;
+    max-width: 100%;
+}
+
+/* Masonry without JS: columns fill top to bottom */
+.splashing-grid {
+    columns: 4 14rem;
+    column-gap: 16px;
+}
+
+.splashing-item {
     position: relative;
     margin-bottom: 16px;
     overflow: hidden;
+    break-inside: avoid;
     border-radius: var(--c-radius-md);
     background-color: var(--c-surface-sunken);
 }
@@ -46,47 +58,21 @@
 .splashing-spinner {
     position: absolute;
     inset: 0;
-    display: none;
+    display: grid;
     place-items: center;
     pointer-events: none;
 }
 
-.splashing-image-grid.saving {
+.splashing-item.saving {
     pointer-events: none;
 }
 
-.splashing-image-grid.saving img {
+.splashing-item.saving img {
     opacity: .4;
 }
 
-.splashing-image-grid.saving .splashing-spinner {
-    display: grid;
-}
-
-.splashing-container {
-    transition: opacity .4s ease;
-}
-
-.splashing-container.are-images-unloaded {
-    opacity: 0;
-}
-
-.page-load-status {
+.splashing-status {
     padding: var(--c-spacing-lg) 0;
     text-align: center;
     color: var(--c-text-quiet);
-}
-
-.splashing-search {
-    padding-block: var(--c-spacing-md);
-}
-
-.splashing-search craft-input {
-    width: 24rem;
-    max-width: 100%;
-}
-
-/* Push cp/Screen's toolbar group (which wraps our form) to the right of the header row */
-:has(> * > * > .splashing-search) {
-    margin-inline-start: auto;
 }
