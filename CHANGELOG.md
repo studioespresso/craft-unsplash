@@ -1,5 +1,9 @@
 # Splashing Images changelog
 
+## 6.0.0-beta.2 - 2026-11-21
+### Changed
+- Moved plugin to laravel file structure
+
 ## 6.0.0-beta.1 - 2026-11-15
 ### Changed
 - Requires Craft CMS 6.0.0-beta.1 and PHP 8.5
