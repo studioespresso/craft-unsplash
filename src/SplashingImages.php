@@ -22,7 +22,6 @@ use CraftCms\Cms\Ui\Controls\Text;
 use CraftCms\Cms\Ui\Nodes\Field;
 use CraftCms\Cms\Ui\Ui;
 use CraftCms\Cms\Ui\UiContext;
-use studioespresso\splashingimages\models\Settings;
 
 use function CraftCms\Cms\t;
 
@@ -35,6 +34,9 @@ use function CraftCms\Cms\t;
  */
 class SplashingImages extends Plugin
 {
+    /** Craft 5 users must be on 5.0.4 first: it converts the volume setting from an ID to a handle */
+    public string $minVersionRequired = '5.0.4';
+
     protected array $styles = [
         __DIR__.'/../resources/dist/css/SplashingImages.css' => 'css/SplashingImages.css',
     ];
@@ -42,6 +44,11 @@ class SplashingImages extends Plugin
     protected array $scripts = [
         __DIR__.'/../resources/dist/js/splashing-images.js' => 'js/splashing-images.js',
     ];
+
+    public function boot(): void
+    {
+        $this->app->singleton(Settings::class, fn () => $this->getSettings());
+    }
 
     protected static function createSettings(): ?PluginSettings
     {
@@ -53,7 +60,7 @@ class SplashingImages extends Plugin
         return new NavItem()
             ->label($this->getSettings()->pluginLabel ?: 'Unsplash Images')
             ->href($this->handle)
-            ->iconSvg(file_get_contents($this->getBasePath().'/icon-mask.svg'));
+            ->iconSvg(file_get_contents($this->getResourcesPath().'/icon-mask.svg'));
     }
 
     public function settingsUi(UiContext $context = new UiContext): ?Ui

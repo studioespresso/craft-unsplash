@@ -11,8 +11,8 @@
         "splashing images"
     ],
     "support": {
-        "docs": "https://github.com/studioespresso/craft3-unsplash/blob/develop/README.md",
-        "issues": "https://github.com/studioespresso/craft3-unsplashs/issues"
+        "docs": "https://github.com/studioespresso/craft-unsplash/blob/v6/README.md",
+        "issues": "https://github.com/studioespresso/craft-unsplash/issues"
     },
     "license": "MIT",
     "authors": [
@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": ">=8.5",
-        "craftcms/cms": "^6.0.0-beta.1",
+        "craftcms/cms": "^6.0.0-beta.2",
         "unsplash/unsplash": "^3.2.1"
     },
     "require-dev": {
@@ -50,7 +50,7 @@
         "hasCpSettings": true,
         "hasCpSection": true,
         "schemaVersion": "1.2.0",
-        "changelogUrl": "https://github.com/studioespresso/craft3-unsplash/blob/develop/CHANGELOG.md",
+        "changelogUrl": "https://github.com/studioespresso/craft-unsplash/blob/v6/CHANGELOG.md",
         "class": "studioespresso\\splashingimages\\SplashingImages"
     },
     "funding": [

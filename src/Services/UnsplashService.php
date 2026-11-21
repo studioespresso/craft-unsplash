@@ -10,8 +10,9 @@
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
-namespace studioespresso\splashingimages\services;
+namespace studioespresso\splashingimages\Services;
 
+use Illuminate\Container\Attributes\Singleton;
 use Illuminate\Support\Facades\Cache;
 use Unsplash\HttpClient;
 use Unsplash\Photo;
@@ -22,6 +23,7 @@ use Unsplash\Search;
  *
  * @since     1.0.0
  */
+#[Singleton]
 class UnsplashService
 {
     public function __construct()

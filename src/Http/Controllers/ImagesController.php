@@ -10,12 +10,12 @@
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
-namespace studioespresso\splashingimages\controllers;
+namespace studioespresso\splashingimages\Http\Controllers;
 
 use CraftCms\Cms\Http\Responses\CpScreenResponse;
 use Illuminate\Http\Request;
-use studioespresso\splashingimages\services\UnsplashService;
-use studioespresso\splashingimages\SplashingImages;
+use studioespresso\splashingimages\Services\UnsplashService;
+use studioespresso\splashingimages\Settings;
 
 use function CraftCms\Cms\cp_url;
 use function CraftCms\Cms\t;
@@ -27,7 +27,7 @@ use function CraftCms\Cms\t;
  */
 class ImagesController
 {
-    public function __construct(private UnsplashService $unsplash) {}
+    public function __construct(private UnsplashService $unsplash, private Settings $settings) {}
 
     public function index(Request $request, int $page = 1): mixed
     {
@@ -60,7 +60,7 @@ class ImagesController
         }
 
         return new CpScreenResponse()
-            ->title(SplashingImages::getInstance()->getSettings()->pluginLabel ?: 'Splashing Images')
+            ->title($this->settings->pluginLabel ?: 'Splashing Images')
             ->inertiaPage('splashing-images/Gallery', [
                 'images' => $images,
                 'nextPageUrl' => $images ? $data['next_page'] : null,

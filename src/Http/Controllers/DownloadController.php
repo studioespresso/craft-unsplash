@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
-namespace studioespresso\splashingimages\controllers;
+namespace studioespresso\splashingimages\Http\Controllers;
 
 use CraftCms\Cms\Asset\Elements\Asset;
 use CraftCms\Cms\Asset\Validation\AssetRules;
@@ -21,8 +21,8 @@ use CraftCms\Cms\Support\Facades\Volumes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use studioespresso\splashingimages\services\UnsplashService;
-use studioespresso\splashingimages\SplashingImages;
+use studioespresso\splashingimages\Services\UnsplashService;
+use studioespresso\splashingimages\Settings;
 
 use function CraftCms\Cms\t;
 
@@ -33,9 +33,8 @@ use function CraftCms\Cms\t;
  */
 class DownloadController
 {
-    public function __invoke(Request $request, UnsplashService $unsplash): JsonResponse
+    public function __invoke(Request $request, UnsplashService $unsplash, Settings $settings): JsonResponse
     {
-        $settings = SplashingImages::getInstance()->getSettings();
         $volume = $settings->destination ? Volumes::getVolumeByHandle($settings->destination) : null;
         if (! $volume) {
             return $this->result(false, 'Please set a file destination in settings so images can be saved');

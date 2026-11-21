@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2017 Studio Espresso
  */
 
-namespace studioespresso\splashingimages\models;
+namespace studioespresso\splashingimages;
 
 use CraftCms\Cms\Plugin\PluginSettings;
 
@@ -35,10 +35,8 @@ class Settings extends PluginSettings
 
     /**
      * Some field model attribute
-     *
-     * @var string
      */
-    public $destination = '';
+    public string $destination = '';
 
     public string $folder = '';
 
